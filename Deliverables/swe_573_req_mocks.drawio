@@ -1,0 +1,118 @@
+<mxfile host="Electron" modified="2024-03-02T15:17:19.338Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/23.1.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="-5bBHWImlkRjWVWkAnRP" version="23.1.5" type="device">
+  <diagram name="Page-1" id="hT5yPsnkGmW4OuqI8rKV">
+    <mxGraphModel dx="1242" dy="793" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Scc57TFC-rIM_niCT2At-1" value="Mock: Bob Creating a Community for Upcoming Movies" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=17;" vertex="1" parent="1">
+          <mxGeometry x="20" y="50" width="350" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-3" value="" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="59" y="117" width="740" height="242" as="geometry" />
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Scc57TFC-rIM_niCT2At-4" target="Scc57TFC-rIM_niCT2At-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-4" value="Login" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="85" y="151" width="60" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Scc57TFC-rIM_niCT2At-5" target="Scc57TFC-rIM_niCT2At-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-5" value="Enter Create Community Page" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="192" y="146" width="78" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Scc57TFC-rIM_niCT2At-6" target="Scc57TFC-rIM_niCT2At-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-6" value="Give title to community: Upcoming Movies" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="312" y="138" width="113" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Scc57TFC-rIM_niCT2At-7" target="Scc57TFC-rIM_niCT2At-11">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="684" y="170" />
+              <mxPoint x="684" y="221" />
+              <mxPoint x="131" y="221" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-7" value="Give description to community: Community for tracking the newest movie releases" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="470" y="131.5" width="133" height="73" as="geometry" />
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-14" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Scc57TFC-rIM_niCT2At-11" target="Scc57TFC-rIM_niCT2At-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-11" value="Define a Schema for Post, schema name: Movie Release" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="69" y="243" width="123" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Scc57TFC-rIM_niCT2At-13" target="Scc57TFC-rIM_niCT2At-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-13" value="Define data fields for schema Movie Release" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="225" y="243" width="123" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Scc57TFC-rIM_niCT2At-15" target="Scc57TFC-rIM_niCT2At-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-15" value="Key: Name, Value: Text;&lt;br&gt;Key: Release Date, Value: Date;&lt;br&gt;Key: Genre, Value: Text;&lt;br&gt;Key:&amp;nbsp; Poster, Value: Image" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="398" y="232.5" width="189" height="86" as="geometry" />
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-17" value="Finish Creating Community" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="656" y="241.25" width="106" height="68.5" as="geometry" />
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-19" value="Mock: Alice Sharing a Post in Upcoming Movies Community" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=17;" vertex="1" parent="1">
+          <mxGeometry x="31" y="399" width="350" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-20" value="" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="55" y="436" width="740" height="242" as="geometry" />
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-21" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Scc57TFC-rIM_niCT2At-22" target="Scc57TFC-rIM_niCT2At-24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-22" value="Login" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="81" y="470" width="60" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-23" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Scc57TFC-rIM_niCT2At-24" target="Scc57TFC-rIM_niCT2At-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-24" value="Enter Create Community Page" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="188" y="465" width="78" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-25" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Scc57TFC-rIM_niCT2At-26" target="Scc57TFC-rIM_niCT2At-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-26" value="Click &quot;New Post&quot;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="308" y="457" width="113" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-27" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Scc57TFC-rIM_niCT2At-28" target="Scc57TFC-rIM_niCT2At-30">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="680" y="489" />
+              <mxPoint x="680" y="540" />
+              <mxPoint x="127" y="540" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-28" value="Choose schema for the post: Movie Release" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="466" y="450.5" width="133" height="73" as="geometry" />
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-36" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Scc57TFC-rIM_niCT2At-30" target="Scc57TFC-rIM_niCT2At-34">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-30" value="Enter Values to Schema" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="65" y="562" width="123" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-33" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Scc57TFC-rIM_niCT2At-34" target="Scc57TFC-rIM_niCT2At-35">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-34" value="Name: Dune 2;&lt;br&gt;Release Date: 01.03.2024;&lt;br&gt;Genre: Science Fiction;&lt;br&gt;Poster: &amp;lt;uploaded image&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="298" y="551.5" width="189" height="86" as="geometry" />
+        </mxCell>
+        <mxCell id="Scc57TFC-rIM_niCT2At-35" value="Finish Post" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="589" y="560.25" width="106" height="68.5" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

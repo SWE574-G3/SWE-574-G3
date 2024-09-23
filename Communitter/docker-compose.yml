@@ -1,0 +1,38 @@
+services:
+  db:
+    container_name: postgres
+    image: postgres
+    ports:
+      - 3001:5432
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: communitter
+      POSTGRES_USER: postgres
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    restart: always
+
+  backend:
+    container_name: backend
+    build:
+      dockerfile: API.Dockerfile
+    ports:
+      - 8080:8080
+    environment:
+      db_url: jdbc:postgresql://db:5432/communitter
+      db_username: postgres
+      db_password: password
+    depends_on:
+      - db
+    restart: always
+
+  frontend:
+    container_name: frontend
+    build:
+      dockerfile: ./../communitter-frontend/Frontend.Dockerfile
+      context: ./../communitter-frontend
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend
+    restart: always

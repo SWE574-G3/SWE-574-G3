@@ -70,7 +70,7 @@ For any questions or suggestions, please feel free to reach out to the project m
 
 For any questions or suggestions, feel free to reach out to the project maintainers and contributors:
 
-- **Oğuz Öz**: [GitHub Profile](https://github.com/orgs/SWE574-G3/people/Oguzoz1)
+- **Oğuz Özüer**: [GitHub Profile](https://github.com/orgs/SWE574-G3/people/Oguzoz1)
 - **Nilay Aydın**: [GitHub Profile](https://github.com/niloaydin)
 - **Ahmet Dolma**: [GitHub Profile](https://github.com/AhmetZ06)
 - **Ahmet Özmüş**: [GitHub Profile](https://github.com/orgs/SWE574-G3/people/Ozmus)

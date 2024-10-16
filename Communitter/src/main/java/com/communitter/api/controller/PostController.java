@@ -1,8 +1,8 @@
 package com.communitter.api.controller;
 
 
-import com.communitter.api.post.Post;
-import com.communitter.api.post.PostService;
+import com.communitter.api.model.Post;
+import com.communitter.api.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

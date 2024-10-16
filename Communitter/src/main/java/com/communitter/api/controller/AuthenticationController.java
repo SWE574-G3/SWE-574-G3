@@ -1,6 +1,10 @@
 package com.communitter.api.controller;
 
-import com.communitter.api.auth.*;
+import com.communitter.api.dto.request.AuthenticationRequest;
+import com.communitter.api.dto.request.UserRequest;
+import com.communitter.api.response.AuthenticationResponse;
+import com.communitter.api.response.RegisterResponse;
+import com.communitter.api.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,8 +1,8 @@
 package com.communitter.api.controller;
 
-import com.communitter.api.community.Community;
-import com.communitter.api.community.CommunityService;
-import com.communitter.api.community.Subscription;
+import com.communitter.api.model.Community;
+import com.communitter.api.service.CommunityService;
+import com.communitter.api.model.Subscription;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

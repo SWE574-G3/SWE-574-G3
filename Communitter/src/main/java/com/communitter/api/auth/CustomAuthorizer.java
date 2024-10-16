@@ -1,10 +1,13 @@
 package com.communitter.api.auth;
 
-import com.communitter.api.authconfig.JwtAuthFilter;
-import com.communitter.api.community.*;
-import com.communitter.api.post.Post;
-import com.communitter.api.post.PostRepository;
-import com.communitter.api.user.User;
+import com.communitter.api.key.SubscriptionKey;
+import com.communitter.api.model.Community;
+import com.communitter.api.model.Subscription;
+import com.communitter.api.model.Post;
+import com.communitter.api.repository.CommunityRepository;
+import com.communitter.api.repository.PostRepository;
+import com.communitter.api.repository.SubscriptionRepository;
+import com.communitter.api.model.User;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +15,6 @@ import org.springframework.security.access.expression.method.MethodSecurityExpre
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import java.security.Principal;
 import java.util.Objects;
 import java.util.Optional;
 

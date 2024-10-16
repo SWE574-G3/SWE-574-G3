@@ -1,6 +1,8 @@
-package com.communitter.api.search;
+package com.communitter.api.controller;
 
 
+import com.communitter.api.search.BasicSearchResponse;
+import com.communitter.api.search.SearchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

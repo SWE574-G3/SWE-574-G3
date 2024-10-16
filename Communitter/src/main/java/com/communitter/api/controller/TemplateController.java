@@ -1,7 +1,9 @@
-package com.communitter.api.templates;
+package com.communitter.api.controller;
 
+import com.communitter.api.templates.DataFieldType;
+import com.communitter.api.templates.Template;
+import com.communitter.api.templates.TemplateService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.parameters.P;

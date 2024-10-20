@@ -1,5 +1,12 @@
 export function FilterPost(post, postFilters) {
   let filterPass = true;
+  // Check if post have all datafields for all activated post filters
+  for(let filter in postFilters){
+    if (!filterPass) return;
+    if(postFilters[filter]?.activated){
+        filterPass= post.postFields.find(postField=>postField.dataField.id==filter)
+    }
+  }
 
   post.postFields.forEach((postField) => {
     if (!filterPass) return;

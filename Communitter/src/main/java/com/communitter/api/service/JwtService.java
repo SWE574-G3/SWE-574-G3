@@ -20,7 +20,6 @@ public class JwtService {
     private final String SECRET="d2bedb814817fa4824c95665b4615260aa71e80b0051b389c229630e4bb57636";
     public String extractEmail(String token){
         String email= extractClaim(token,Claims::getSubject);
-        logger.info("EMAIL FROM TOKEN IS: "+email);
         return email;
     }
 
@@ -51,7 +50,6 @@ public class JwtService {
         return claimExtractor.apply(claims);
     }
     public boolean isTokenValid(String token, User userDetails){
-       logger.info("IS TOKEN SIGNED:" + Jwts.parserBuilder().setSigningKey(getSigninKey()).build().isSigned(token));
         String emailInToken = extractEmail(token);
         return (emailInToken.equals(userDetails.getEmail()) && !isExpired(token));
 

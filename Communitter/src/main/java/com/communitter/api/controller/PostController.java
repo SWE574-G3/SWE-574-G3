@@ -23,10 +23,10 @@ public class PostController {
        return ResponseEntity.ok(postService.createPost(id,post));
     }
 
-    @PreAuthorize("@authorizer.checkAuthor(#root,#id)")
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletePost(@PathVariable Long id){
-        return ResponseEntity.ok(postService.deletePost(id));
-    }
+//    @PreAuthorize("@authorizer.checkAuthor(#root,#id)")
+//    @DeleteMapping("/community/{communityId}/{id}")
+//    public ResponseEntity<String> deletePost(@PathVariable Long id){
+//        return ResponseEntity.ok(postService.deletePost(id));
+//    }
 
 }

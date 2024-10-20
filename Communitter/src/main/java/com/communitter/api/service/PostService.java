@@ -1,8 +1,10 @@
 package com.communitter.api.service;
 
+import com.communitter.api.exception.NotAuthorizedException;
 import com.communitter.api.model.Post;
 import com.communitter.api.model.PostField;
-import com.communitter.api.validator.PostValidator;
+import com.communitter.api.utils.BasicAuthorizationUtil;
+import com.communitter.api.utils.PostValidator;
 import com.communitter.api.model.Community;
 import com.communitter.api.repository.CommunityRepository;
 import com.communitter.api.repository.PostFieldRepository;
@@ -13,9 +15,11 @@ import com.communitter.api.model.Template;
 import com.communitter.api.repository.TemplateRepository;
 import com.communitter.api.model.User;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.slf4j.Logger;
 
 import java.util.*;
 
@@ -27,6 +31,8 @@ public class PostService {
     private final CommunityRepository communityRepository;
     private final TemplateRepository templateRepository;
     private final PostFieldRepository postFieldRepository;
+    private final BasicAuthorizationUtil authUtil;
+    public Logger logger = LoggerFactory.getLogger(PostService.class);
 
     @Transactional
     public Post createPost(Long id, Post post) {
@@ -52,10 +58,23 @@ public class PostService {
     }
 
     @Transactional
-    public String deletePost(Long id){
+    public void deletePost(Long communityId, Long id){
+        logger.info("basladi");
+        logger.info("community Id", communityId);
+        logger.info("post Id", id);
+        Community targetCommunity = communityRepository.findById(communityId).orElseThrow(()->new NoSuchElementException("Community does not exist"));
         Post postToDelete =postRepository.findById(id).orElseThrow(()->new NoSuchElementException("Post does not exist"));
-        postRepository.delete(postToDelete);
-        return "Post deleted";
+        logger.info("helloooo");
+        User currentUser = authUtil.getCurrentUser();
+
+        logger.info(String.valueOf(currentUser));
+
+        if (currentUser.getId().equals(postToDelete.getAuthor().getId()) ||
+                currentUser.getId().equals(targetCommunity.getCreator().getId())) {
+            postRepository.deleteById(id);
+        } else {
+            throw new NotAuthorizedException("You are not authorized to delete this post");
+        }
     }
 
     private boolean checkRequiredFields(Set<PostField> postFields, Template postTemplate) {

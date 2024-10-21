@@ -1,4 +1,4 @@
-package com.communitter.api.validator;
+package com.communitter.api.util;
 
 import com.communitter.api.model.Post;
 import com.communitter.api.model.PostField;

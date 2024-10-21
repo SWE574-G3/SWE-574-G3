@@ -1,4 +1,4 @@
-package com.communitter.api;
+package com.communitter.api.config;
 
 
 

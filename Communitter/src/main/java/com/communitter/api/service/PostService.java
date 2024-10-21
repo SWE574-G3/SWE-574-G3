@@ -2,7 +2,7 @@ package com.communitter.api.service;
 
 import com.communitter.api.model.Post;
 import com.communitter.api.model.PostField;
-import com.communitter.api.validator.PostValidator;
+import com.communitter.api.util.PostValidator;
 import com.communitter.api.model.Community;
 import com.communitter.api.repository.CommunityRepository;
 import com.communitter.api.repository.PostFieldRepository;

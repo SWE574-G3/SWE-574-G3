@@ -54,10 +54,11 @@ const MakePostModal = ({ templates, isOpen, setIsOpen }) => {
     setDisplayButton(false);
     const postData = {
       date: new Date(),
-      template: { id: selectedTemplate.id, name: selectedTemplate.name },
+      template: { id: selectedTemplate?.id, name: selectedTemplate?.name },
       postFields: postFields.filter((postField) => postField.value !== ""),
     };
     try {
+      if(!postData.template.id || !postData.template.name) throw new Error("Please choose a template first")
       const data = await fetchWithOpts(
         `${url}/posts/community/${community.id}`,
         {

@@ -51,4 +51,10 @@ public class Post {
     @ToString.Exclude
     private Set<PostField> postFields;
 
+    @OneToMany(mappedBy = "post",fetch = FetchType.EAGER)
+    @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
+    @JsonManagedReference("post-votes")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Set<PostVote> postVotes;
 }

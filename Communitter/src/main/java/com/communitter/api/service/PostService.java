@@ -59,12 +59,8 @@ public class PostService {
 
     @Transactional
     public void deletePost(Long communityId, Long id){
-        logger.info("basladi");
-        logger.info("community Id", communityId);
-        logger.info("post Id", id);
         Community targetCommunity = communityRepository.findById(communityId).orElseThrow(()->new NoSuchElementException("Community does not exist"));
         Post postToDelete =postRepository.findById(id).orElseThrow(()->new NoSuchElementException("Post does not exist"));
-        logger.info("helloooo");
         User currentUser = authUtil.getCurrentUser();
 
         logger.info(String.valueOf(currentUser));

@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,8 +24,14 @@ public class PostVote {
             generator = "post_vote_sequence")
     private Long id;
 
+    @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP(6)")
+    private LocalDateTime createdAt;
+
+    @Column(name = "is_upvote", nullable = false)
+    private boolean isUpvote;
+
     @ManyToOne
-    @JoinColumn(name = "post_id",nullable = false)
+    @JoinColumn(name = "post_id", nullable = false)
     @JsonBackReference("post-votes")
     private Post post;
 
@@ -31,4 +39,16 @@ public class PostVote {
     @JoinColumn(name = "user_id")
     @JsonBackReference("user-votes")
     private User user;
+
+    public PostVote(Long id, boolean isUpvote, Post postToVote, User user) {
+        this.id = id;
+        this.isUpvote = isUpvote;
+        this.post = postToVote;
+        this.user = user;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 }

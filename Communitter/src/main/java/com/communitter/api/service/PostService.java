@@ -1,17 +1,8 @@
 package com.communitter.api.service;
 
-import com.communitter.api.model.Post;
-import com.communitter.api.model.PostField;
+import com.communitter.api.model.*;
+import com.communitter.api.repository.*;
 import com.communitter.api.util.PostValidator;
-import com.communitter.api.model.Community;
-import com.communitter.api.repository.CommunityRepository;
-import com.communitter.api.repository.PostFieldRepository;
-import com.communitter.api.repository.PostRepository;
-import com.communitter.api.model.DataField;
-import com.communitter.api.repository.DataFieldRepository;
-import com.communitter.api.model.Template;
-import com.communitter.api.repository.TemplateRepository;
-import com.communitter.api.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -23,7 +14,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
-    private final DataFieldRepository dataFieldRepository;
+    private final PostVoteRepository postVoteRepository;
     private final CommunityRepository communityRepository;
     private final TemplateRepository templateRepository;
     private final PostFieldRepository postFieldRepository;
@@ -56,6 +47,14 @@ public class PostService {
         Post postToDelete =postRepository.findById(id).orElseThrow(()->new NoSuchElementException("Post does not exist"));
         postRepository.delete(postToDelete);
         return "Post deleted";
+    }
+
+    @Transactional
+    public void votePost(Long id, boolean isUpvote){
+        User author= (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Post postToVote =postRepository.findById(id).orElseThrow(()->new NoSuchElementException("Post does not exist"));
+        PostVote postVote = new PostVote(id, isUpvote, postToVote, author);
+        postVoteRepository.save(postVote);
     }
 
     private boolean checkRequiredFields(Set<PostField> postFields, Template postTemplate) {

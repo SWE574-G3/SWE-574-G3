@@ -22,16 +22,15 @@ public class PostField {
             generator = "post_fields_sequence")
     private Long id;
 
-    @Column(nullable = false,columnDefinition = "TEXT")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String value;
 
     @ManyToOne
-    @JoinColumn(name = "post_id",nullable = false)
+    @JoinColumn(name = "post_id", nullable = false)
     @JsonBackReference("post-fields")
     private Post post;
 
     @ManyToOne
-    @JoinColumn(name = "data_field_id",nullable = false)
+    @JoinColumn(name = "data_field_id", nullable = false)
     private DataField dataField;
-
 }

@@ -50,11 +50,15 @@ public class PostService {
     }
 
     @Transactional
-    public void votePost(Long id, boolean isUpvote){
+    public PostVote votePost(Long id, boolean isUpvote){
         User author= (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Post postToVote =postRepository.findById(id).orElseThrow(()->new NoSuchElementException("Post does not exist"));
         PostVote postVote = new PostVote(id, isUpvote, postToVote, author);
-        postVoteRepository.save(postVote);
+        return postVoteRepository.save(postVote);
+    }
+
+    public Long getVoteCount(Long id){
+        return postVoteRepository.countVotesForPost(id, true) - postVoteRepository.countVotesForPost(id, false);
     }
 
     private boolean checkRequiredFields(Set<PostField> postFields, Template postTemplate) {

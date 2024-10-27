@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="post_vote")
+@Table(name="post_votes")
 public class PostVote {
     @Id
     @SequenceGenerator(
@@ -45,10 +45,6 @@ public class PostVote {
         this.isUpvote = isUpvote;
         this.post = postToVote;
         this.user = user;
-    }
-
-    @PrePersist
-    protected void onCreate() {
         this.createdAt = LocalDateTime.now();
     }
 }

@@ -1,22 +1,16 @@
 package com.communitter.api.service;
 
-import com.communitter.api.model.Post;
-import com.communitter.api.model.PostField;
+import com.communitter.api.auth.CustomAuthorizer;
+import com.communitter.api.model.*;
+import com.communitter.api.repository.*;
 import com.communitter.api.util.PostValidator;
-import com.communitter.api.model.Community;
-import com.communitter.api.repository.CommunityRepository;
-import com.communitter.api.repository.PostFieldRepository;
-import com.communitter.api.repository.PostRepository;
-import com.communitter.api.model.DataField;
-import com.communitter.api.repository.DataFieldRepository;
-import com.communitter.api.model.Template;
-import com.communitter.api.repository.TemplateRepository;
-import com.communitter.api.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -27,6 +21,9 @@ public class PostService {
     private final CommunityRepository communityRepository;
     private final TemplateRepository templateRepository;
     private final PostFieldRepository postFieldRepository;
+    private final ActivityStreamService activityStreamService;
+
+    public Logger logger = LoggerFactory.getLogger(PostService.class);
 
     @Transactional
     public Post createPost(Long id, Post post) {
@@ -44,6 +41,7 @@ public class PostService {
                 postField.setPost(createdPost);
             }
             postFieldRepository.saveAll(post.getPostFields());
+            activityStreamService.createActivity(ActivityAction.CREATE, author, targetCommunity, createdPost);
             return  createdPost;
         }
         else{

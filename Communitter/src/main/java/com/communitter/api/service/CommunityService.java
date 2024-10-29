@@ -9,6 +9,8 @@ import com.communitter.api.model.User;
 import com.communitter.api.model.Subscription;
 import com.communitter.api.key.SubscriptionKey;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,9 +25,11 @@ public class CommunityService {
     private final CommunityRepository communityRepository;
     private final SubscriptionRepository subscriptionRepository;
     private final RoleRepository roleRepository;
+    public Logger logger = LoggerFactory.getLogger(CommunityService.class);
 
     @Transactional
     public Community createCommunity(Community community){
+        logger.info(String.valueOf(community));
         User creator= (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         community.setCreator(creator);
         Community createdCommunity=communityRepository.save(community);

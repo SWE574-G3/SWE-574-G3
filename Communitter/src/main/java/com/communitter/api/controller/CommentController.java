@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.communitter.api.dto.CommentDto;
 import com.communitter.api.service.CommentService;
-import com.communitter.api.service.JwtService;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import lombok.RequiredArgsConstructor;
@@ -26,12 +25,10 @@ import lombok.RequiredArgsConstructor;
 public class CommentController {
     
     private final CommentService commentService;
-    public Logger logger = LoggerFactory.getLogger(JwtService.class);
 
     @PreAuthorize("@authorizer.checkAuthor(#root,#id)")
     @PostMapping("/posts/{id}")
     public ResponseEntity<CommentDto> createComment(@P("id") @PathVariable Long id, @RequestBody CommentDto comment){
-        logger.info("BODY:" + comment);
         return ResponseEntity.ok(commentService.createComment(id, comment));
     }
 

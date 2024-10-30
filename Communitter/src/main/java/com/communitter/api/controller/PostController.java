@@ -34,12 +34,12 @@ public class PostController {
     }
 
     @PreAuthorize("@authorizer.checkSubscription(#root,#id)")
-    @PostMapping("/vote/{id}")
+    @PostMapping("/{id}/vote")
     public ResponseEntity<PostVote> votePost(@P("id") @PathVariable Long id, @RequestParam  boolean isUpvote){
         return ResponseEntity.ok(postService.votePost(id, isUpvote));
     }
 
-    @GetMapping("/voteCount/{id}")
+    @GetMapping("/{id}/voteCount")
     public ResponseEntity<Long> getVoteCount(@P("id") @PathVariable Long id){
         return ResponseEntity.ok(postService.getVoteCount(id));
     }

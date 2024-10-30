@@ -2,23 +2,10 @@ import Card from "react-bootstrap/Card";
 import CardBody from "react-bootstrap/CardBody";
 import CardTitle from "react-bootstrap/CardTitle";
 import PostField from "./PostCardField";
-import React, { useState, useEffect } from "react";
-import { fetchWithOpts } from "../utilities/fetchWithOptions";
-import { url } from "../utilities/config";
-import {setErrorMessage} from "../features/errorSlice";
+import React from "react";
 
 const PostCard = ({ post }) => {
     const { author, postFields, date: timestamp } = post; // Destructure post object
-    const [voteCount, setVoteCount] = useState(0); // State for vote count
-
-    useEffect(() => {
-        fetchWithOpts(`${url}/posts/voteCount/${post.id}`, {
-            method: "GET",
-            headers: {},
-        })
-            .then((data) => setVoteCount(data))
-            .catch((e) => setErrorMessage(e.message));
-    }, [post.id]);
 
     return (
     <Card className="mb-3">
@@ -38,7 +25,6 @@ const PostCard = ({ post }) => {
             {postFields.map((postField) => (
               <PostField key={postField.id} postField={postField} />
             ))}
-            <p className="text-muted mt-2">Vote Count: {voteCount}</p>
         </CardBody>
     </Card>
   );

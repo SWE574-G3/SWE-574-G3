@@ -1,25 +1,34 @@
 package com.communitter.api.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Entity
-@Table(name = "ImageData")
+
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name="ImageData")
 public class ImageData {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
     private String type;
-    @Lob
-    @Column(name = "imagedata",length = 1000)
     private byte[] imageData;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = true)
+    @JsonBackReference("user-profile-picture")
+    private User user;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "community_id", nullable = true)
+    @JsonBackReference("community-subs")
+    private Community community;
+
 }

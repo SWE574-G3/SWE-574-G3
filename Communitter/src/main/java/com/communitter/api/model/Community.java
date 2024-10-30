@@ -60,4 +60,8 @@ public class Community {
     @JsonIgnoreProperties({"community"})
     private Set<Post> posts;
 
+    @OneToOne(mappedBy = "community", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @JsonManagedReference("community-image")
+    private ImageData communityImage;
+
 }

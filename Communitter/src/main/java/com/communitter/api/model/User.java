@@ -1,5 +1,6 @@
 package com.communitter.api.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -74,6 +75,12 @@ public class User implements UserDetails {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<Post> posts;
+
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @JsonManagedReference("user-profile-picture")
+    private ImageData profileImage;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

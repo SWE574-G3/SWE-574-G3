@@ -74,14 +74,10 @@ const PostCard = ({ post }) => {
                 {postFields.map((postField) => (
                     <PostField key={postField.id} postField={postField} />
                 ))}
-                <div className="vote-buttons mt-2">
-                    <button onClick={handleUpvote} className="btn btn-success me-2">
-                        Upvote
-                    </button>
+                <div className="vote-buttons mt-2 d-flex align-items-center" style={{ position: "absolute", bottom: "10px", right: "10px" }}>
+                    <i onClick={handleUpvote} className="bi bi-arrow-up me-2" style={{ cursor: "pointer", color: "green" }}></i>
                     <span>{voteCount}</span>
-                    <button onClick={handleDownvote} className="btn btn-danger ms-2">
-                        Downvote
-                    </button>
+                    <i onClick={handleDownvote} className="bi bi-arrow-down ms-2" style={{ cursor: "pointer", color: "red" }}></i>
                 </div>
             </CardBody>
         </Card>

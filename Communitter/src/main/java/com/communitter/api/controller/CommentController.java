@@ -1,18 +1,18 @@
 package com.communitter.api.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.*;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.communitter.api.dto.CommentDto;
+import com.communitter.api.model.Comment;
 import com.communitter.api.service.CommentService;
 
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,15 +26,23 @@ public class CommentController {
     
     private final CommentService commentService;
 
-    @PreAuthorize("@authorizer.checkAuthor(#root,#id)")
     @PostMapping("/posts/{id}")
     public ResponseEntity<CommentDto> createComment(@P("id") @PathVariable Long id, @RequestBody CommentDto comment){
         return ResponseEntity.ok(commentService.createComment(id, comment));
     }
-
-    @PreAuthorize("@authorizer.checkAuthor(#root,#id)")
-    @DeleteMapping("{id}")
+    //EDIT/DELETE ISSUE (COMMUNITY OWNER/POST OWNER/COMMENT OWNER)
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteComment(@PathVariable Long id){
         return ResponseEntity.ok(commentService.deleteComment(id));
+    }
+
+    @GetMapping("/all/{postId}")
+    public ResponseEntity<Set<Comment>> getAllPostComments(@PathVariable Long postId){
+        return ResponseEntity.ok(commentService.getAllPostComments(postId));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Comment> getCommentById(@PathVariable Long id){
+        return ResponseEntity.ok(commentService.getCommentById(id));
     }
 }

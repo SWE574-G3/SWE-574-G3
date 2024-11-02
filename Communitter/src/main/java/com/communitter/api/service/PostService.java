@@ -1,5 +1,6 @@
 package com.communitter.api.service;
 
+import com.communitter.api.key.PostVoteKey;
 import com.communitter.api.model.*;
 import com.communitter.api.repository.*;
 import com.communitter.api.util.PostValidator;
@@ -53,7 +54,9 @@ public class PostService {
     public PostVote votePost(Long id, boolean isUpvote){
         User author= (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Post postToVote =postRepository.findById(id).orElseThrow(()->new NoSuchElementException("Post does not exist"));
+        PostVoteKey postVoteKey = new PostVoteKey(author.getId(), postToVote.getId());
         PostVote postVote = PostVote.builder()
+                .id(postVoteKey)
                 .isUpvote(isUpvote)
                 .post(postToVote)
                 .user(author)

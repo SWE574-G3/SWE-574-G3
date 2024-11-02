@@ -1,6 +1,6 @@
 package com.communitter.api.service;
 
-import java.util.Date;
+import java.util.*;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -23,14 +23,21 @@ public class CommentService {
 
     @Transactional
     public CommentDto createComment(Long postId, CommentDto commentDto){
-        Post post = postRepository.findById(postId).orElseThrow();
         User author= (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Comment createdComment = Comment.builder().date(new Date())        
-        .post(post)              
         .author(author)          
         .content(commentDto.getContent()) 
         .build();
+        
+        Post post = postRepository.findById(postId).orElseThrow();
+        createdComment.setPost(post);
+
+        post.getComments().add(createdComment);
+        
+        postRepository.save(post);
+
         commentRepository.save(createdComment);
+        
         return commentDto;
     }
 
@@ -39,5 +46,17 @@ public class CommentService {
         Comment comment = commentRepository.findById(id).orElseThrow();
         commentRepository.delete(comment);
         return "Comment deleted";
+    }
+
+    public Comment getCommentById(Long id) {
+        Comment comment = commentRepository.findById(id).orElseThrow();
+        return comment;
+    }
+
+    public Set<Comment> getAllPostComments(Long postId) {
+        Post post = postRepository.findById(postId).orElseThrow();
+        Set<Comment> comments = post.getComments();
+
+        return comments;
     }
 }

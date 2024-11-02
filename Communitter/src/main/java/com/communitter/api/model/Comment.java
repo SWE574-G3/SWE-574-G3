@@ -34,13 +34,13 @@ public class Comment {
 
     private Date date;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "post_id", nullable = false)
-    @JsonIgnoreProperties({"template","postFields"})
+    @JsonIgnoreProperties({"template","postFields","comments"})
     @JsonBackReference("post-comments")
     private Post post;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id", nullable = false)
     @JsonIgnoreProperties({"about","subscriptions"})
     private User author;

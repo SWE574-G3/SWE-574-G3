@@ -52,7 +52,7 @@ public class Post {
     private Set<PostField> postFields;
 
     //Managing the post reference in the Comment entity.
-    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
     @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
     @JsonManagedReference("post-comments")
     private Set<Comment> comments;

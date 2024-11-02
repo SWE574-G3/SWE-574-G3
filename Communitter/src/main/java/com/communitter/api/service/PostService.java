@@ -53,7 +53,11 @@ public class PostService {
     public PostVote votePost(Long id, boolean isUpvote){
         User author= (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Post postToVote =postRepository.findById(id).orElseThrow(()->new NoSuchElementException("Post does not exist"));
-        PostVote postVote = new PostVote(id, isUpvote, postToVote, author);
+        PostVote postVote = PostVote.builder()
+                .isUpvote(isUpvote)
+                .post(postToVote)
+                .user(author)
+                .build();
         return postVoteRepository.save(postVote);
     }
 

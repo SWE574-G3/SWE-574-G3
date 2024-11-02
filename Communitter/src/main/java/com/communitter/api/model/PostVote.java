@@ -3,11 +3,14 @@ package com.communitter.api.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,8 +27,9 @@ public class PostVote {
             generator = "post_vote_sequence")
     private Long id;
 
-    @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP(6)")
-    private LocalDateTime createdAt;
+    @Builder.Default
+    @Column(name = "created_at", nullable = false)
+    private OffsetDateTime createdAt = OffsetDateTime.now();
 
     @Column(name = "is_upvote", nullable = false)
     private boolean isUpvote;
@@ -39,12 +43,4 @@ public class PostVote {
     @JoinColumn(name = "user_id")
     @JsonBackReference("user-votes")
     private User user;
-
-    public PostVote(Long id, boolean isUpvote, Post postToVote, User user) {
-        this.id = id;
-        this.isUpvote = isUpvote;
-        this.post = postToVote;
-        this.user = user;
-        this.createdAt = LocalDateTime.now();
-    }
 }

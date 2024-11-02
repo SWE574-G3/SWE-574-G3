@@ -51,4 +51,9 @@ public class Post {
     @ToString.Exclude
     private Set<PostField> postFields;
 
+    //Managing the post reference in the Comment entity.
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
+    @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
+    @JsonManagedReference("post-comments")
+    private Set<Comment> comments;
 }

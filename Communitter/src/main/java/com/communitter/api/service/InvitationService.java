@@ -3,6 +3,7 @@ package com.communitter.api.service;
 import com.communitter.api.dto.InvitationDto;
 import com.communitter.api.dto.request.InvitationCreateRequestDto;
 import com.communitter.api.key.SubscriptionKey;
+import com.communitter.api.mapper.InvitationMapper;
 import com.communitter.api.model.Community;
 import com.communitter.api.model.Invitation;
 import com.communitter.api.model.Role;
@@ -14,6 +15,7 @@ import com.communitter.api.repository.RoleRepository;
 import com.communitter.api.repository.SubscriptionRepository;
 import com.communitter.api.repository.UserRepository;
 import com.communitter.api.util.InvitationStatus;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,7 @@ public class InvitationService {
     private final SubscriptionRepository subscriptionRepository;
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
+    private final InvitationMapper invitationMapper;
 
     public InvitationDto inviteUser(User authUser, InvitationCreateRequestDto request) {
 
@@ -57,13 +60,19 @@ public class InvitationService {
         Role role = roleRepository.getReferenceById(request.getRoleId());
 
         Invitation invitation = Invitation.builder().user(invitedUser).community(community)
-            .sentBy(authUser).userCommunityRole(role).sentAt(request.getSentAt()).build();
+            .sentBy(authUser).role(role).sentAt(request.getSentAt()).build();
 
         Invitation sentInvitation = invitationRepository.save(invitation);
 
-        return new InvitationDto(sentInvitation.getId(), sentInvitation.getUser().getUsername(),
-            sentInvitation.getCommunity().getId(), sentInvitation.getUserCommunityRole().getId(),
-            sentInvitation.getInvitationStatus(), sentInvitation.getSentBy().getId(),
-            sentInvitation.getSentAt());
+        return invitationMapper.toDto(sentInvitation);
+    }
+
+    public List<InvitationDto> getCommunityInvitations(Long communityId) {
+
+        Community community = communityRepository.getReferenceById(communityId);
+
+        List<Invitation> invitations = invitationRepository.findAllByCommunity(community);
+
+        return invitations.stream().map(invitationMapper::toDto).toList();
     }
 }

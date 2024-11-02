@@ -9,9 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -27,5 +29,12 @@ public class InvitationController {
     public ResponseEntity<InvitationDto> sendInvitation(@AuthenticationPrincipal User authUser,
         @RequestBody InvitationCreateRequestDto request) {
         return ResponseEntity.ok(invitationService.inviteUser(authUser, request));
+    }
+
+    @PreAuthorize("@authorizer.checkSubscription(#root,#communityId)")
+    @GetMapping(params = {"communityId"})
+    public ResponseEntity<Object> getCommunityInvitations(
+        @RequestParam("communityId") Long communityId) {
+        return ResponseEntity.ok(invitationService.getCommunityInvitations(communityId));
     }
 }

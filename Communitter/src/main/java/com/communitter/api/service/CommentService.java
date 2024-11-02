@@ -24,20 +24,19 @@ public class CommentService {
     @Transactional
     public CommentDto createComment(Long postId, CommentDto commentDto){
         User author= (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Comment createdComment = Comment.builder().date(new Date())        
+        Post post = postRepository.findById(postId).orElseThrow();
+        Comment createdComment = Comment.builder().date(new Date())
+                .post(post)
+                .date(new Date())
         .author(author)          
         .content(commentDto.getContent()) 
         .build();
-        
-        Post post = postRepository.findById(postId).orElseThrow();
-        createdComment.setPost(post);
-
-        post.getComments().add(createdComment);
-        
-        postRepository.save(post);
 
         commentRepository.save(createdComment);
-        
+
+        post.getComments().add(createdComment);
+        postRepository.save(post);
+
         return commentDto;
     }
 

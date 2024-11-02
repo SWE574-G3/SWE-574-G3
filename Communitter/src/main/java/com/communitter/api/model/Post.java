@@ -1,6 +1,7 @@
 package com.communitter.api.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -8,6 +9,7 @@ import lombok.*;
 import org.hibernate.annotations.Cascade;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -52,8 +54,10 @@ public class Post {
     private Set<PostField> postFields;
 
     //Managing the post reference in the Comment entity.
-    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
     @JsonManagedReference("post-comments")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Set<Comment> comments;
 }

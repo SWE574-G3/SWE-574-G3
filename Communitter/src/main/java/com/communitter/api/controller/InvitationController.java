@@ -4,6 +4,7 @@ import com.communitter.api.dto.InvitationDto;
 import com.communitter.api.dto.request.InvitationCreateRequestDto;
 import com.communitter.api.model.User;
 import com.communitter.api.service.InvitationService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -33,8 +34,13 @@ public class InvitationController {
 
     @PreAuthorize("@authorizer.checkSubscription(#root,#communityId)")
     @GetMapping(params = {"communityId"})
-    public ResponseEntity<Object> getCommunityInvitations(
+    public ResponseEntity<List<InvitationDto>> getCommunityInvitations(
         @RequestParam("communityId") Long communityId) {
         return ResponseEntity.ok(invitationService.getCommunityInvitations(communityId));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<InvitationDto>> getUserInvitations(@AuthenticationPrincipal User authUser) {
+        return ResponseEntity.ok(invitationService.getUserPendingInvitations(authUser));
     }
 }

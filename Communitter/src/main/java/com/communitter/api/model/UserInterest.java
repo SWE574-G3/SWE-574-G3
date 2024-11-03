@@ -22,7 +22,7 @@ public class UserInterest {
     @JsonIgnoreProperties({"avatar","about","subscriptions","email","password","header","posts","createdCommunities"})
     private User user;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     @JoinColumn(name = "wiki_entity_code", nullable = false)
     private WikiEntity wikiEntity;
 }

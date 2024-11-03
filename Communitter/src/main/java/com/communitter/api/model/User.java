@@ -75,7 +75,7 @@ public class User implements UserDetails {
     @ToString.Exclude
     private Set<Post> posts;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true,fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<UserInterest> interests;
 

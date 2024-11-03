@@ -80,7 +80,7 @@ export function UserInterestsPage() {
         <form onSubmit={handleSubmit} className="d-flex">
           <div className="mb-3">
             <label htmlFor="name" className="form-label">
-              Search your interests in Wikidata
+              Search the labels in Wikidata
             </label>
             <input
               type="name"

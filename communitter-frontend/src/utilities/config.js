@@ -4,3 +4,4 @@ export const defaultFetchOpts = {
   method: "GET",
   headers: {},
 };
+export const wikidataUrl = "https://www.wikidata.org/w/api.php?";

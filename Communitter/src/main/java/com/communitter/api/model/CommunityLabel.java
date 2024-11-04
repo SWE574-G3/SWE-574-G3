@@ -1,26 +1,27 @@
 package com.communitter.api.model;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
-
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="user_interests",indexes = {@Index(name = "idx_user_id", columnList = "user_id"),@Index(name = "idx_wiki_entity_code", columnList = "wiki_entity_code")},uniqueConstraints = { @UniqueConstraint(columnNames = { "user_id", "wiki_entity_code" }) })
-public class UserInterest {
+@Table(name="community_labels",indexes = {@Index(name = "idx_community_id", columnList = "community_id"),@Index(name = "idx_wiki_entity_code", columnList = "wiki_entity_code")},uniqueConstraints = { @UniqueConstraint(columnNames = { "community_id", "wiki_entity_code" }) })
+public class CommunityLabel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "community_id", nullable = false)
     @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
-    @JsonIgnoreProperties({"avatar","about","subscriptions","email","password","header","posts","createdCommunities"})
-    private User user;
+    @JsonIgnoreProperties({"subscriptions","templates","posts"})
+    private Community community;
 
     @ManyToOne
     @Cascade(org.hibernate.annotations.CascadeType.PERSIST)

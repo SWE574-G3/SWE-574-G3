@@ -1,9 +1,12 @@
 package com.communitter.api.controller;
 
+import com.communitter.api.model.CommunityLabel;
 import com.communitter.api.model.UserInterest;
 import com.communitter.api.service.RecommendationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,5 +21,11 @@ public class RecommendationController {
     @PostMapping("/user/interests")
     public ResponseEntity<List<UserInterest>> saveUserInterests(@RequestBody List<UserInterest> interests){
         return ResponseEntity.ok(recommendationService.saveUserInterest(interests));
+    }
+
+    @PreAuthorize("@authorizer.checkCreator(#root,#id)")
+    @PostMapping("/community/{id}/labels")
+    public ResponseEntity<List<CommunityLabel>> saveCommunityLabels(@RequestBody List<CommunityLabel> labels,@P("id") @PathVariable Long id){
+        return ResponseEntity.ok(recommendationService.saveCommunityLabel(labels,id));
     }
 }

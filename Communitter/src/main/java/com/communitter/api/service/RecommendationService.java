@@ -1,12 +1,8 @@
 package com.communitter.api.service;
 
-import com.communitter.api.model.CommunityLabel;
-import com.communitter.api.model.User;
-import com.communitter.api.model.UserInterest;
-import com.communitter.api.repository.CommunityLabelRepository;
-import com.communitter.api.repository.CommunityRepository;
-import com.communitter.api.repository.UserInterestRepository;
-import com.communitter.api.repository.WikiEntityRepository;
+import com.communitter.api.dto.CommunityDto;
+import com.communitter.api.model.*;
+import com.communitter.api.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +10,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -43,5 +42,33 @@ public class RecommendationService {
             label.setCommunity(communityRepository.getReferenceById(communityId));
         }
         return communityLabelRepository.saveAll(communityLabels);
+    }
+
+    public Set<CommunityDto> getCommunityRecommendations(){
+        User principal= (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<UserInterest> userInterests=userInterestRepository.findAllByUser(principal).orElseThrow().stream().toList();
+        logger.info(userInterests.toString());
+        List<String> interestCodes=new ArrayList<String>();
+        for(UserInterest interest:userInterests){
+            interestCodes.add(interest.getWikiEntity().getCode());
+            interestCodes.addAll(interest.getWikiEntity().getParentCodes());
+        }
+        logger.info(interestCodes.toString());
+        Set<String> interestSet= new HashSet<>(interestCodes);
+        Set<WikiEntity> entities=new HashSet<>();
+        for(String interestCode:interestSet){
+            entities.add(WikiEntity.builder().code(interestCode).build());
+        }
+        Set<CommunityLabel> matchedCommunities= communityLabelRepository.findAllByWikiEntityIn(entities).orElseThrow();
+        logger.info(matchedCommunities.toString());
+        Set<CommunityDto> mappedCommunities= new HashSet<>();
+
+        for(CommunityLabel communityLabel:matchedCommunities){
+            Community community=communityLabel.getCommunity();
+            mappedCommunities.add(CommunityDto.builder().name(community.getName()).
+                    id(community.getId()).about(community.getAbout())
+                    .creator(community.getCreator()).isPublic(community.isPublic()).build());
+        }
+        return mappedCommunities;
     }
 }

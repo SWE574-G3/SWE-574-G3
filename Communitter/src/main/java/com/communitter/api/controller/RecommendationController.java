@@ -1,5 +1,6 @@
 package com.communitter.api.controller;
 
+import com.communitter.api.dto.CommunityDto;
 import com.communitter.api.model.CommunityLabel;
 import com.communitter.api.model.UserInterest;
 import com.communitter.api.service.RecommendationService;
@@ -10,6 +11,7 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @CrossOrigin
@@ -27,5 +29,10 @@ public class RecommendationController {
     @PostMapping("/community/{id}/labels")
     public ResponseEntity<List<CommunityLabel>> saveCommunityLabels(@RequestBody List<CommunityLabel> labels,@P("id") @PathVariable Long id){
         return ResponseEntity.ok(recommendationService.saveCommunityLabel(labels,id));
+    }
+
+    @GetMapping("/communities")
+    public ResponseEntity <Set<CommunityDto>> getCommunityRecommendations(){
+        return ResponseEntity.ok(recommendationService.getCommunityRecommendations());
     }
 }

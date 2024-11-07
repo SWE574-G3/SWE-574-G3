@@ -7,13 +7,14 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
+import com.communitter.api.dto.ImageDTO;
 import java.io.IOException;
 
 @RestController
@@ -35,28 +36,36 @@ public class ImageController {
         return ResponseEntity.ok(response);
     }
 
-    // POST endpoint for uploading a community's profile picture
-    @PostMapping("/community/{communityId}/profile-picture")
-    public ResponseEntity<String> uploadCommunityProfilePicture(@PathVariable Long communityId, @RequestParam("image") MultipartFile file) throws IOException {
-        String response = imageService.uploadCommunityPicture(communityId, file);
-        return ResponseEntity.ok(response);
-    }
-
-    // GET endpoint to retrieve a user's profile picture by user ID
+    
     @GetMapping("/user/{userId}/profile-picture")
-    public ResponseEntity<byte[]> getUserProfilePicture(@PathVariable Long userId) {
-        byte[] imageData = imageService.downloadImageByUserId(userId);
-        return ResponseEntity.ok()
-                .contentType(MediaType.IMAGE_PNG)
-                .body(imageData);
-    }
+    public ResponseEntity<?> downloadUserProfilePicture(@PathVariable Long userId) {
+    try {
+        ImageDTO imageDataDTO = imageService.getUserProfilePicture(userId);
 
-    // GET endpoint to retrieve a community's profile picture by community ID
-    @GetMapping("/community/{communityId}/profile-picture")
-    public ResponseEntity<byte[]> getCommunityProfilePicture(@PathVariable Long communityId) {
-        byte[] imageData = imageService.downloadImageByCommunityId(communityId);
-        return ResponseEntity.ok()
-                .contentType(MediaType.IMAGE_PNG)
-                .body(imageData);
+        return ResponseEntity.status(HttpStatus.OK)
+                .contentType(MediaType.parseMediaType(imageDataDTO.getMimeType())) // Sets the correct MIME type
+                .body(imageDataDTO.getData()); // Returns binary data directly
+
+    } catch (RuntimeException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Error: " + e.getMessage());
     }
+}
+
+
+    // @GetMapping("/{fileName}")
+	// public ResponseEntity<?> downloadImage(@PathVariable String fileName){
+	// 	byte[] imageData=service.downloadImage(fileName);
+	// 	return ResponseEntity.status(HttpStatus.OK)
+	// 			.contentType(MediaType.valueOf("image/png"))
+	// 			.body(imageData);
+
+	// }
+    // // POST endpoint for uploading a community's profile picture
+    // @PostMapping("/community/{communityId}/profile-picture")
+    // public ResponseEntity<String> uploadCommunityProfilePicture(@PathVariable Long communityId, @RequestParam("image") MultipartFile file) throws IOException {
+    //     String response = imageService.uploadCommunityPicture(communityId, file);
+    //     return ResponseEntity.ok(response);
+    // }
+
 }

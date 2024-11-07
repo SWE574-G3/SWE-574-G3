@@ -19,12 +19,19 @@ public class ImageData {
 
     private String name;
     private String type;
-    private byte[] imageData;
+    private String mimeType;
+    
+    
+    private byte[] data_image;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = true)
+    @JoinColumn(name = "user_id", nullable = true) // Foreign key in ImageData
     @JsonBackReference("user-profile-picture")
+    @ToString.Exclude // Avoid circular references
+    @EqualsAndHashCode.Exclude
     private User user;
+
+    
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "community_id", nullable = true)

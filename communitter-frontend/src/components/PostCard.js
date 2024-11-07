@@ -3,9 +3,60 @@ import CardBody from "react-bootstrap/CardBody";
 import CardTitle from "react-bootstrap/CardTitle";
 import PostField from "./PostCardField";
 import Button from "react-bootstrap/Button";
+import React, { useState, useEffect } from "react";
+import { fetchWithOpts } from "../utilities/fetchWithOptions";
+import { url } from "../utilities/config";
+import {setErrorMessage} from "../features/errorSlice";
 
 const PostCard = ({ post, onDelete }) => {
   const { author, postFields, date: timestamp, id } = post; // Destructure post object
+
+    const [voteCount, setVoteCount] = useState(0);
+
+    // Function to fetch the latest vote count
+    const fetchVoteCount = async () => {
+        fetchWithOpts(`${url}/posts/${post.id}/voteCount`, {
+            method: "GET",
+            headers: {},
+        })
+            .then((data) => setVoteCount(data))
+            .catch((e) => setErrorMessage(e.message));
+    };
+
+    // Initial fetch of the vote count when the component mounts
+    useEffect(() => {
+        fetchVoteCount();
+    }, [post.id]);
+
+    // Handle upvote
+    const handleUpvote = async () => {
+        try {
+            const response = await fetchWithOpts(`${url}/posts/${post.id}/vote?isUpvote=true`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+            });
+            if (response) {
+                await fetchVoteCount();
+            }
+        } catch (error) {
+            setErrorMessage("Failed to upvote: " + error.message);
+        }
+    };
+
+    // Handle downvote
+    const handleDownvote = async () => {
+        try {
+            const response = await fetchWithOpts(`${url}/posts/${post.id}/vote?isUpvote=false`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+            });
+            if (response) {
+                await fetchVoteCount();
+            }
+        } catch (error) {
+            setErrorMessage("Failed to downvote: " + error.message);
+        }
+    };
 
     const handleDeleteClick = () => {
         if (window.confirm("Are you sure you want to delete this post?")) {
@@ -34,6 +85,11 @@ const PostCard = ({ post, onDelete }) => {
               <Button variant="danger" onClick={handleDeleteClick}>
                   Delete
               </Button>
+          </div>
+          <div className="vote-buttons mt-2 d-flex align-items-center" style={{ position: "absolute", bottom: "10px", right: "10px" }}>
+              <i onClick={handleUpvote} className="bi bi-arrow-up me-2" style={{ cursor: "pointer", color: "green" }}></i>
+              <span>{voteCount}</span>
+              <i onClick={handleDownvote} className="bi bi-arrow-down ms-2" style={{ cursor: "pointer", color: "red" }}></i>
           </div>
       </CardBody>
     </Card>

@@ -7,11 +7,13 @@ import React, { useState, useEffect } from "react";
 import { fetchWithOpts } from "../utilities/fetchWithOptions";
 import { url } from "../utilities/config";
 import {setErrorMessage} from "../features/errorSlice";
+import { useNavigate } from "react-router-dom";
 
 const PostCard = ({ post, onDelete }) => {
   const { author, postFields, date: timestamp, id } = post; // Destructure post object
 
     const [voteCount, setVoteCount] = useState(0);
+    const navigate = useNavigate();
 
     // Function to fetch the latest vote count
     const fetchVoteCount = async () => {
@@ -27,6 +29,11 @@ const PostCard = ({ post, onDelete }) => {
     useEffect(() => {
         fetchVoteCount();
     }, [post.id]);
+
+    // Directing to postview
+    const directToPostView = () => {
+        navigate(`/posts/${post.id}`);
+      };
 
     // Handle upvote
     const handleUpvote = async () => {
@@ -57,7 +64,7 @@ const PostCard = ({ post, onDelete }) => {
             setErrorMessage("Failed to downvote: " + error.message);
         }
     };
-
+    
     const handleDeleteClick = () => {
         if (window.confirm("Are you sure you want to delete this post?")) {
             onDelete(id);
@@ -65,7 +72,7 @@ const PostCard = ({ post, onDelete }) => {
     };
   return (
     <Card className="mb-3">
-      <CardTitle>
+      <CardTitle onClick={directToPostView} style={{cursor: "pointer"}}>
         {author.username} -{" "}
         {new Date(timestamp).toLocaleDateString("tr-TR", {
           year: "numeric",
@@ -86,7 +93,7 @@ const PostCard = ({ post, onDelete }) => {
                   Delete
               </Button>
           </div>
-          <div className="vote-buttons mt-2 d-flex align-items-center" style={{ position: "absolute", bottom: "10px", right: "10px" }}>
+          <div className="vote-buttons mt-2  d-flex align-items-center" style={{ position: "absolute", bottom: "10px", right: "10px" }}>
               <i onClick={handleUpvote} className="bi bi-arrow-up me-2" style={{ cursor: "pointer", color: "green" }}></i>
               <span>{voteCount}</span>
               <i onClick={handleDownvote} className="bi bi-arrow-down ms-2" style={{ cursor: "pointer", color: "red" }}></i>

@@ -27,6 +27,9 @@ public class PostController {
        return ResponseEntity.ok(postService.createPost(id, post));
     }
 
+    public ResponseEntity<Post> getPostById(@P("id") @PathVariable Long id, Post post){
+        return ResponseEntity.ok(postService.getPostById(id));
+    }
 
     @PreAuthorize("@authorizer.checkSubscription(#root,#id)")
     @PostMapping("/{id}/vote")

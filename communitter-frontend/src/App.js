@@ -6,6 +6,7 @@ import { UserPage } from "./pages/userPage";
 import { SharedLayout } from "./pages/shared";
 import { HomePage } from "./pages/homePage";
 import { CommunityCreationPage } from "./pages/createCommunity";
+import PostPage from "./pages/postPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             element={<CommunityCreationPage></CommunityCreationPage>}
           ></Route>
           <Route path="/user/:id" element={<UserPage></UserPage>}></Route>
+          <Route path="/posts/:id" element={<PostPage></PostPage>}></Route>
           <Route
             path="/community/:id"
             element={<CommunityPage></CommunityPage>}

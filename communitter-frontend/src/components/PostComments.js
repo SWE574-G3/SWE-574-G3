@@ -1,6 +1,9 @@
 import { CommentCard } from './CommentCard';
 
 export const PostComments = ({comments}) => {
+    if (!Array.isArray(comments) || comments.length === 0) {
+        return <p>No Comments Found!</p>;
+    }
     return (
         <div className="mt-5">
             <h2>Comments</h2>

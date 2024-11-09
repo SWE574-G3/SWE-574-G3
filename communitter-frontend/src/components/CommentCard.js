@@ -9,7 +9,7 @@ export const CommentCard = ({comment}) => {
     const navigate = useNavigate();
 
     const directToUserView = () => {
-        navigate(`/user/${id}`)
+        navigate(`/user/${author.id}`)
     };
 
     return (

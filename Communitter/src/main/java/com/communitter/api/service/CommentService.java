@@ -1,10 +1,12 @@
 package com.communitter.api.service;
 
-import java.util.*;
+import java.util.Date;
+import java.util.Set;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.communitter.api.dto.CommentAuthorDto;
 import com.communitter.api.dto.CommentDto;
 import com.communitter.api.model.Comment;
 import com.communitter.api.model.Post;
@@ -37,7 +39,17 @@ public class CommentService {
         post.getComments().add(createdComment);
         postRepository.save(post);
 
-        return commentDto;
+        return CommentDto.builder()
+        .id(createdComment.getId())
+        .author(
+            CommentAuthorDto.builder()
+            .id(author.getId())
+            .username(author.getUsername())
+            .build()
+        )
+        .date(createdComment.getDate())
+        .content(createdComment.getContent())
+        .build();   
     }
 
     @Transactional
@@ -47,11 +59,13 @@ public class CommentService {
         return "Comment deleted";
     }
 
+    @Transactional
     public Comment getCommentById(Long id) {
         Comment comment = commentRepository.findById(id).orElseThrow();
         return comment;
     }
 
+    @Transactional
     public Set<Comment> getAllPostComments(Long postId) {
         Post post = postRepository.findById(postId).orElseThrow();
         Set<Comment> comments = post.getComments();

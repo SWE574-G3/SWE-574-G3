@@ -108,4 +108,10 @@ public class PostService {
         }
         return true;
     }
+
+    public Post getPostById(Long id) {
+        Post post = postRepository.findById(id).orElseThrow();
+
+        return post;
+    }
 }

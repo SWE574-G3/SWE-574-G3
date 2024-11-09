@@ -15,6 +15,8 @@ export const PostPage = () => {
 
     // Commenting Statements
     const [commentingState, setCommentingState] = useState({
+        id: null,
+        author: null,
         content: ""
     });
 
@@ -70,7 +72,6 @@ export const PostPage = () => {
         <div>
             <h2>Post Details</h2>
             <PostCard post={post} />
-            {/* Comment Form */}
             <div className="mt-4">
                 <h3>Add a Comment</h3>
                 <form onSubmit={handleSubmit}>

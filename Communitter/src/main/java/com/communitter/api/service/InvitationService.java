@@ -75,4 +75,12 @@ public class InvitationService {
 
         return invitations.stream().map(invitationMapper::toDto).toList();
     }
+
+    public List<InvitationDto> getUserPendingInvitations(User user) {
+
+        List<Invitation> invitations = invitationRepository.findAllByUserAndInvitationStatus(user,
+            InvitationStatus.PENDING);
+
+        return invitations.stream().map(invitationMapper::toDto).toList();
+    }
 }

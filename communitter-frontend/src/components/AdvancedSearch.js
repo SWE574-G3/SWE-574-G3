@@ -59,6 +59,7 @@ const AdvancedSearchModal = ({
           filterObject = { type: "date", start: 0, end: 0 };
           break;
         case "image":
+          filterObject = { type: "image"};
           break;
         case "geolocation":
           filterObject = {
@@ -72,6 +73,7 @@ const AdvancedSearchModal = ({
             `Unknown data postField type: ${field.dataFieldType.type}`
           );
       }
+      filterObject.activated=false;
       initFilters[field.id] = filterObject;
     });
     setPostFilters(initFilters);
@@ -80,7 +82,7 @@ const AdvancedSearchModal = ({
   const handleFilterChange = (index, value) => {
     setPostFilters((postFilters) => {
       let updatedPostFilters = { ...postFilters };
-      updatedPostFilters[index] = value;
+      updatedPostFilters[index] = {...value,activated:true};
       return updatedPostFilters;
     });
   };

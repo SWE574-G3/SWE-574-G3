@@ -34,7 +34,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleAuthenticationException(AuthenticationException exc){
         return new ResponseEntity<>("Authentication Failed", HttpStatus.UNAUTHORIZED);
     }
-
+    @ExceptionHandler(NotAuthorizedException.class)
+    public ResponseEntity<String> handleNotAuthorizedException(NotAuthorizedException exc){
+        return new ResponseEntity<>(exc.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<String> handleAccessDenied(AccessDeniedException exc){
         return new ResponseEntity<>(exc.getMessage(), HttpStatus.FORBIDDEN);

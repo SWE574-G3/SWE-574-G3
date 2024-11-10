@@ -37,7 +37,7 @@ public class PostController {
         return ResponseEntity.ok(postService.getPostById(id));
     }
 
-    @PreAuthorize("@authorizer.checkSubscription(#root,#id)")
+    @PreAuthorize("@authorizer.checkSubscriptionByPostId(#root,#id)")
     @PostMapping("/{id}/vote")
     public ResponseEntity<PostVote> votePost(@P("id") @PathVariable Long id, @RequestParam  boolean isUpvote){
         return ResponseEntity.ok(postService.votePost(id, isUpvote));

@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { fetchWithOpts } from "../utilities/fetchWithOptions";
-import { url } from "../utilities/config";
+import {defaultFetchOpts, url} from "../utilities/config";
 import PostCard from "../components/PostCard";
 import { PostComments } from '../components/PostComments';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { CommentService } from "../utilities/CommentService";
+import {useDispatch, useSelector} from "react-redux";
+import {deletePost} from "../features/communitySlice";
+import {setErrorMessage} from "../features/errorSlice";
 
 export const PostPage = () => {
     //Post and Comment statements
@@ -12,6 +15,9 @@ export const PostPage = () => {
     const [post, setPost] = useState(null);
     const [error, setError] = useState(null);
     const [comments, setComments] = useState([]);
+    const community = useSelector((state) => state.community.visitedCommunity);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     // Commenting Statements
     const [commentingState, setCommentingState] = useState({
@@ -40,6 +46,21 @@ export const PostPage = () => {
             console.error(error.message);
         }
     }
+    const handleDeletePost = async (postId) => {
+        try {
+            const communityId = community.id;
+
+            const response = await fetchWithOpts(`${url}/community/${communityId}/delete-post/${postId}`, {
+                ...defaultFetchOpts,
+                method: "DELETE",
+            });
+            dispatch(deletePost(postId));
+
+            navigate(`/community/${communityId}`);
+        } catch (err) {
+            dispatch(setErrorMessage(err.message));
+        }
+    };
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -71,7 +92,7 @@ export const PostPage = () => {
     return (
         <div>
             <h2>Post Details</h2>
-            <PostCard post={post} />
+            <PostCard post={post} onDelete={handleDeletePost}/>
             <div className="mt-4">
                 <h3>Add a Comment</h3>
                 <form onSubmit={handleSubmit}>

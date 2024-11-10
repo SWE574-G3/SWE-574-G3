@@ -27,11 +27,16 @@ public class PostController {
        return ResponseEntity.ok(postService.createPost(id, post));
     }
 
+    @GetMapping
+    public ResponseEntity<List<Post>> getAllPosts() {
+        List<Post> posts = postService.getAllPosts();
+        return ResponseEntity.ok(posts);
+    }
     @GetMapping("/{id}")
     public ResponseEntity<Post> getPostById(@P("id") @PathVariable Long id, Post post){
         return ResponseEntity.ok(postService.getPostById(id));
     }
-    
+
     @PreAuthorize("@authorizer.checkSubscription(#root,#id)")
     @PostMapping("/{id}/vote")
     public ResponseEntity<PostVote> votePost(@P("id") @PathVariable Long id, @RequestParam  boolean isUpvote){

@@ -51,20 +51,9 @@ public class PostService {
 
     @Transactional
     public void deletePost(Long communityId, Long id){
-        Community targetCommunity = communityRepository.findById(communityId).orElseThrow(()->new NoSuchElementException("Community does not exist"));
-        Post postToDelete =postRepository.findById(id).orElseThrow(()->new NoSuchElementException("Post does not exist"));
+        communityRepository.findById(communityId).orElseThrow(()->new NoSuchElementException("Community does not exist"));
+        postRepository.findById(id).orElseThrow(()->new NoSuchElementException("Post does not exist"));
         postRepository.deleteById(id);
-
-//        User currentUser = authUtil.getCurrentUser();
-//
-//        logger.info(String.valueOf(currentUser));
-//
-//        if (currentUser.getId().equals(postToDelete.getAuthor().getId()) ||
-//                currentUser.getId().equals(targetCommunity.getCreator().getId())) {
-//            postRepository.deleteById(id);
-//        } else {
-//            throw new NotAuthorizedException("You are not authorized to delete this post");
-//        }
     }
 
     @Transactional

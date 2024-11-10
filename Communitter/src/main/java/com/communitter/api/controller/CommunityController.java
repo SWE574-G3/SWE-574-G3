@@ -19,8 +19,10 @@ import java.util.List;
 @RequestMapping("/community")
 @RequiredArgsConstructor
 public class CommunityController {
+
     private final CommunityService communityService;
     private final PostService postService;
+
     @PostMapping("/create")
     public ResponseEntity<Community> createCommunity(@RequestBody Community community){
 
@@ -36,10 +38,12 @@ public class CommunityController {
     public ResponseEntity<Subscription> subscribeToCommunity(@PathVariable Long id){
         return ResponseEntity.ok(communityService.subscribeToCommunity(id));
     }
+
     @DeleteMapping("/unsubscribe/{id}")
     public ResponseEntity<String> unsubscribeFromCommunity(@PathVariable Long id){
         return ResponseEntity.ok(communityService.unsubscribe(id));
     }
+
     @GetMapping("/all")
     public ResponseEntity<List<Community>> getAllCommunities(){
         return ResponseEntity.ok(communityService.getAllCommunities());

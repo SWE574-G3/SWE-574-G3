@@ -1,17 +1,9 @@
 package com.communitter.api.service;
 
-import com.communitter.api.model.Post;
-import com.communitter.api.model.PostField;
+import com.communitter.api.key.PostVoteKey;
+import com.communitter.api.model.*;
+import com.communitter.api.repository.*;
 import com.communitter.api.util.PostValidator;
-import com.communitter.api.model.Community;
-import com.communitter.api.repository.CommunityRepository;
-import com.communitter.api.repository.PostFieldRepository;
-import com.communitter.api.repository.PostRepository;
-import com.communitter.api.model.DataField;
-import com.communitter.api.repository.DataFieldRepository;
-import com.communitter.api.model.Template;
-import com.communitter.api.repository.TemplateRepository;
-import com.communitter.api.model.User;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +19,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
-    private final DataFieldRepository dataFieldRepository;
+    private final PostVoteRepository postVoteRepository;
     private final CommunityRepository communityRepository;
     private final TemplateRepository templateRepository;
     private final PostFieldRepository postFieldRepository;
@@ -107,6 +99,24 @@ public class PostService {
         return postRepository.save(existingPost);
     }
 
+    @Transactional
+    public PostVote votePost(Long id, boolean isUpvote){
+        User author= (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Post postToVote =postRepository.findById(id).orElseThrow(()->new NoSuchElementException("Post does not exist"));
+        PostVoteKey postVoteKey = new PostVoteKey(author.getId(), postToVote.getId());
+        PostVote postVote = PostVote.builder()
+                .id(postVoteKey)
+                .isUpvote(isUpvote)
+                .post(postToVote)
+                .user(author)
+                .build();
+        return postVoteRepository.save(postVote);
+    }
+
+    public Long getVoteCount(Long id){
+        return postVoteRepository.countVotesForPost(id, true) - postVoteRepository.countVotesForPost(id, false);
+    }
+
     private boolean checkRequiredFields(Set<PostField> postFields, Template postTemplate) {
         Set<DataField> templateFields = postTemplate.getDataFields();
         Set<Long> postRequiredFieldsSet = new HashSet<>();
@@ -135,5 +145,11 @@ public class PostService {
 
     public List<Post> getAllPosts() {
         return postRepository.findAll();
+    }
+
+    public Post getPostById(Long id) {
+        Post post = postRepository.findById(id).orElseThrow();
+
+        return post;
     }
 }

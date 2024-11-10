@@ -1,5 +1,8 @@
 package com.communitter.api.service;
 
+import com.communitter.api.key.PostVoteKey;
+import com.communitter.api.model.*;
+import com.communitter.api.repository.*;
 import com.communitter.api.auth.CustomAuthorizer;
 import com.communitter.api.model.*;
 import com.communitter.api.repository.*;
@@ -22,13 +25,12 @@ import java.util.*;
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
-    private final DataFieldRepository dataFieldRepository;
+    private final PostVoteRepository postVoteRepository;
     private final CommunityRepository communityRepository;
     private final TemplateRepository templateRepository;
     private final PostFieldRepository postFieldRepository;
     private final ActivityStreamService activityStreamService;
     private final BasicAuthorizationUtil authUtil;
-
     public Logger logger = LoggerFactory.getLogger(PostService.class);
 
     @Transactional
@@ -57,18 +59,59 @@ public class PostService {
 
     @Transactional
     public void deletePost(Long communityId, Long id){
-        Community targetCommunity = communityRepository.findById(communityId).orElseThrow(()->new NoSuchElementException("Community does not exist"));
-        Post postToDelete =postRepository.findById(id).orElseThrow(()->new NoSuchElementException("Post does not exist"));
-        User currentUser = authUtil.getCurrentUser();
+        communityRepository.findById(communityId).orElseThrow(()->new NoSuchElementException("Community does not exist"));
+        postRepository.findById(id).orElseThrow(()->new NoSuchElementException("Post does not exist"));
+        postRepository.deleteById(id);
+    }
 
-        logger.info(String.valueOf(currentUser));
+    @Transactional
+    public Post editPost(Long postId, Post updatedPost) {
+        // Fetch the existing post
+        Post existingPost = postRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found"));
 
-        if (currentUser.getId().equals(postToDelete.getAuthor().getId()) ||
-                currentUser.getId().equals(targetCommunity.getCreator().getId())) {
-            postRepository.deleteById(id);
+        // Update the date or other top-level fields if needed
+        existingPost.setDate(new Date());
+
+        if (updatedPost.getPostFields() != null && !updatedPost.getPostFields().isEmpty()) {
+            Template postTemplate = templateRepository.findById(existingPost.getTemplate().getId()).orElseThrow();
+
+            if (!checkRequiredFields(updatedPost.getPostFields(), postTemplate)) {
+                throw new RuntimeException("Updated post does not have all required fields");
+            }
+
+            // Loop through each updated field and apply changes to existing fields
+            for (PostField updatedField : updatedPost.getPostFields()) {
+                PostField existingField = postFieldRepository.findById(updatedField.getId())
+                        .orElseThrow(() -> new RuntimeException("Post field not found"));
+
+                // Update the existing field's value
+                existingField.setValue(updatedField.getValue());
+                postFieldRepository.save(existingField);
+            }
         } else {
-            throw new NotAuthorizedException("You are not authorized to delete this post");
+            throw new RuntimeException("Post must have fields");
         }
+
+        // Save and return the modified post
+        return postRepository.save(existingPost);
+    }
+
+    @Transactional
+    public PostVote votePost(Long id, boolean isUpvote){
+        User author= (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Post postToVote =postRepository.findById(id).orElseThrow(()->new NoSuchElementException("Post does not exist"));
+        PostVoteKey postVoteKey = new PostVoteKey(author.getId(), postToVote.getId());
+        PostVote postVote = PostVote.builder()
+                .id(postVoteKey)
+                .isUpvote(isUpvote)
+                .post(postToVote)
+                .user(author)
+                .build();
+        return postVoteRepository.save(postVote);
+    }
+
+    public Long getVoteCount(Long id){
+        return postVoteRepository.countVotesForPost(id, true) - postVoteRepository.countVotesForPost(id, false);
     }
 
     private boolean checkRequiredFields(Set<PostField> postFields, Template postTemplate) {
@@ -95,5 +138,15 @@ public class PostService {
             if (!postFieldSet.contains(dataFieldId)) return false;
         }
         return true;
+    }
+
+    public List<Post> getAllPosts() {
+        return postRepository.findAll();
+    }
+
+    public Post getPostById(Long id) {
+        Post post = postRepository.findById(id).orElseThrow();
+
+        return post;
     }
 }

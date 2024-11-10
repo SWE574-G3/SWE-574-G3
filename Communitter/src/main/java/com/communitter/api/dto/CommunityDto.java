@@ -1,7 +1,6 @@
 package com.communitter.api.dto;
 
-import java.util.Date;
-
+import com.communitter.api.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,14 +10,15 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentDto {
+public class CommunityDto {
 
-    private Long id;    
-    
-    private CommentAuthorDto author;
-    
-    private Date date;
+    private Long id;
 
-    private String content;
+    private String name;
 
+    private String about;
+
+    private boolean isPublic;
+
+    private UserDto creator;
 }

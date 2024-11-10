@@ -119,8 +119,9 @@ public class InvitationService {
 
         Subscription subscription = subscriptionRepository.findById(subsKey).orElseThrow();
 
-        if (subscription.getRole().equals(userRole) && !invitation.getSentBy().getId()
-            .equals(authUser.getId())) {
+        if ((subscription.getRole().equals(userRole) && !invitation.getSentBy().getId()
+            .equals(authUser.getId())) || (subscription.getRole().getId() < invitation.getRole()
+            .getId())) {
             throw new RuntimeException("You cannot cancel this invitation.");
         }
 

@@ -17,7 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.time.LocalDateTime;
 import com.communitter.api.util.BasicAuthorizationUtil;
-import com.communitter.api.exception.NotAuthorizedException;
 
 import java.util.*;
 
@@ -107,7 +106,15 @@ public class PostService {
                 .post(postToVote)
                 .user(author)
                 .build();
-        return postVoteRepository.save(postVote);
+        Community community = postToVote.getCommunity();
+        PostVote votedPost= postVoteRepository.save(postVote);
+        if(isUpvote){
+            activityStreamService.createActivity(ActivityAction.UPVOTE, author, community, postToVote);
+        } else{
+            activityStreamService.createActivity(ActivityAction.DOWNVOTE, author, community, postToVote);
+        }
+        return votedPost;
+
     }
 
     public Long getVoteCount(Long id){

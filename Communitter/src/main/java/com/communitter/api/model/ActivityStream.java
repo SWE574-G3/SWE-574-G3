@@ -39,10 +39,6 @@
         @JoinColumn(name = "user_id", nullable = false)
         private User user;
 
-    //    @ManyToOne
-    //    @JoinColumn(name = "comment_id")
-    //    private Comment comment;
-
         @ManyToOne
         @JoinColumn(name = "post_id")
         private Post post;

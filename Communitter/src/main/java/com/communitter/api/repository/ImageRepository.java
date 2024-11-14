@@ -7,5 +7,6 @@ public interface ImageRepository extends JpaRepository<ImageData,Long> {
 
     ImageData findByName(String fileName);
     ImageData findByUserId(long userId);
+    ImageData findByCommunityId(long communityId);
 
 }

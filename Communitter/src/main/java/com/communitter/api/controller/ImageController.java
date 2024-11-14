@@ -1,6 +1,7 @@
 package com.communitter.api.controller;
 
 import com.communitter.api.model.Post;
+import com.communitter.api.model.User;
 import com.communitter.api.service.ImageService;
 import com.communitter.api.service.PostService;
 import lombok.AllArgsConstructor;
@@ -15,6 +16,10 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import com.communitter.api.dto.ImageDTO;
+import com.communitter.api.dto.request.UserRequest;
+import com.communitter.api.service.ImageService;
+
+
 import java.io.IOException;
 
 @RestController
@@ -30,8 +35,9 @@ public class ImageController {
     }
 
     // POST endpoint for uploading a user's profile picture
+    @PreAuthorize("@authorizer.authorizerForUser(#root,#userId)")
     @PostMapping("/user/{userId}/profile-picture")
-    public ResponseEntity<String> uploadUserProfilePicture(@PathVariable Long userId, @RequestParam("image") MultipartFile file) throws IOException {
+    public ResponseEntity<String> uploadUserProfilePicture(@P ("userId") @PathVariable Long userId, @RequestParam("image") MultipartFile file) throws IOException {
         String response = imageService.uploadProfilePicture(userId, file);
         return ResponseEntity.ok(response);
     }
@@ -50,22 +56,50 @@ public class ImageController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body("Error: " + e.getMessage());
     }
-}
+    }
 
 
-    // @GetMapping("/{fileName}")
-	// public ResponseEntity<?> downloadImage(@PathVariable String fileName){
-	// 	byte[] imageData=service.downloadImage(fileName);
-	// 	return ResponseEntity.status(HttpStatus.OK)
-	// 			.contentType(MediaType.valueOf("image/png"))
-	// 			.body(imageData);
+    //______________________________________________________________________________________________________________________
+    // POST and GET endpoint for uploading a communities' profile picture
+    //______________________________________________________________________________________________________________________
+    @PreAuthorize("@authorizer.checkCommunityRole(#root,#communityId)")
+    @PostMapping("/community/{communityId}/community-picture")
+    public ResponseEntity<String> uploadCommunityPicture(@P ("communityId") @PathVariable Long communityId, @RequestParam("image") MultipartFile file) throws IOException {
+        String response = imageService.uploadCommunity_picture(communityId, file);
+        return ResponseEntity.ok(response);
+    }
 
-	// }
-    // // POST endpoint for uploading a community's profile picture
-    // @PostMapping("/community/{communityId}/profile-picture")
-    // public ResponseEntity<String> uploadCommunityProfilePicture(@PathVariable Long communityId, @RequestParam("image") MultipartFile file) throws IOException {
-    //     String response = imageService.uploadCommunityPicture(communityId, file);
-    //     return ResponseEntity.ok(response);
-    // }
 
+    @GetMapping("/community/{communityId}/profile-picture")
+    public ResponseEntity<?> downloadUCommunityPicture(@PathVariable Long community_image_id) {
+    try {
+        ImageDTO imageDataDTO = imageService.getCommunityImage(community_image_id);
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .contentType(MediaType.parseMediaType(imageDataDTO.getMimeType())) // Sets the correct MIME type
+                .body(imageDataDTO.getData()); // Returns binary data directly
+
+    } catch (RuntimeException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Error: " + e.getMessage());
+    }
+    }
+
+
+    //______________________________________________________________________________________________________________________
+    // DELETE endpoint for deleting a user's and communities' profile picture
+    //______________________________________________________________________________________________________________________
+    @PreAuthorize("@authorizer.authorizerForUser(#root,#userId)")
+    @DeleteMapping("/user/{userId}/profile-picture")
+    public ResponseEntity<String> deleteUserProfilePicture(@PathVariable Long userId) {
+        String response = imageService.deleteProfilePicture(userId);
+        return ResponseEntity.ok(response);
+    }
+
+    @PreAuthorize("@authorizer.checkCommunityRole(#root,#communityId)")
+    @DeleteMapping("/community/{communityId}/community-picture")
+    public ResponseEntity<String> deleteCommunityProfilePicture(@PathVariable Long communityId) {
+        String response = imageService.deleteCommunityPicture(communityId);
+        return ResponseEntity.ok(response);
+    }
 }

@@ -49,6 +49,7 @@ public class CommunityService {
         if(currentSub.isPresent()) throw new RuntimeException("User already subscribed");
         return subscriptionRepository.save(new Subscription(subsKey,subscriber,community,userRole));
     }
+
     @Transactional
     public String unsubscribe(Long id){
         User subscriber= (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

@@ -32,10 +32,13 @@ public class ImageData {
     private User user;
 
     
-
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "community_id", nullable = true)
-    @JsonBackReference("community-subs")
+    @JoinColumn(name = "community_id", nullable = true) // Foreign key in ImageData
+    @JsonBackReference("community-profile-picture")
+    @ToString.Exclude // Avoid circular references
+    @EqualsAndHashCode.Exclude
     private Community community;
+
+
 
 }

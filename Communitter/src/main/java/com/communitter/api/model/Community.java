@@ -60,8 +60,15 @@ public class Community {
     @JsonIgnoreProperties({"community"})
     private Set<Post> posts;
 
-    @OneToOne(mappedBy = "community", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    @JsonManagedReference("community-image")
+   
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "community_image_id") // Specifies the foreign key in User
+    @JsonManagedReference("community-profile-picture")
+    @ToString.Exclude // Avoid circular references
+    @EqualsAndHashCode.Exclude
     private ImageData communityImage;
+
+    
 
 }

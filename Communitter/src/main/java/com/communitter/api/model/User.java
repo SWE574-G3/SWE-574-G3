@@ -76,20 +76,35 @@ public class User implements UserDetails {
     @ToString.Exclude
     private Set<Post> posts;
 
-    
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "profile_image_id") // Specifies the foreign key in User
     @JsonManagedReference("user-profile-picture")
     @ToString.Exclude // Avoid circular references
     @EqualsAndHashCode.Exclude
     private ImageData profileImage;
-    
-    
-
+  
+  
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
+    @JsonManagedReference("user-votes")
+    @JsonIgnore
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Set<PostVote> votes;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("Visitor"));
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
     }
 
     @Override

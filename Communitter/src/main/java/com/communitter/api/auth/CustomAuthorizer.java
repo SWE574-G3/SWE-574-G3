@@ -34,9 +34,14 @@ public class CustomAuthorizer {
     }
 
     public boolean checkSubscription(MethodSecurityExpressionOperations operations, Long id){
-        User principal= extractPrincipal(operations);
         Community community = communityRepository.findById(id).orElseThrow();
-        SubscriptionKey subsKey= new SubscriptionKey(principal.getId(), community.getId());
+        SubscriptionKey subsKey= createSubscriptionkey(operations, community.getId());
+        return subscriptionRepository.findById(subsKey).isPresent();
+    }
+
+    public boolean checkSubscriptionByPostId(MethodSecurityExpressionOperations operations, Long id){
+        Community community = postRepository.findById(id).orElseThrow().getCommunity();
+        SubscriptionKey subsKey= createSubscriptionkey(operations, community.getId());
         return subscriptionRepository.findById(subsKey).isPresent();
     }
     public boolean checkAuthor(MethodSecurityExpressionOperations operations, Long id){
@@ -84,8 +89,10 @@ public class CustomAuthorizer {
         }
     }
     
-    
-
-
+    private SubscriptionKey createSubscriptionkey(MethodSecurityExpressionOperations operations, Long communityId){
+        User principal= extractPrincipal(operations);
+        SubscriptionKey subsKey= new SubscriptionKey(principal.getId(), communityId);
+        return subsKey;
+    }
 
 }

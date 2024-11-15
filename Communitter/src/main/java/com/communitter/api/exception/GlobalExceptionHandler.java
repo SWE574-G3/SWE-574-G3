@@ -18,7 +18,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<String> handleNoSucElement(NoSuchElementException exc){
-       return new ResponseEntity<>(exc.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+       return new ResponseEntity<>(exc.getMessage(), HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<String> handleRuntimeException(RuntimeException exc){
@@ -34,7 +34,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleAuthenticationException(AuthenticationException exc){
         return new ResponseEntity<>("Authentication Failed", HttpStatus.UNAUTHORIZED);
     }
-
+    @ExceptionHandler(NotAuthorizedException.class)
+    public ResponseEntity<String> handleNotAuthorizedException(NotAuthorizedException exc){
+        return new ResponseEntity<>(exc.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<String> handleAccessDenied(AccessDeniedException exc){
         return new ResponseEntity<>(exc.getMessage(), HttpStatus.FORBIDDEN);

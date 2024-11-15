@@ -19,9 +19,15 @@ const communitySlice = createSlice({
     setVisitedCommunity: (state, action) => {
       state.visitedCommunity = action.payload;
     },
+    deletePost: (state, action) => {
+      const postIdToDelete = action.payload;
+      state.visitedCommunity.posts = state.visitedCommunity.posts.filter(
+          (post) => post.id !== postIdToDelete
+      );
+    },
   },
 });
 
-export const { setVisitedCommunity } = communitySlice.actions;
+export const { setVisitedCommunity, deletePost } = communitySlice.actions;
 
 export default communitySlice.reducer;

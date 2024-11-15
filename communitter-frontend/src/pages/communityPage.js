@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchWithOpts } from "../utilities/fetchWithOptions";
 import { defaultFetchOpts, url } from "../utilities/config";
-import { setVisitedCommunity } from "../features/communitySlice";
+import {deletePost, setVisitedCommunity} from "../features/communitySlice";
 import { setErrorMessage } from "../features/errorSlice";
 import { TemplateModal } from "../components/templateModal";
 import MakePostModal from "../components/postModal";
@@ -47,6 +47,19 @@ export const CommunityPage = () => {
       dispatch(setErrorMessage(err.message));
     }
     setSubsButton(true);
+  };
+  const handleDeletePost = async (postId) => {
+    try {
+      const communityId = community.id;
+
+      const response = await fetchWithOpts(`${url}/community/${communityId}/delete-post/${postId}`, {
+        ...defaultFetchOpts,
+        method: "DELETE",
+      });
+      dispatch(deletePost(postId));
+    } catch (err) {
+      dispatch(setErrorMessage(err.message));
+    }
   };
   useEffect(() => {
     console.log("entered useEffect");
@@ -156,7 +169,7 @@ export const CommunityPage = () => {
           setIsOpen={setIsFilterOpen}
           templates={community.templates}
         ></AdvancedSearchModal>
-        <Posts posts={posts} /> <Members members={community.subscriptions} />
+        <Posts posts={posts} onDelete={handleDeletePost}/> <Members members={community.subscriptions} />
         <TemplateModal
           isOpen={isTemplateOpen}
           setIsOpen={setIsTemplateOpen}

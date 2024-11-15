@@ -59,6 +59,7 @@ const AdvancedSearchModal = ({
           filterObject = { type: "date", start: 0, end: 0 };
           break;
         case "image":
+          filterObject = { type: "image"};
           break;
         case "geolocation":
           filterObject = {

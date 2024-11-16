@@ -37,7 +37,7 @@ public class RecommendationController {
     }
 
     @GetMapping("/user/interests")
-    public ResponseEntity<List<UserInterest>> getUserInterests(@RequestBody List<UserInterest> interests){
+    public ResponseEntity<List<UserInterest>> getUserInterests(){
         return ResponseEntity.ok(recommendationService.getUserInterest());
     }
 

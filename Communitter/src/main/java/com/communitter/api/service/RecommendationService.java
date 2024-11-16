@@ -10,10 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -70,5 +67,15 @@ public class RecommendationService {
                     .creator(community.getCreator()).isPublic(community.isPublic()).build());
         }
         return mappedCommunities;
+    }
+
+    public List<UserInterest> getUserInterest(){
+        User user= (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userInterestRepository.findAllByUser(user).orElse(new HashSet<UserInterest>()).stream().toList();
+    }
+
+    public List<CommunityLabel> getCommunityLabel(Long communityId){
+        Community community=communityRepository.findById(communityId).orElseThrow();
+        return communityLabelRepository.findAllByCommunity(community).stream().toList();
     }
 }

@@ -35,4 +35,15 @@ public class RecommendationController {
     public ResponseEntity <Set<CommunityDto>> getCommunityRecommendations(){
         return ResponseEntity.ok(recommendationService.getCommunityRecommendations());
     }
+
+    @GetMapping("/user/interests")
+    public ResponseEntity<List<UserInterest>> getUserInterests(@RequestBody List<UserInterest> interests){
+        return ResponseEntity.ok(recommendationService.getUserInterest());
+    }
+
+    @PreAuthorize("@authorizer.checkCreator(#root,#id)")
+    @GetMapping("/community/{id}/labels")
+    public ResponseEntity<List<CommunityLabel>> saveCommunityLabels(@P("id") @PathVariable Long id){
+        return ResponseEntity.ok(recommendationService.getCommunityLabel(id));
+    }
 }

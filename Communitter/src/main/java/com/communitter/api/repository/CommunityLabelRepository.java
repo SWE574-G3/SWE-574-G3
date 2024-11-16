@@ -13,5 +13,6 @@ public interface CommunityLabelRepository extends JpaRepository<CommunityLabel,L
     Optional<CommunityLabel> findByCommunity(Community community);
     Optional<CommunityLabel> findByWikiEntity(WikiEntity wikiEntity);
     Optional<Set<CommunityLabel>> findAllByWikiEntityIn(Set<WikiEntity> wikiEntities);
+    Optional<CommunityLabel> findAllByCommunity(Community community);
 
 }

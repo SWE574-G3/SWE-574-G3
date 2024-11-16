@@ -1,68 +1,55 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
-import { BsTrash } from "react-icons/bs";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { BsCheckCircle, BsXCircle } from "react-icons/bs";
+import { useDispatch } from "react-redux";
 import { setErrorMessage } from "../features/errorSlice";
 import { url } from "../utilities/config";
 import { fetchWithOpts } from "../utilities/fetchWithOptions";
-import { getUserRoleValue } from "../utilities/roles";
-import NewInvitationModal from "./NewInvitationModal";
 
-const Invitations = () => {
+const UserInvitations = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [invitations, setInvitations] = useState({});
   const dispatch = useDispatch();
-  const { id: communityId } = useParams();
-  const loggedInUser = useSelector((state) => state.user.loggedInUser);
-  const community = useSelector((state) => state.community.visitedCommunity);
-
-  const userRoleValue = getUserRoleValue(loggedInUser, community.id);
-
-  const [showNewInvitationModal, setShowNewInvitationModal] = useState(false);
-
-  const handleOpenNewInvitationModal = () => setShowNewInvitationModal(true);
-  const handleCloseNewInvitationModal = () => setShowNewInvitationModal(false);
 
   const fetchInvitations = useCallback(() => {
-    fetchWithOpts(`${url}/invitation?communityId=${communityId}`, {
+    fetchWithOpts(`${url}/invitation`, {
       method: "GET",
       headers: {},
     })
       .then((data) => setInvitations(data))
       .catch((e) => setErrorMessage(e.message));
-  }, [communityId]);
+  }, []);
 
   useEffect(() => {
     fetchInvitations();
-  }, [communityId, fetchInvitations, loggedInUser]);
+  }, [fetchInvitations]);
 
-  const handleAddInvitation = async (newInvitation) => {
+  const handleAcceptInvitation = async (invitationId) => {
     setIsLoading(true);
     try {
-      await fetchWithOpts(`${url}/invitation`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newInvitation),
-      });
-      setShowNewInvitationModal(false);
+      await fetchWithOpts(
+        `${url}/invitation/${invitationId}/accept-invitation`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       setIsLoading(false);
-      fetchInvitations();
-      console.log(newInvitation);
+      window.location.reload();
     } catch (err) {
       dispatch(setErrorMessage(err.message));
       setIsLoading(false);
     }
   };
 
-  const handleCancelInvitation = async (invitationId) => {
-    if (window.confirm("Are you sure you want to cancel this invitation?")) {
+  const handleRejectInvitation = async (invitationId) => {
+    if (window.confirm("Are you sure you want to reject this invitation?")) {
       setIsLoading(true);
       try {
         await fetchWithOpts(
-          `${url}/invitation/${invitationId}/cancel-invitation`,
+          `${url}/invitation/${invitationId}/reject-invitation`,
           {
             method: "PUT",
             headers: {
@@ -83,31 +70,23 @@ const Invitations = () => {
     <>
       <div className="mt-5">
         <div className="d-flex justify-content-between align-items-center">
-          <h2>Invitations</h2>
-          <Button
-            variant="primary"
-            onClick={handleOpenNewInvitationModal}
-            className="ms-3"
-          >
-            New Invitation
-          </Button>
+          <h2>My Invitations</h2>
         </div>
         {invitations.length > 0 ? (
           <Table bordered responsive>
             <thead>
               <tr>
-                <th>Username</th>
+                <th>Community</th>
                 <th>Role</th>
                 <th>Invited By</th>
                 <th>Date</th>
-                <th>Status</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {invitations.map((invitation, index) => (
                 <tr key={index}>
-                  <td>{invitation.user.username}</td>
+                  <td>{invitation.community.name}</td>
                   <td>{invitation.role.name}</td>
                   <td>{invitation.sentBy.username}</td>
                   <td>
@@ -122,16 +101,22 @@ const Invitations = () => {
                   </td>
                   <td>{invitation.invitationStatus}</td>
                   <td>
-                    {userRoleValue > invitation.role.id &&
-                    invitation.invitationStatus === "PENDING" ? (
+                    <div className="d-flex gap-2">
                       <Button
-                        variant="danger"
-                        onClick={() => handleCancelInvitation(invitation.id)}
+                        variant="success"
+                        onClick={() => handleAcceptInvitation(invitation.id)}
                         size="sm"
                       >
-                        <BsTrash />
+                        <BsCheckCircle />
                       </Button>
-                    ) : null}
+                      <Button
+                        variant="danger"
+                        onClick={() => handleRejectInvitation(invitation.id)}
+                        size="sm"
+                      >
+                        <BsXCircle />
+                      </Button>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -141,14 +126,8 @@ const Invitations = () => {
           <p>No invitation found.</p>
         )}
       </div>
-      <NewInvitationModal
-        show={showNewInvitationModal}
-        onHide={handleCloseNewInvitationModal}
-        onSubmit={handleAddInvitation}
-        isLoading={isLoading}
-      />
     </>
   );
 };
 
-export default Invitations;
+export default UserInvitations;

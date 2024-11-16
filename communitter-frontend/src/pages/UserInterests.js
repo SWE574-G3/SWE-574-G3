@@ -107,11 +107,21 @@ export function UserInterestsPage() {
     setSearchResults([]);
     setShowResults(false);
   };
-  /*useEffect(()=>{
+  useEffect(()=>{
     const getInterests= async()=>{
-      const interests=await fetchWithOpts(`${url}/`)
+      try{
+        const interests=await fetchWithOpts(`${url}/recommendation/user/interests`,defaultFetchOpts);
+        console.log(interests);
+        
+        //setExistingInterests(interests.map(interest=>interest.wikiEntity));
+      }catch(err){
+        console.log(err);
+        
+        dispatch(setErrorMessage(err.message));
+      }
     }
-  })*/
+    getInterests();
+  })
   return (
     <section className="position-relative h-100 d-grid align-items-center justify-content-center">
       <section className="justify-content-center align-content-center position-relative">

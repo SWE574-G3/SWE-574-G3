@@ -5,6 +5,7 @@ import com.communitter.api.model.Comment;
 import com.communitter.api.model.Community;
 import com.communitter.api.model.Subscription;
 import com.communitter.api.model.Post;
+import com.communitter.api.repository.CommentRepository;
 import com.communitter.api.repository.CommunityRepository;
 import com.communitter.api.repository.PostRepository;
 import com.communitter.api.repository.SubscriptionRepository;

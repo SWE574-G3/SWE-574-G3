@@ -20,8 +20,8 @@ export function SharedLayout() {
     async function protectRoute() {
       const isloggedIn = await checkLogin();
       if (!isloggedIn.ok) {
-        setIsAllowed(true);
-        //location.pathname !== "/" ? navigate("/") : setIsAllowed(true);
+        setIsAllowed(false);
+        location.pathname !== "/" ? navigate("/") : setIsAllowed(true);
       } else {
         dispatch(setLoggedInUser(isloggedIn.userInfo));
         console.log("User info in shared layout");

@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { setErrorMessage } from "../features/errorSlice";
 import { useDispatch } from "react-redux";
 import { defaultFetchOpts } from "../utilities/config";
 import { url } from "../utilities/config";
 import { useNavigate } from "react-router-dom";
 import { fetchWiki } from "../utilities/fetchWiki";
+import { buildGetParams } from "../utilities/buildGetParams";
+import { buildWikiEntities } from "../utilities/buildWikiEntities";
+import { fetchWithOpts } from "../utilities/fetchWithOptions";
 export function UserInterestsPage() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -13,6 +16,7 @@ export function UserInterestsPage() {
   const [showResults, setShowResults] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [interests, setInterests] = useState([]);
+  const [existingInterests,setExistingInterests]=useState([]);
 
   const searchParams = {
     origin: "*",
@@ -21,15 +25,22 @@ export function UserInterestsPage() {
     language: "en",
     search: "",
   };
+  const getParams={
+            origin:"*",
+            action: 'wbgetentities',
+            format: 'json',
+            languages: 'en'
+  }
   const handleChange = (e) => {
     setSearchTerm(() => e.target.value);
   };
   const handleRemove = (item) => {
     setInterests(interests.filter((interest) => interest !== item));
   };
-  const handleSubmit = async (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
     console.log(searchTerm);
+    setIsLoading(true)
     if (searchTerm.trim()) {
       try {
         searchParams.search = searchTerm;
@@ -45,9 +56,48 @@ export function UserInterestsPage() {
       setShowResults(false);
       dispatch(setErrorMessage("Please enter a valid term"));
     }
+    setIsLoading(false)
   };
+  const handleSubmit=async (e)=>{
+    e.preventDefault();
+    setIsLoading(true);
+    if(interests.length){
+      console.log(interests);
+      buildGetParams(interests,getParams);
+      console.log(getParams);
+      try{
+        const data=await fetchWiki(getParams,defaultFetchOpts);
+        console.log(data);
+        let sanitizedEntities=buildWikiEntities(data.entities);
+        const response= await fetchWithOpts(`${url}/recommendation/user/interests`,{
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(sanitizedEntities),
+        })
+
+        
+        setExistingInterests([...existingInterests,...sanitizedEntities.map(interest=>interest.wikiEntity)]);
+        setInterests([]);    
+        
+      }catch(err){
+        console.log(err);
+        
+        dispatch(setErrorMessage("Failed to Submit"))
+      }
+      
+    }
+    else{
+      dispatch(setErrorMessage("There is nothing to submit"))
+    }
+    setIsLoading(false);
+    
+  }
   const handleAdd = (result) => {
-    if (!interests.find((interest) => interest.label === result.label)) {
+    console.log(result);
+    
+    if (!interests.concat(existingInterests).find((interest) => interest.id === result.id)) {
       setInterests([...interests, result]);
     } else {
       dispatch(setErrorMessage("Label already added"));
@@ -57,6 +107,11 @@ export function UserInterestsPage() {
     setSearchResults([]);
     setShowResults(false);
   };
+  /*useEffect(()=>{
+    const getInterests= async()=>{
+      const interests=await fetchWithOpts(`${url}/`)
+    }
+  })*/
   return (
     <section className="position-relative h-100 d-grid align-items-center justify-content-center">
       <section className="justify-content-center align-content-center position-relative">
@@ -76,8 +131,23 @@ export function UserInterestsPage() {
               {item.label}
             </p>
           ))}
+           {existingInterests.map((item, index) => (
+            <p
+              key={index}
+              className="me-3 p-1 bg-success border border-secondary rounded position-relative"
+            >
+              <span
+                onClick={() => handleRemove(item)}
+                className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary"
+                role="button"
+              >
+                x
+              </span>
+              {item.label}
+            </p>
+          ))}
         </div>
-        <form onSubmit={handleSubmit} className="d-flex">
+        <form className="d-flex">
           <div className="mb-3">
             <label htmlFor="name" className="form-label">
               Search the labels in Wikidata
@@ -96,9 +166,17 @@ export function UserInterestsPage() {
 
           <button
             disabled={isLoading}
+            onClick={handleSearch}
             className={`btn btn-primary d-block ms-3 my-auto`}
           >
             Search
+          </button>
+          <button
+            disabled={isLoading}
+            onClick={handleSubmit}
+            className={`btn btn-primary d-block ms-3 my-auto`}
+          >
+            Submit
           </button>
         </form>
         {/* Search results dropdown */}

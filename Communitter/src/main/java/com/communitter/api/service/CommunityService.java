@@ -44,11 +44,15 @@ public class CommunityService {
     }
 
     @Transactional
-    public Subscription subscribeToCommunity(Long id){
+    public Subscription subscribeToCommunity(Long id, String roleName, Boolean checkPrivate){
         User subscriber= (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Community community = communityRepository.findById(id).orElseThrow();
+
+        if (checkPrivate && !community.isPublic())
+            throw new RuntimeException("You cannot join private communities directly.");
+
         SubscriptionKey subsKey= new SubscriptionKey(subscriber.getId(), community.getId());
-        Role userRole= roleRepository.findByName("user").orElseThrow();
+        Role userRole= roleRepository.findByName(roleName).orElseThrow();
         Optional<Subscription> currentSub=subscriptionRepository.findById(subsKey);
         if(currentSub.isPresent()) throw new RuntimeException("User already subscribed");
         activityStreamService.createActivity(ActivityAction.JOIN, subscriber,community, null);

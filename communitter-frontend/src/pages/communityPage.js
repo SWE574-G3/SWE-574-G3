@@ -1,20 +1,22 @@
-import { Posts } from "../components/communityPosts";
-import { Members } from "../components/communityMembers";
-import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchWithOpts } from "../utilities/fetchWithOptions";
-import { defaultFetchOpts, url } from "../utilities/config";
-import { deletePost, setVisitedCommunity } from "../features/communitySlice";
-import { setErrorMessage } from "../features/errorSlice";
-import { TemplateModal } from "../components/templateModal";
-import MakePostModal from "../components/postModal";
+import ActivityStreamCard from "../components/ActivityStreamCard";
 import AdvancedSearchModal from "../components/AdvancedSearch";
 import { ModalWrapper } from "../components/ModalWrapper";
+import MakePostModal from "../components/postModal";
+import { TemplateModal } from "../components/templateModal";
 import { WikidataInterface } from "../components/wikidataInterface";
-import ActivityStreamCard from "../components/ActivityStreamCard";
 import "../css/communityPage.css";
+import { deletePost, setVisitedCommunity } from "../features/communitySlice";
+import { setErrorMessage } from "../features/errorSlice";
+import { defaultFetchOpts, url } from "../utilities/config";
+import { fetchWithOpts } from "../utilities/fetchWithOptions";
 
+import { useNavigate, useParams } from "react-router-dom";
+import { Members } from "../components/communityMembers";
+import { Posts } from "../components/communityPosts";
+import Invitations from "../components/Invitations";
+import { getUserRoleValue } from "../utilities/roles";
 export const CommunityPage = () => {
   const community = useSelector((state) => state.community.visitedCommunity);
   const [posts, setPosts] = useState(community.posts);
@@ -36,6 +38,8 @@ export const CommunityPage = () => {
   const dispatch = useDispatch();
   const params = useParams();
   const navigate = useNavigate();
+
+  const userRoleValue = getUserRoleValue(loggedInUser, community.id);
 
   const handleSubscription = async () => {
     setSubsButton(false);
@@ -278,6 +282,7 @@ export const CommunityPage = () => {
               handleEditPost={handleEditPost}
             />
             <Members members={community.subscriptions} />
+            {!community.public && userRoleValue !== 0 ? <Invitations /> : null}
             <TemplateModal
               isOpen={isTemplateOpen}
               setIsOpen={setIsTemplateOpen}

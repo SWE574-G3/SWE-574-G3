@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import { getUserRoleValue, roles } from "../utilities/roles";
 
 const NewInvitationModal = ({ show, onHide, onSubmit, isLoading }) => {
   const [username, setUsername] = useState("");
@@ -8,11 +9,7 @@ const NewInvitationModal = ({ show, onHide, onSubmit, isLoading }) => {
   const loggedInUser = useSelector((state) => state.user.loggedInUser);
   const community = useSelector((state) => state.community.visitedCommunity);
 
-  const userSubscription = loggedInUser.subscriptions.find(
-    (subscription) => subscription.id.communityId === community.id
-  );
-
-  const userRoleValue = userSubscription ? userSubscription.role.id : 0;
+  const userRoleValue = getUserRoleValue(loggedInUser, community.id);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,12 +22,6 @@ const NewInvitationModal = ({ show, onHide, onSubmit, isLoading }) => {
       });
     }
   };
-
-  const roles = [
-    { value: 3, label: "owner" },
-    { value: 2, label: "moderator" },
-    { value: 1, label: "user" },
-  ];
 
   return (
     <Modal show={show} onHide={onHide} centered>
@@ -58,15 +49,17 @@ const NewInvitationModal = ({ show, onHide, onSubmit, isLoading }) => {
           <Form.Group className="mb-3" controlId="formRole">
             <Form.Label>Role</Form.Label>
             <Form.Select value={role} onChange={(e) => setRole(e.target.value)}>
-              {roles.map((role) => (
-                <option
-                  key={role.value}
-                  value={role.value}
-                  disabled={userRoleValue <= role.value}
-                >
-                  {role.label}
-                </option>
-              ))}
+              {roles.map((role) =>
+                userRoleValue > role.value ? (
+                  <option
+                    key={role.value}
+                    value={role.value}
+                    disabled={userRoleValue <= role.value}
+                  >
+                    {role.label}
+                  </option>
+                ) : null
+              )}
             </Form.Select>
           </Form.Group>
         </Form>

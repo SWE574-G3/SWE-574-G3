@@ -1,6 +1,7 @@
 package com.communitter.api.auth;
 
 import com.communitter.api.key.SubscriptionKey;
+import com.communitter.api.model.Comment;
 import com.communitter.api.model.Community;
 import com.communitter.api.model.Subscription;
 import com.communitter.api.model.Post;
@@ -24,7 +25,9 @@ public class CustomAuthorizer {
     private final CommunityRepository communityRepository;
     private final SubscriptionRepository subscriptionRepository;
     private final PostRepository postRepository;
+    private final CommentRepository commentRepository;
     public Logger logger = LoggerFactory.getLogger(CustomAuthorizer.class);
+    
     public boolean authorizerForUser(MethodSecurityExpressionOperations operations, Long id){
         User principal= extractPrincipal(operations);
         Long principalId = principal.getId();
@@ -61,6 +64,12 @@ public class CustomAuthorizer {
             return false;
         }
 
+    }
+
+    public boolean checkCommentAuthor(MethodSecurityExpressionOperations operations, Long id){
+        User principal = extractPrincipal(operations);
+        Comment comment = commentRepository.findById(id).orElseThrow();
+        return Objects.equals(principal.getId(), comment.getAuthor().getId());
     }
 
     private User extractPrincipal(MethodSecurityExpressionOperations operations){

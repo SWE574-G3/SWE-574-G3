@@ -46,4 +46,18 @@ public class RecommendationController {
     public ResponseEntity<List<CommunityLabel>> saveCommunityLabels(@P("id") @PathVariable Long id){
         return ResponseEntity.ok(recommendationService.getCommunityLabel(id));
     }
+
+    @DeleteMapping("/user/interests/{code}")
+    public ResponseEntity<String> deleteUserInterest(@PathVariable String code){
+        recommendationService.deleteUserInterest(code);
+        return ResponseEntity.ok("User Interest deleted");
+    }
+
+    @PreAuthorize("@authorizer.checkCreator(#root,#id)")
+    @GetMapping("/community/{id}/labels/{code}")
+    public ResponseEntity<String> deleteCommunityLabel(@P("id") @PathVariable Long id,@PathVariable String code){
+        recommendationService.deleteCommunityLabel(code,id);
+        return ResponseEntity.ok("Community label deleted");
+    }
+
 }

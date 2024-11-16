@@ -13,5 +13,6 @@ public interface UserInterestRepository extends JpaRepository<UserInterest,Long>
     Optional<UserInterest> findByUser(User user);
     Optional<Set<UserInterest>> findAllByUser(User user);
     Optional<UserInterest> findByWikiEntity(WikiEntity wikiEntity);
+    Optional<UserInterest> findByUserAndWikiEntity(User user, WikiEntity wikiEntity);
 
 }

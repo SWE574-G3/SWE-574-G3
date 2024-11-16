@@ -78,4 +78,18 @@ public class RecommendationService {
         Community community=communityRepository.findById(communityId).orElseThrow();
         return communityLabelRepository.findAllByCommunity(community).stream().toList();
     }
+
+    public void deleteUserInterest(String wikiEntityCode){
+        User user= (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        WikiEntity entity=wikiEntityRepository.findByCode(wikiEntityCode).orElseThrow();
+        UserInterest interest=userInterestRepository.findByUserAndWikiEntity(user, entity).orElseThrow();
+        userInterestRepository.delete(interest);
+    }
+
+    public void deleteCommunityLabel(String wikiEntityCode,Long communityId){
+        WikiEntity entity=wikiEntityRepository.findByCode(wikiEntityCode).orElseThrow();
+        Community community=communityRepository.findById(communityId).orElseThrow();
+        CommunityLabel communityLabel =communityLabelRepository.findByCommunityAndWikiEntity(community, entity).orElseThrow();
+        communityLabelRepository.delete(communityLabel);
+    }
 }

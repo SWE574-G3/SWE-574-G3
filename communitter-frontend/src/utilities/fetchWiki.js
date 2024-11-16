@@ -1,6 +1,7 @@
 import { wikidataUrl } from "./config";
 
 export async function fetchWiki(searchParams, options) {
+  if(options.headers) delete options.headers;
   const paramsString = new URLSearchParams(searchParams).toString();
   const url = wikidataUrl + paramsString;
   const response = await fetch(url, options);

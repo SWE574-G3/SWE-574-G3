@@ -113,7 +113,7 @@ export function UserInterestsPage() {
         const interests=await fetchWithOpts(`${url}/recommendation/user/interests`,defaultFetchOpts);
         console.log(interests);
         
-        //setExistingInterests(interests.map(interest=>interest.wikiEntity));
+        setExistingInterests(interests.map(interest=>interest.wikiEntity));
       }catch(err){
         console.log(err);
         
@@ -121,7 +121,7 @@ export function UserInterestsPage() {
       }
     }
     getInterests();
-  })
+  },[])
   return (
     <section className="position-relative h-100 d-grid align-items-center justify-content-center">
       <section className="justify-content-center align-content-center position-relative">

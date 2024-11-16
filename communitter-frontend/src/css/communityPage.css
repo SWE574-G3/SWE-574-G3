@@ -21,8 +21,9 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 10px;
-    height: 100%; /* Adjust height as needed */
-    overflow-y: auto; /* Make it scrollable if it overflows */
+    height: 100%;
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
 }
 
 .activity-feed h3 {

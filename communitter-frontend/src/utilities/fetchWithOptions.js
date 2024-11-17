@@ -2,6 +2,7 @@ import { tokenName } from "./config";
 
 export async function fetchWithOpts(url, options) {
   const token = localStorage.getItem(tokenName);
+  if(!options.headers) options.headers={};
   options.headers.Authorization = "Bearer " + token;
   
   

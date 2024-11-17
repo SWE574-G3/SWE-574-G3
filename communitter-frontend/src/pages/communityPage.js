@@ -10,6 +10,8 @@ import { setErrorMessage } from "../features/errorSlice";
 import { TemplateModal } from "../components/templateModal";
 import MakePostModal from "../components/postModal";
 import AdvancedSearchModal from "../components/AdvancedSearch";
+import { ModalWrapper } from "../components/ModalWrapper";
+import { WikidataInterface } from "../components/wikidataInterface";
 export const CommunityPage = () => {
   const community = useSelector((state) => state.community.visitedCommunity);
   const [posts, setPosts] = useState(community.posts);
@@ -23,7 +25,7 @@ export const CommunityPage = () => {
   const [isPostOpen, setIsPostOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [role,setRole]=useState("visitor");
-  const [labelModal,setIsLabelModal]=useState(false);
+  const [showLabelModal,setShowLabelModal]=useState(false);
   const dispatch = useDispatch();
   const params = useParams();
   const navigate = useNavigate();
@@ -157,7 +159,7 @@ export const CommunityPage = () => {
                  (role==="owner" || role  ==="creator") &&
                 <button
                   onClick={() => {
-                    setIsPostOpen(true);
+                    setShowLabelModal(true);
                   }}
                   className="btn btn-primary mt-3 mx-3"
                 >
@@ -195,6 +197,9 @@ export const CommunityPage = () => {
           isOpen={isPostOpen}
           setIsOpen={setIsPostOpen}
         />
+        <ModalWrapper show={showLabelModal} handleClose={setShowLabelModal}>
+          <WikidataInterface url={`${url}/recommendation/community/${community.id}/labels`}/>
+        </ModalWrapper>
       </div>
     )
   );

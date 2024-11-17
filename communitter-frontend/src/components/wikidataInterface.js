@@ -51,7 +51,7 @@ export function WikidataInterface({url}){
       
     }
     catch(err){
-      dispatch(setErrorMessage(err));
+      dispatch(setErrorMessage(err.message));
     }
   }
   const handleSearch = async (e) => {

@@ -22,10 +22,14 @@ export const CommunityPage = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isPostOpen, setIsPostOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [role,setRole]=useState("visitor");
+  const [labelModal,setIsLabelModal]=useState(false);
   const dispatch = useDispatch();
   const params = useParams();
   const navigate = useNavigate();
   const handleSubscription = async () => {
+    console.log(defaultFetchOpts);
+    
     setSubsButton(false);
     try {
       if (!isSubscribed) {
@@ -74,11 +78,11 @@ export const CommunityPage = () => {
           }
         );
         dispatch(setVisitedCommunity(visitedCommunity));
+        const currentSub=community.subscriptions.find(subscription=>subscription.id.userId==loggedInUser.id);
         setIsSubscribed(
-          community.subscriptions.some(
-            (subscription) => subscription.id.userId == loggedInUser.id
-          )
+         currentSub?true:false
         );
+        setRole(currentSub?currentSub.role.name:role)
         setPosts(visitedCommunity.posts);
         setIsLoading(false);
       } catch (err) {
@@ -149,6 +153,18 @@ export const CommunityPage = () => {
                 >
                   Make a Post
                 </button>
+                {
+                 (role==="owner" || role  ==="creator") &&
+                <button
+                  onClick={() => {
+                    setIsPostOpen(true);
+                  }}
+                  className="btn btn-primary mt-3 mx-3"
+                >
+                  Labels
+                </button>
+
+                }
               </div>
             </div>
           </div>

@@ -77,6 +77,11 @@ public class CommunityService {
                 .name("Default Template")
                 .community(community)
                 .build());
+        dataFieldRepository.save(DataField.builder().name("Title")
+                .isRequired(true)
+                .dataFieldType(dataFieldTypeRepository.findByType("string"))
+                .template(createdTemplate)
+                .build());
         dataFieldRepository.save(DataField.builder().name("Comment")
                 .isRequired(true)
                 .dataFieldType(dataFieldTypeRepository.findByType("string"))

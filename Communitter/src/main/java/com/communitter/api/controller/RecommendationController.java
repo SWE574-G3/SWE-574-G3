@@ -54,7 +54,7 @@ public class RecommendationController {
     }
 
     @PreAuthorize("@authorizer.checkCreator(#root,#id)")
-    @GetMapping("/community/{id}/labels/{code}")
+    @DeleteMapping("/community/{id}/labels/{code}")
     public ResponseEntity<String> deleteCommunityLabel(@P("id") @PathVariable Long id,@PathVariable String code){
         recommendationService.deleteCommunityLabel(code,id);
         return ResponseEntity.ok("Community label deleted");

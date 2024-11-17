@@ -37,6 +37,23 @@ export function UserInterestsPage() {
   const handleRemove = (item) => {
     setInterests(interests.filter((interest) => interest !== item));
   };
+  const handleDelete=async (interest)=>{
+    console.log(interest);
+    
+    try{
+      const deleteResult= await fetchWithOpts(`${url}/recommendation/user/interests/${interest.code}`,{
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      })
+      console.log(deleteResult);
+      
+    }
+    catch(err){
+      dispatch(setErrorMessage(err));
+    }
+  }
   const handleSearch = async (e) => {
     e.preventDefault();
     console.log(searchTerm);
@@ -147,7 +164,7 @@ export function UserInterestsPage() {
               className="me-3 p-1 bg-success border border-secondary rounded position-relative"
             >
               <span
-                onClick={() => handleRemove(item)}
+                onClick={() => handleDelete(item)}
                 className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary"
                 role="button"
               >

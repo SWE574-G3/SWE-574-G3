@@ -18,7 +18,6 @@ public class UserInterest {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
     @JsonIgnoreProperties({"avatar","about","subscriptions","email","password","header","posts","createdCommunities"})
     private User user;
 

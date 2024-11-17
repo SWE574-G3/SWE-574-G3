@@ -19,7 +19,6 @@ public class CommunityLabel {
 
     @ManyToOne
     @JoinColumn(name = "community_id", nullable = false)
-    @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
     @JsonIgnoreProperties({"subscriptions","templates","posts"})
     private Community community;
 

@@ -60,4 +60,8 @@ public class Community {
     @JsonIgnoreProperties({"community"})
     private Set<Post> posts;
 
+    @OneToMany(mappedBy = "community", cascade = CascadeType.REMOVE, orphanRemoval = true,fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Set<CommunityLabel> labels;
+
 }

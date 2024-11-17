@@ -1,6 +1,8 @@
 package com.communitter.api.controller;
 
 import com.communitter.api.dto.CommunityDto;
+import com.communitter.api.dto.CommunityLabelDto;
+import com.communitter.api.dto.UserInterestDto;
 import com.communitter.api.model.CommunityLabel;
 import com.communitter.api.model.UserInterest;
 import com.communitter.api.service.RecommendationService;
@@ -37,13 +39,13 @@ public class RecommendationController {
     }
 
     @GetMapping("/user/interests")
-    public ResponseEntity<List<UserInterest>> getUserInterests(){
+    public ResponseEntity<List<UserInterestDto>> getUserInterests(){
         return ResponseEntity.ok(recommendationService.getUserInterest());
     }
 
     @PreAuthorize("@authorizer.checkCreator(#root,#id)")
     @GetMapping("/community/{id}/labels")
-    public ResponseEntity<List<CommunityLabel>> saveCommunityLabels(@P("id") @PathVariable Long id){
+    public ResponseEntity<List<CommunityLabelDto>> getCommunityLabels(@P("id") @PathVariable Long id){
         return ResponseEntity.ok(recommendationService.getCommunityLabel(id));
     }
 

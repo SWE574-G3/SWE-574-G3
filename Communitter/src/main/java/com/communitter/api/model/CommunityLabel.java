@@ -1,10 +1,11 @@
 package com.communitter.api.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Cascade;
 
 @Data
@@ -17,9 +18,13 @@ public class CommunityLabel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "community_id", nullable = false)
-    @JsonIgnoreProperties({"subscriptions","templates","posts"})
+    @JsonIgnore
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @JsonBackReference("community-labels")
+    //@JsonIgnoreProperties({"posts","subscriptions","templates","creator","labels"})
     private Community community;
 
     @ManyToOne

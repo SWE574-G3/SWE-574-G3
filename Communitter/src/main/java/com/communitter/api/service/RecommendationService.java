@@ -1,6 +1,8 @@
 package com.communitter.api.service;
 
 import com.communitter.api.dto.CommunityDto;
+import com.communitter.api.dto.CommunityLabelDto;
+import com.communitter.api.dto.UserInterestDto;
 import com.communitter.api.model.*;
 import com.communitter.api.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -36,11 +38,12 @@ public class RecommendationService {
         User user= (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         for (CommunityLabel label:communityLabels){
             label.setWikiEntity(wikiEntityRepository.findByCode(label.getWikiEntity().getCode()).orElse(label.getWikiEntity()));
-            label.setCommunity(communityRepository.getReferenceById(communityId));
+            label.setCommunity(communityRepository.findById(communityId).orElseThrow());
         }
         return communityLabelRepository.saveAll(communityLabels);
     }
 
+    @Transactional
     public Set<CommunityDto> getCommunityRecommendations(){
         User principal= (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<UserInterest> userInterests=userInterestRepository.findAllByUser(principal);
@@ -69,16 +72,33 @@ public class RecommendationService {
         return mappedCommunities;
     }
 
-    public List<UserInterest> getUserInterest(){
+    @Transactional
+    public List<UserInterestDto> getUserInterest(){
         User user= (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userInterestRepository.findAllByUser(user);
+         List<UserInterestDto> interestDtos= new ArrayList<>();
+         List<UserInterest> interests=userInterestRepository.findAllByUser(user);
+         for(UserInterest interest:interests){
+             interestDtos.add(UserInterestDto.builder().id(interest.getId()).userId(interest.getUser().getId()).wikiEntity(interest.getWikiEntity()).build());
+         }
+         return interestDtos;
     }
 
-    public List<CommunityLabel> getCommunityLabel(Long communityId){
+    @Transactional
+    public List<CommunityLabelDto> getCommunityLabel(Long communityId){
         Community community=communityRepository.findById(communityId).orElseThrow();
-        return communityLabelRepository.findAllByCommunity(community);
+
+        List<CommunityLabelDto> communityLabelDtos=new ArrayList<>();
+        List<CommunityLabel> labels= communityLabelRepository.findAllByCommunity(community);
+        for(CommunityLabel label:labels){
+            communityLabelDtos.add(CommunityLabelDto.builder().id(label.getId()).communityId(label.getCommunity().getId()).
+                    wikiEntity(label.getWikiEntity()).build());
+        }
+        return communityLabelDtos;
+
+
     }
 
+    @Transactional
     public void deleteUserInterest(String wikiEntityCode){
         User user= (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         WikiEntity entity=wikiEntityRepository.findByCode(wikiEntityCode).orElseThrow();
@@ -86,6 +106,7 @@ public class RecommendationService {
         userInterestRepository.delete(interest);
     }
 
+    @Transactional
     public void deleteCommunityLabel(String wikiEntityCode,Long communityId){
         WikiEntity entity=wikiEntityRepository.findByCode(wikiEntityCode).orElseThrow();
         Community community=communityRepository.findById(communityId).orElseThrow();

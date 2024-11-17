@@ -1,5 +1,4 @@
 export function ModalWrapper({ show, handleClose, children }) {
-    console.log("ModalWrapper handleClose: ", handleClose);
   
     return (
       <>

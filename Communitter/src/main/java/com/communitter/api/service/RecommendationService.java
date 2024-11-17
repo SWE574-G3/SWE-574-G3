@@ -43,7 +43,7 @@ public class RecommendationService {
 
     public Set<CommunityDto> getCommunityRecommendations(){
         User principal= (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<UserInterest> userInterests=userInterestRepository.findAllByUser(principal).orElseThrow().stream().toList();
+        List<UserInterest> userInterests=userInterestRepository.findAllByUser(principal);
         logger.info(userInterests.toString());
         List<String> interestCodes=new ArrayList<String>();
         for(UserInterest interest:userInterests){
@@ -71,12 +71,12 @@ public class RecommendationService {
 
     public List<UserInterest> getUserInterest(){
         User user= (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userInterestRepository.findAllByUser(user).orElse(new HashSet<UserInterest>()).stream().toList();
+        return userInterestRepository.findAllByUser(user);
     }
 
     public List<CommunityLabel> getCommunityLabel(Long communityId){
         Community community=communityRepository.findById(communityId).orElseThrow();
-        return communityLabelRepository.findAllByCommunity(community).stream().toList();
+        return communityLabelRepository.findAllByCommunity(community);
     }
 
     public void deleteUserInterest(String wikiEntityCode){

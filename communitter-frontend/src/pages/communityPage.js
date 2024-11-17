@@ -10,10 +10,12 @@ import { setErrorMessage } from "../features/errorSlice";
 import { TemplateModal } from "../components/templateModal";
 import MakePostModal from "../components/postModal";
 import AdvancedSearchModal from "../components/AdvancedSearch";
+import EditPostModal from "../components/EditPostModal";
 export const CommunityPage = () => {
   const community = useSelector((state) => state.community.visitedCommunity);
   const [posts, setPosts] = useState(community.posts);
-  console.log(posts);
+  const [editPost, setEditPost] = useState(null);
+  const [isPostEdited, setIsPostEdited] = useState(false)
   const loggedInUser = useSelector((state) => state.user.loggedInUser);
   console.log(community);
   const [isSubscribed, setIsSubscribed] = useState(false);
@@ -61,6 +63,50 @@ export const CommunityPage = () => {
       dispatch(setErrorMessage(err.message));
     }
   };
+
+  const handleEditPost = (updatedPost) => {
+    console.log("CCCC");
+    const communityId = params.id;
+    console.log("ANAAAAA");
+
+    console.log(`updated post = ${JSON.stringify(updatedPost)}`);
+    console.log(`URL = ${url}/community/${communityId}/edit-post/${updatedPost.id}`);
+    console.log(`GONDERILEN POST = ${JSON.stringify({postFields: updatedPost.postFields})}`);
+
+    // Debug log before fetch call
+    console.log("Sending request...");
+
+    fetchWithOpts(`${url}/community/${communityId}/edit-post/${updatedPost.id}`, {
+      ...defaultFetchOpts,
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json", // Explicitly set the Content-Type
+      },
+      body: JSON.stringify({
+        postFields: updatedPost.postFields,
+      }),
+    })
+        .then((response) => {
+          console.log("YYYYYY");
+
+          dispatch(
+              setVisitedCommunity({
+                ...community,
+                posts: community.posts.map((post) =>
+                    post.id === updatedPost.id
+                        ? { ...post, postFields: updatedPost.postFields } // Creating a new object for the updated post
+                        : post
+                ),
+              })
+          );
+          setIsPostEdited(true)
+        })
+        .catch((err) => {
+          console.error("Request error:", err.message);
+          dispatch(setErrorMessage(err.message));
+        });
+  };
+
   useEffect(() => {
     console.log("entered useEffect");
     console.log(isSubscribed);
@@ -90,6 +136,7 @@ export const CommunityPage = () => {
       }
     }
     getCommunity();
+    setIsPostEdited(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     dispatch,
@@ -98,6 +145,7 @@ export const CommunityPage = () => {
     community?.posts.length,
     community?.templates.length,
     isSubscribed,
+    isPostEdited
   ]);
   return (
     !isLoading && (
@@ -169,7 +217,15 @@ export const CommunityPage = () => {
           setIsOpen={setIsFilterOpen}
           templates={community.templates}
         ></AdvancedSearchModal>
-        <Posts posts={posts} onDelete={handleDeletePost}/> <Members members={community.subscriptions} />
+        <Posts posts={posts} onDelete={handleDeletePost} onEdit={(post) => setEditPost(post)}/> <Members members={community.subscriptions} />
+        {editPost && (
+            <EditPostModal
+                post={editPost}
+                show={!!editPost}
+                onClose={() => setEditPost(null)}
+                onSave={handleEditPost}
+            />
+        )}
         <TemplateModal
           isOpen={isTemplateOpen}
           setIsOpen={setIsTemplateOpen}

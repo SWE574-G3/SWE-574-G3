@@ -9,7 +9,7 @@ import { url } from "../utilities/config";
 import {setErrorMessage} from "../features/errorSlice";
 import { useNavigate } from "react-router-dom";
 
-const PostCard = ({ post, onDelete }) => {
+const PostCard = ({ post, onDelete, onEdit }) => {
   const { author, postFields, date: timestamp, id } = post; // Destructure post object
 
     const [voteCount, setVoteCount] = useState(0);
@@ -23,6 +23,9 @@ const PostCard = ({ post, onDelete }) => {
         })
             .then((data) => setVoteCount(data))
             .catch((e) => setErrorMessage(e.message));
+    };
+    const handleEditClick = () => {
+        onEdit(post);
     };
 
     // Initial fetch of the vote count when the component mounts
@@ -82,7 +85,7 @@ const PostCard = ({ post, onDelete }) => {
           minute: "2-digit",
           hour12: false,
         })}{" "}
-        - Template: {post.template.name}
+        - Template: {post.template?.name}
       </CardTitle>
       <CardBody>
         {postFields.map((postField) => (
@@ -92,6 +95,9 @@ const PostCard = ({ post, onDelete }) => {
               <Button variant="danger" onClick={handleDeleteClick}>
                   Delete
               </Button>
+              <Button variant="primary" onClick={handleEditClick}>
+                  Edit
+              </Button>
           </div>
           <div className="vote-buttons mt-2  d-flex align-items-center" style={{ position: "absolute", bottom: "10px", right: "10px" }}>
               <i onClick={handleUpvote} className="bi bi-arrow-up me-2" style={{ cursor: "pointer", color: "green" }}></i>
@@ -99,6 +105,8 @@ const PostCard = ({ post, onDelete }) => {
               <i onClick={handleDownvote} className="bi bi-arrow-down ms-2" style={{ cursor: "pointer", color: "red" }}></i>
           </div>
       </CardBody>
+
+
     </Card>
   );
 };

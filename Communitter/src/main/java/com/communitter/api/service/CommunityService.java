@@ -74,7 +74,7 @@ public class CommunityService {
 
     private void addDefaultTemplate(Community community){
         Template createdTemplate = templateRepository.save(Template.builder()
-                .name("Default Template")
+                .name("Default Template-".concat(community.getName()))
                 .community(community)
                 .build());
         dataFieldRepository.save(DataField.builder().name("Title")

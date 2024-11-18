@@ -21,9 +21,9 @@ public class WikiEntity {
     private String code;
     @Column(nullable = false)
     private String label;
-    @Column(nullable = false)
+    @Column
     private String url;
-    @Column(nullable = false)
+    @Column
     private String description;
 
     @ElementCollection

@@ -2,6 +2,7 @@ package com.communitter.api.service;
 
 import com.communitter.api.dto.CommunityDto;
 import com.communitter.api.dto.CommunityLabelDto;
+import com.communitter.api.dto.UserDto;
 import com.communitter.api.dto.UserInterestDto;
 import com.communitter.api.model.*;
 import com.communitter.api.repository.*;
@@ -67,7 +68,8 @@ public class RecommendationService {
             Community community=communityLabel.getCommunity();
             mappedCommunities.add(CommunityDto.builder().name(community.getName()).
                     id(community.getId()).about(community.getAbout())
-                    .creator(community.getCreator()).isPublic(community.isPublic()).build());
+                    .creator(UserDto.builder().id(community.getCreator().getId()).username(community.getCreator().getUsername()).build())
+                    .isPublic(community.isPublic()).build());
         }
         return mappedCommunities;
     }

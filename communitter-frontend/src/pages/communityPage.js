@@ -219,7 +219,6 @@ export const CommunityPage = () => {
         ></AdvancedSearchModal>
         <Posts posts={posts} onDelete={handleDeletePost} onEdit={(post) => setEditPost(post)} handleEditPost={handleEditPost}/> 
           <Members members={community.subscriptions} />
-       
         <TemplateModal
           isOpen={isTemplateOpen}
           setIsOpen={setIsTemplateOpen}

@@ -9,9 +9,11 @@ import { url } from "../utilities/config";
 import {setErrorMessage} from "../features/errorSlice";
 import { useNavigate } from "react-router-dom";
 import EditPostModal from "./EditPostModal";
+import {useSelector} from "react-redux";
 
 const PostCard = ({ post, onDelete, onEdit,handleEditPost }) => {
   const { author, postFields, date: timestamp, id } = post; // Destructure post object
+    const community = useSelector((state) => state.community.visitedCommunity);
     const [showEditModal,setShowEditModal]=useState(false);
     const [voteCount, setVoteCount] = useState(0);
     const navigate = useNavigate();
@@ -29,6 +31,7 @@ const PostCard = ({ post, onDelete, onEdit,handleEditPost }) => {
         setShowEditModal(true)
     };
 
+
     // Initial fetch of the vote count when the component mounts
     useEffect(() => {
         fetchVoteCount();
@@ -36,10 +39,10 @@ const PostCard = ({ post, onDelete, onEdit,handleEditPost }) => {
 
     // Directing to postview
     const directToPostView = () => {
-        navigate(`/posts/${post.id}`);
+        navigate(`/community/${community.id}/posts/${post.id}`);
       };
 
-    // Handle upvote
+    // Handle upvotexs
     const handleUpvote = async () => {
         try {
             const response = await fetchWithOpts(`${url}/posts/${post.id}/vote?isUpvote=true`, {
@@ -74,6 +77,7 @@ const PostCard = ({ post, onDelete, onEdit,handleEditPost }) => {
             onDelete(id);
         }
     };
+
   return (
     <Card className="mb-3">
       <CardTitle onClick={directToPostView} style={{cursor: "pointer"}}>
@@ -110,7 +114,7 @@ const PostCard = ({ post, onDelete, onEdit,handleEditPost }) => {
       {showEditModal && (
             <EditPostModal
                 post={post}
-                show={!!showEditModal}
+                show={showEditModal}
                 onClose={() => setShowEditModal(false)}
                 onSave={handleEditPost}
             />

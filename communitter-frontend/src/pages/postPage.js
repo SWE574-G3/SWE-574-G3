@@ -6,12 +6,12 @@ import { PostComments } from '../components/PostComments';
 import { useParams, useNavigate } from "react-router-dom";
 import { CommentService } from "../utilities/CommentService";
 import {useDispatch, useSelector} from "react-redux";
-import {deletePost} from "../features/communitySlice";
+import {deletePost, setVisitedCommunity} from "../features/communitySlice";
 import {setErrorMessage} from "../features/errorSlice";
 
 export const PostPage = () => {
     //Post and Comment statements
-    const { id } = useParams();
+    const { communityId, id } = useParams();
     const [post, setPost] = useState(null);
     const [error, setError] = useState(null);
     const [comments, setComments] = useState([]);
@@ -25,7 +25,47 @@ export const PostPage = () => {
         author: null,
         content: ""
     });
+    const handleEditPost = (updatedPost) => {
+        console.log("CCCC");
 
+
+        console.log(`updated post = ${JSON.stringify(updatedPost)}`);
+        console.log(`URL = ${url}/community/${communityId}/edit-post/${updatedPost.id}`);
+        console.log(`GONDERILEN POST = ${JSON.stringify({postFields: updatedPost.postFields})}`);
+
+        // Debug log before fetch call
+        console.log("Sending request...");
+
+        fetchWithOpts(`${url}/community/${communityId}/edit-post/${updatedPost.id}`, {
+            ...defaultFetchOpts,
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json", // Explicitly set the Content-Type
+            },
+            body: JSON.stringify({
+                postFields: updatedPost.postFields,
+            }),
+        })
+            .then((response) => {
+                console.log("YYYYYY");
+
+                dispatch(
+                    setVisitedCommunity({
+                        ...community,
+                        posts: community.posts.map((post) =>
+                            post.id === updatedPost.id
+                                ? { ...post, postFields: updatedPost.postFields } // Creating a new object for the updated post
+                                : post
+                        ),
+                    })
+                );
+                navigate(`/community/${communityId}`)
+            })
+            .catch((err) => {
+                console.error("Request error:", err.message);
+                dispatch(setErrorMessage(err.message));
+            });
+    };
     const handleChange = (e) => {
         setCommentingState({ ...commentingState, [e.target.name]: e.target.value });
     };
@@ -92,7 +132,7 @@ export const PostPage = () => {
     return (
         <div>
             <h2>Post Details</h2>
-            <PostCard post={post} onDelete={handleDeletePost}/>
+            <PostCard post={post} onDelete={handleDeletePost} handleEditPost={handleEditPost}/>
             <div className="mt-4">
                 <h3>Add a Comment</h3>
                 <form onSubmit={handleSubmit}>

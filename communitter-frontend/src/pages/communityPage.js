@@ -10,6 +10,8 @@ import { setErrorMessage } from "../features/errorSlice";
 import { TemplateModal } from "../components/templateModal";
 import MakePostModal from "../components/postModal";
 import AdvancedSearchModal from "../components/AdvancedSearch";
+import { ModalWrapper } from "../components/ModalWrapper";
+import { WikidataInterface } from "../components/wikidataInterface";
 export const CommunityPage = () => {
   const community = useSelector((state) => state.community.visitedCommunity);
   const [posts, setPosts] = useState(community.posts);
@@ -22,10 +24,14 @@ export const CommunityPage = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isPostOpen, setIsPostOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [role,setRole]=useState("visitor");
+  const [showLabelModal,setShowLabelModal]=useState(false);
   const dispatch = useDispatch();
   const params = useParams();
   const navigate = useNavigate();
   const handleSubscription = async () => {
+    console.log(defaultFetchOpts);
+    
     setSubsButton(false);
     try {
       if (!isSubscribed) {
@@ -74,11 +80,11 @@ export const CommunityPage = () => {
           }
         );
         dispatch(setVisitedCommunity(visitedCommunity));
+        const currentSub=community.subscriptions.find(subscription=>subscription.id.userId==loggedInUser.id);
         setIsSubscribed(
-          community.subscriptions.some(
-            (subscription) => subscription.id.userId == loggedInUser.id
-          )
+         currentSub?true:false
         );
+        setRole(currentSub?currentSub.role.name:role)
         setPosts(visitedCommunity.posts);
         setIsLoading(false);
       } catch (err) {
@@ -149,6 +155,18 @@ export const CommunityPage = () => {
                 >
                   Make a Post
                 </button>
+                {
+                 (role==="owner" || role  ==="creator") &&
+                <button
+                  onClick={() => {
+                    setShowLabelModal(true);
+                  }}
+                  className="btn btn-primary mt-3 mx-3"
+                >
+                  Labels
+                </button>
+
+                }
               </div>
             </div>
           </div>
@@ -179,6 +197,9 @@ export const CommunityPage = () => {
           isOpen={isPostOpen}
           setIsOpen={setIsPostOpen}
         />
+        <ModalWrapper show={showLabelModal} handleClose={setShowLabelModal}>
+          <WikidataInterface url={`${url}/recommendation/community/${community.id}/labels`}/>
+        </ModalWrapper>
       </div>
     )
   );

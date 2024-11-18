@@ -8,10 +8,11 @@ import { fetchWithOpts } from "../utilities/fetchWithOptions";
 import { url } from "../utilities/config";
 import {setErrorMessage} from "../features/errorSlice";
 import { useNavigate } from "react-router-dom";
+import EditPostModal from "./EditPostModal";
 
-const PostCard = ({ post, onDelete, onEdit }) => {
+const PostCard = ({ post, onDelete, onEdit,handleEditPost }) => {
   const { author, postFields, date: timestamp, id } = post; // Destructure post object
-
+    const [showEditModal,setShowEditModal]=useState(false);
     const [voteCount, setVoteCount] = useState(0);
     const navigate = useNavigate();
 
@@ -25,7 +26,7 @@ const PostCard = ({ post, onDelete, onEdit }) => {
             .catch((e) => setErrorMessage(e.message));
     };
     const handleEditClick = () => {
-        onEdit(post);
+        setShowEditModal(true)
     };
 
     // Initial fetch of the vote count when the component mounts
@@ -106,7 +107,14 @@ const PostCard = ({ post, onDelete, onEdit }) => {
           </div>
       </CardBody>
 
-
+      {showEditModal && (
+            <EditPostModal
+                post={post}
+                show={!!showEditModal}
+                onClose={() => setShowEditModal(false)}
+                onSave={handleEditPost}
+            />
+        )}
     </Card>
   );
 };

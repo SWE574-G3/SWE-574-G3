@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Embeddable
 @NoArgsConstructor
 @AllArgsConstructor
-public class SubscriptionKey implements Serializable {
+public class PostVoteKey implements Serializable {
     private Long userId;
-    private Long communityId;
+    private Long postId;
 }

@@ -1,5 +1,6 @@
 package com.communitter.api.dto;
 
+import com.communitter.api.model.User;
 import com.communitter.api.util.InvitationStatus;
 import java.util.Date;
 import lombok.AllArgsConstructor;
@@ -12,17 +13,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class InvitationDto {
+
     private Long id;
 
-    private String username;
+    private UserDto user;
 
-    private  Long communityId;
+    private CommunityDto community;
 
-    private Long roleId;
+    private RoleDto role;
 
     private InvitationStatus invitationStatus;
 
-    private Long sentBy;
+    private UserDto sentBy;
 
     private Date sentAt;
 }

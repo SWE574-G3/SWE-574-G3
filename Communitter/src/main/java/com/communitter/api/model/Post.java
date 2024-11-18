@@ -52,7 +52,7 @@ public class Post {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<PostField> postFields;
-
+  
     //Managing the post reference in the Comment entity.
     @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
@@ -60,4 +60,17 @@ public class Post {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<Comment> comments;
+
+    @OneToMany(
+            mappedBy = "post",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
+    @JsonManagedReference("post-votes")
+    @JsonIgnore
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Set<PostVote> postVotes;
 }

@@ -1,7 +1,5 @@
 package com.communitter.api.dto;
 
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,14 +9,17 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentDto {
+public class UserDto {
 
-    private Long id;    
-    
-    private CommentAuthorDto author;
-    
-    private Date date;
+    private Long id;
 
-    private String content;
+    private String username;
 
+    private String email;
+
+    private String about;
+
+    private String header;
+
+    private String avatar;
 }

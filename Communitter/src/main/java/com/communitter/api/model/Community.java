@@ -52,12 +52,20 @@ public class Community {
     @ToString.Exclude
     private Set<Template> templates;
 
-    @OneToMany(mappedBy = "community",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "community",fetch = FetchType.LAZY)
     @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
     @JsonManagedReference("community-posts")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @JsonIgnoreProperties({"community"})
     private Set<Post> posts;
+
+
+    @OneToMany(mappedBy = "community", cascade = CascadeType.REMOVE, orphanRemoval = true,fetch = FetchType.LAZY)
+    @JsonManagedReference("community-labels")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @JsonIgnore
+    private Set<CommunityLabel> labels;
 
 }

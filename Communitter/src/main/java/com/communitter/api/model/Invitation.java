@@ -55,7 +55,7 @@ public class Invitation {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id", nullable = false)
-    private Role userCommunityRole;
+    private Role role;
 
     @Default
     @Enumerated(EnumType.STRING)

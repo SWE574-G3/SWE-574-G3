@@ -58,7 +58,7 @@ export const CommunityPage = () => {
     try {
       const communityId = community.id;
 
-      const response = await fetchWithOpts(`${url}/community/${communityId}/deletePost/${postId}`, {
+      const response = await fetchWithOpts(`${url}/community/${communityId}/delete-post/${postId}`, {
         ...defaultFetchOpts,
         method: "DELETE",
       });

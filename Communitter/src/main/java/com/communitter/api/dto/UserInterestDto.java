@@ -1,7 +1,7 @@
 package com.communitter.api.dto;
 
-import java.util.Date;
-
+import com.communitter.api.model.User;
+import com.communitter.api.model.WikiEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,14 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentDto {
-
-    private Long id;    
-    
-    private CommentAuthorDto author;
-    
-    private Date date;
-
-    private String content;
-
+public class UserInterestDto {
+    private Long id;
+    private Long userId;
+    private WikiEntity wikiEntity;
 }

@@ -69,11 +69,18 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "author",fetch = FetchType.LAZY)
     @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
-    @JsonManagedReference("user-subs")
+    @JsonManagedReference("user-posts")
     @JsonIgnore
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<Post> posts;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true,fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JsonManagedReference("user-interests")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Set<UserInterest> interests;
 
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
@@ -82,6 +89,7 @@ public class User implements UserDetails {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<PostVote> votes;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -44,18 +44,12 @@ public class ImageController {
 
     
     @GetMapping("/user/{userId}/profile-picture")
-    public ResponseEntity<?> downloadUserProfilePicture(@PathVariable Long userId) {
-    try {
+    public ResponseEntity<?> downloadUserProfilePicture(@PathVariable Long userId) throws IOException {
         ImageDTO imageDataDTO = imageService.getUserProfilePicture(userId);
 
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.parseMediaType(imageDataDTO.getMimeType())) // Sets the correct MIME type
                 .body(imageDataDTO.getData()); // Returns binary data directly
-
-    } catch (RuntimeException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body("Error: " + e.getMessage());
-    }
     }
 
 
@@ -70,19 +64,14 @@ public class ImageController {
     }
 
 
-    @GetMapping("/community/{communityId}/profile-picture")
-    public ResponseEntity<?> downloadUCommunityPicture(@PathVariable Long community_image_id) {
-    try {
+    @GetMapping("/community/{communityId}/community-picture")
+    public ResponseEntity<?> downloadUCommunityPicture(@PathVariable Long community_image_id) throws IOException {
         ImageDTO imageDataDTO = imageService.getCommunityImage(community_image_id);
 
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.parseMediaType(imageDataDTO.getMimeType())) // Sets the correct MIME type
                 .body(imageDataDTO.getData()); // Returns binary data directly
 
-    } catch (RuntimeException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body("Error: " + e.getMessage());
-    }
     }
 
 

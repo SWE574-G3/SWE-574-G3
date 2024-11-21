@@ -24,15 +24,12 @@ import java.io.IOException;
 
 @RestController
 @CrossOrigin
+@RequiredArgsConstructor
 @RequestMapping("/Images")
 public class ImageController {
 
     private final ImageService imageService;
 
-    @Autowired
-    public ImageController(ImageService imageService) {
-        this.imageService = imageService;
-    }
 
     // POST endpoint for uploading a user's profile picture
     @PreAuthorize("@authorizer.authorizerForUser(#root,#userId)")
@@ -64,7 +61,7 @@ public class ImageController {
     }
 
 
-    @GetMapping("/community/{communityId}/community-picture")
+    @GetMapping("/community/{community_image_id}/community-picture")
     public ResponseEntity<?> downloadUCommunityPicture(@PathVariable Long community_image_id) throws IOException {
         ImageDTO imageDataDTO = imageService.getCommunityImage(community_image_id);
 

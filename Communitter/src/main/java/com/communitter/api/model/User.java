@@ -1,5 +1,6 @@
 package com.communitter.api.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -74,6 +75,14 @@ public class User implements UserDetails {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<Post> posts;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "profile_image_id") // Specifies the foreign key in User
+    @JsonManagedReference("user-profile-picture")
+    @ToString.Exclude // Avoid circular references
+    @EqualsAndHashCode.Exclude
+    private ImageData profileImage;
+
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true,fetch = FetchType.LAZY)
     @JsonIgnore

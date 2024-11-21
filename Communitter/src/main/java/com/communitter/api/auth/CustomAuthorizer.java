@@ -68,9 +68,31 @@ public class CustomAuthorizer {
         return (User)authentication.getPrincipal();
     }
 
+    //For the image controller service preauthorization for community picture
+
+    public boolean checkCommunityRole(MethodSecurityExpressionOperations operations, Long communityId) {
+        try {
+            User principal = extractPrincipal(operations);
+            Community community = communityRepository.findById(communityId)
+                .orElseThrow(() -> new IllegalArgumentException("Community not found"));
+        
+            SubscriptionKey subsKey = new SubscriptionKey(principal.getId(), community.getId());
+            Optional<Subscription> subscription = subscriptionRepository.findById(subsKey);
+        
+            return subscription.isPresent() && 
+                ("creator".equalsIgnoreCase(subscription.get().getRole().getName()) ||
+                 "moderator".equalsIgnoreCase(subscription.get().getRole().getName()) ||
+                 "owner".equalsIgnoreCase(subscription.get().getRole().getName()));
+        } catch (Exception e) {
+            // Log the error for troubleshooting purposes
+            return false; // Default to denying access in case of error
+        }
+    }
+    
     private SubscriptionKey createSubscriptionkey(MethodSecurityExpressionOperations operations, Long communityId){
         User principal= extractPrincipal(operations);
         SubscriptionKey subsKey= new SubscriptionKey(principal.getId(), communityId);
         return subsKey;
     }
+
 }

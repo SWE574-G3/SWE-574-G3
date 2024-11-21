@@ -36,7 +36,7 @@ public class CommunityController {
 
     @PostMapping("/subscribe/{id}")
     public ResponseEntity<Subscription> subscribeToCommunity(@PathVariable Long id){
-        return ResponseEntity.ok(communityService.subscribeToCommunity(id));
+        return ResponseEntity.ok(communityService.subscribeToCommunity(id,"user", true));
     }
 
     @DeleteMapping("/unsubscribe/{id}")

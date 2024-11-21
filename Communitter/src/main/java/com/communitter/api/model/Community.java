@@ -52,7 +52,7 @@ public class Community {
     @ToString.Exclude
     private Set<Template> templates;
 
-    @OneToMany(mappedBy = "community",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "community",fetch = FetchType.LAZY)
     @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
     @JsonManagedReference("community-posts")
     @EqualsAndHashCode.Exclude
@@ -60,7 +60,7 @@ public class Community {
     @JsonIgnoreProperties({"community"})
     private Set<Post> posts;
 
-   
+
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "community_image_id") // Specifies the foreign key in User
@@ -69,6 +69,14 @@ public class Community {
     @EqualsAndHashCode.Exclude
     private ImageData communityImage;
 
-    
+
+
+
+    @OneToMany(mappedBy = "community", cascade = CascadeType.REMOVE, orphanRemoval = true,fetch = FetchType.LAZY)
+    @JsonManagedReference("community-labels")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @JsonIgnore
+    private Set<CommunityLabel> labels;
 
 }

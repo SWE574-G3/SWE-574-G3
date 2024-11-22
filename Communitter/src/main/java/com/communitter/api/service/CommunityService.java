@@ -2,6 +2,13 @@ package com.communitter.api.service;
 
 import com.communitter.api.model.*;
 import com.communitter.api.repository.*;
+import com.communitter.api.model.*;
+import com.communitter.api.repository.CommunityRepository;
+import com.communitter.api.repository.SubscriptionRepository;
+import com.communitter.api.model.Role;
+import com.communitter.api.repository.RoleRepository;
+import com.communitter.api.model.User;
+import com.communitter.api.model.Subscription;
 import com.communitter.api.key.SubscriptionKey;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -20,6 +27,7 @@ public class CommunityService {
     private final CommunityRepository communityRepository;
     private final SubscriptionRepository subscriptionRepository;
     private final RoleRepository roleRepository;
+    private final ActivityStreamService activityStreamService;
     private  final DataFieldTypeRepository dataFieldTypeRepository;
     private final DataFieldRepository dataFieldRepository;
     private final TemplateRepository templateRepository;
@@ -54,9 +62,9 @@ public class CommunityService {
         Role userRole= roleRepository.findByName(roleName).orElseThrow();
         Optional<Subscription> currentSub=subscriptionRepository.findById(subsKey);
         if(currentSub.isPresent()) throw new RuntimeException("User already subscribed");
+        activityStreamService.createActivity(ActivityAction.JOIN, subscriber,community, null);
         return subscriptionRepository.save(new Subscription(subsKey,subscriber,community,userRole));
     }
-
     @Transactional
     public String unsubscribe(Long id){
         User subscriber= (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

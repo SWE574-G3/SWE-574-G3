@@ -1,8 +1,11 @@
 package com.communitter.api.controller;
 
+import com.communitter.api.dto.ActivityStreamDto;
 import com.communitter.api.exception.NotAuthorizedException;
+import com.communitter.api.model.ActivityStream;
 import com.communitter.api.model.Community;
 import com.communitter.api.model.Post;
+import com.communitter.api.service.ActivityStreamService;
 import com.communitter.api.service.CommunityService;
 import com.communitter.api.model.Subscription;
 import com.communitter.api.service.PostService;
@@ -13,6 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
@@ -22,6 +26,7 @@ public class CommunityController {
 
     private final CommunityService communityService;
     private final PostService postService;
+    private final ActivityStreamService activityStreamService;
 
     @PostMapping("/create")
     public ResponseEntity<Community> createCommunity(@RequestBody Community community){
@@ -71,4 +76,17 @@ public class CommunityController {
             @RequestBody Post updatedPost) {
         return ResponseEntity.ok(postService.editPost( postId, updatedPost));
     }
+
+    @GetMapping("/{communityId}/activity-stream")
+    public ResponseEntity<List<ActivityStreamDto>> getActivitiesByCommunity(@PathVariable Long communityId) {
+        List<ActivityStream> activities = activityStreamService.getActivitiesByCommunity(communityId);
+
+        List<ActivityStreamDto> activityDtos = activities.stream()
+                .map(activityStreamService::toDto)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(activityDtos);
+    }
+
+
 }

@@ -3,6 +3,9 @@ package com.communitter.api.service;
 import com.communitter.api.key.PostVoteKey;
 import com.communitter.api.model.*;
 import com.communitter.api.repository.*;
+import com.communitter.api.auth.CustomAuthorizer;
+import com.communitter.api.model.*;
+import com.communitter.api.repository.*;
 import com.communitter.api.util.PostValidator;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -10,8 +13,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import java.time.LocalDateTime;
 import com.communitter.api.util.BasicAuthorizationUtil;
-import com.communitter.api.exception.NotAuthorizedException;
 
 import java.util.*;
 
@@ -23,6 +28,7 @@ public class PostService {
     private final CommunityRepository communityRepository;
     private final TemplateRepository templateRepository;
     private final PostFieldRepository postFieldRepository;
+    private final ActivityStreamService activityStreamService;
     private final BasicAuthorizationUtil authUtil;
     public Logger logger = LoggerFactory.getLogger(PostService.class);
 
@@ -42,6 +48,7 @@ public class PostService {
                 postField.setPost(createdPost);
             }
             postFieldRepository.saveAll(post.getPostFields());
+            activityStreamService.createActivity(ActivityAction.CREATE, author, targetCommunity, createdPost);
             return  createdPost;
         }
         else{
@@ -100,7 +107,15 @@ public class PostService {
                 .post(postToVote)
                 .user(author)
                 .build();
-        return postVoteRepository.save(postVote);
+        Community community = postToVote.getCommunity();
+        PostVote votedPost= postVoteRepository.save(postVote);
+        if(isUpvote){
+            activityStreamService.createActivity(ActivityAction.UPVOTE, author, community, postToVote);
+        } else{
+            activityStreamService.createActivity(ActivityAction.DOWNVOTE, author, community, postToVote);
+        }
+        return votedPost;
+
     }
 
     public Long getVoteCount(Long id){

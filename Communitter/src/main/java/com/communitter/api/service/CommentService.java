@@ -3,6 +3,7 @@ package com.communitter.api.service;
 import java.util.Date;
 import java.util.Set;
 
+import com.communitter.api.model.ActivityAction;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 public class CommentService {
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
+    private final ActivityStreamService activityStreamService;
 
     @Transactional
     public CommentDto createComment(Long postId, CommentDto commentDto){
@@ -38,7 +40,7 @@ public class CommentService {
 
         post.getComments().add(createdComment);
         postRepository.save(post);
-
+        activityStreamService.createActivity(ActivityAction.COMMENT, author, post.getCommunity(), post);
         return CommentDto.builder()
         .id(createdComment.getId())
         .author(

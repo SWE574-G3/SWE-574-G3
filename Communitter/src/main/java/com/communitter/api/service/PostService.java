@@ -77,6 +77,7 @@ public class PostService {
             if (!checkRequiredFields(updatedPost.getPostFields(), postTemplate)) {
                 throw new RuntimeException("Updated post does not have all required fields");
             }
+            if(!PostValidator.validatePost(updatedPost)) throw new RuntimeException("Post fields don't comply with the expected format");
 
             // Loop through each updated field and apply changes to existing fields
             for (PostField updatedField : updatedPost.getPostFields()) {

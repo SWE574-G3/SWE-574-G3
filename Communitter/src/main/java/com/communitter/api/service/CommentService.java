@@ -55,6 +55,14 @@ public class CommentService {
     }
 
     @Transactional
+    public CommentDto editComment(CommentDto editedComment){
+        Comment originalComment = getCommentById(editedComment.getId());
+        originalComment.setContent(editedComment.getContent());
+        
+        return editedComment;
+    }
+
+    @Transactional
     public String deleteComment(Long id){
         Comment comment = commentRepository.findById(id).orElseThrow();
         commentRepository.delete(comment);

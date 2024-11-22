@@ -1,6 +1,8 @@
 package com.communitter.api.service;
 
 import com.communitter.api.model.*;
+import com.communitter.api.repository.*;
+import com.communitter.api.model.*;
 import com.communitter.api.repository.CommunityRepository;
 import com.communitter.api.repository.SubscriptionRepository;
 import com.communitter.api.model.Role;
@@ -26,16 +28,21 @@ public class CommunityService {
     private final SubscriptionRepository subscriptionRepository;
     private final RoleRepository roleRepository;
     private final ActivityStreamService activityStreamService;
+    private  final DataFieldTypeRepository dataFieldTypeRepository;
+    private final DataFieldRepository dataFieldRepository;
+    private final TemplateRepository templateRepository;
     public Logger logger = LoggerFactory.getLogger(CommunityService.class);
 
     @Transactional
     public Community createCommunity(Community community){
+        logger.info(String.valueOf(community));
         User creator= (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         community.setCreator(creator);
         Community createdCommunity=communityRepository.save(community);
         SubscriptionKey subsKey= new SubscriptionKey(creator.getId(), createdCommunity.getId());
         Role creatorRole= roleRepository.findByName("creator").orElseThrow();
         subscriptionRepository.save(new Subscription(subsKey,creator,createdCommunity,creatorRole));
+        addDefaultTemplate(createdCommunity);
         return createdCommunity;
     }
 
@@ -68,7 +75,25 @@ public class CommunityService {
         subscriptionRepository.delete(currentSub);
         return "User unsubscribed";
     }
+
     public List<Community> getAllCommunities(){
         return communityRepository.findAll();
+    }
+
+    private void addDefaultTemplate(Community community){
+        Template createdTemplate = templateRepository.save(Template.builder()
+                .name("Default Template")
+                .community(community)
+                .build());
+        dataFieldRepository.save(DataField.builder().name("Title")
+                .isRequired(true)
+                .dataFieldType(dataFieldTypeRepository.findByType("string"))
+                .template(createdTemplate)
+                .build());
+        dataFieldRepository.save(DataField.builder().name("Comment")
+                .isRequired(true)
+                .dataFieldType(dataFieldTypeRepository.findByType("string"))
+                .template(createdTemplate)
+                .build());
     }
 }

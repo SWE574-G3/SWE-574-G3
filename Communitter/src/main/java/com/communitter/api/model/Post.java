@@ -32,13 +32,13 @@ public class Post {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id",nullable = false)
-    @JsonIgnoreProperties({"avatar","about","subscriptions"})
+    @JsonIgnoreProperties({"avatar","about","subscriptions","interests","posts","createdCommunities","accountNonExpired","accountNonLocked","credentialsNonExpired","authorities"})
     private User author;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "community_id",nullable = false)
     @JsonBackReference("community-posts")
-    @JsonIgnoreProperties({"subscriptions","templates","posts","authorities","accountNonExpired","accountNonLocked","credentialsNonExpired"})
+    @JsonIgnoreProperties({"subscriptions","templates","posts","labels"})
     private Community community;
 
     @ManyToOne(fetch = FetchType.EAGER)

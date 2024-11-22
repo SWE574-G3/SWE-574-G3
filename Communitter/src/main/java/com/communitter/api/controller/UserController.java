@@ -43,6 +43,25 @@ public class UserController {
     public ResponseEntity<User> updateUserPassword(@P ("id") @PathVariable Long id, UserRequest userInfo){
         return ResponseEntity.ok(userService.updateUserPassword(id, userInfo));
     }
+
+    //Ahmet Ahmet
+    @PutMapping("/update/header/{id}")
+    @PreAuthorize("@authorizer.authorizerForUser(#root,#id)")
+    public ResponseEntity<User> updateUserHeader(@P("id") @PathVariable Long id, @RequestParam String header) {
+        return ResponseEntity.ok(userService.updateUserHeader(id, header));
+    }
+
+    @PutMapping("/update/about/{id}")
+    @PreAuthorize("@authorizer.authorizerForUser(#root,#id)")
+    public ResponseEntity<User> updateUserAbout(@P("id") @PathVariable Long id, @RequestParam String about) {
+        return ResponseEntity.ok(userService.updateUserAbout(id, about));
+    }
+
+
+
+
+
+
     @GetMapping("/healthcheck")
     public ResponseEntity<String> healthCheck(){
         return ResponseEntity.ok("hello");

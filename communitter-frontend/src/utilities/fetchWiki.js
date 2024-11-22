@@ -1,11 +1,9 @@
-import { tokenName } from "./config";
+import { wikidataUrl } from "./config";
 
-export async function fetchWithOpts(url, options) {
-  const token = localStorage.getItem(tokenName);
-  if(!options.headers) options.headers={};
-  options.headers.Authorization = "Bearer " + token;
-  
-  
+export async function fetchWiki(searchParams, options) {
+  if(options.headers) delete options.headers;
+  const paramsString = new URLSearchParams(searchParams).toString();
+  const url = wikidataUrl + paramsString;
   const response = await fetch(url, options);
   if (!response.ok) {
     const message = await response.text();

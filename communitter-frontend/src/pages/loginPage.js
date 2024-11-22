@@ -39,7 +39,7 @@ export function LoginPage() {
         setWarning(registerResult[1]);
       } else {
         const id = extractId(localStorage.getItem(tokenName));
-        navigate("/user/" + id);
+        navigate("/user/interest");
         console.log(registerResult);
       }
     } else {

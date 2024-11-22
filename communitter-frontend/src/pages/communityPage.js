@@ -12,10 +12,12 @@ import MakePostModal from "../components/postModal";
 import AdvancedSearchModal from "../components/AdvancedSearch";
 import { ModalWrapper } from "../components/ModalWrapper";
 import { WikidataInterface } from "../components/wikidataInterface";
+
 export const CommunityPage = () => {
   const community = useSelector((state) => state.community.visitedCommunity);
   const [posts, setPosts] = useState(community.posts);
-  console.log(posts);
+  const [editPost, setEditPost] = useState(null);
+  const [isPostEdited, setIsPostEdited] = useState(false)
   const loggedInUser = useSelector((state) => state.user.loggedInUser);
   console.log(community);
   const [isSubscribed, setIsSubscribed] = useState(false);
@@ -30,8 +32,6 @@ export const CommunityPage = () => {
   const params = useParams();
   const navigate = useNavigate();
   const handleSubscription = async () => {
-    console.log(defaultFetchOpts);
-    
     setSubsButton(false);
     try {
       if (!isSubscribed) {
@@ -67,9 +67,40 @@ export const CommunityPage = () => {
       dispatch(setErrorMessage(err.message));
     }
   };
+
+  const handleEditPost = (updatedPost) => {
+    const communityId = params.id;
+
+    fetchWithOpts(`${url}/community/${communityId}/edit-post/${updatedPost.id}`, {
+      ...defaultFetchOpts,
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json", // Explicitly set the Content-Type
+      },
+      body: JSON.stringify({
+        postFields: updatedPost.postFields,
+      }),
+    })
+        .then((response) => {
+          dispatch(
+              setVisitedCommunity({
+                ...community,
+                posts: community.posts.map((post) =>
+                    post.id === updatedPost.id
+                        ? { ...post, postFields: updatedPost.postFields } // Creating a new object for the updated post
+                        : post
+                ),
+              })
+          );
+          setIsPostEdited(true)
+        })
+        .catch((err) => {
+          console.error("Request error:", err.message);
+          dispatch(setErrorMessage(err.message));
+        });
+  };
+
   useEffect(() => {
-    console.log("entered useEffect");
-    console.log(isSubscribed);
     async function getCommunity() {
       try {
         const visitedCommunity = await fetchWithOpts(
@@ -80,7 +111,7 @@ export const CommunityPage = () => {
           }
         );
         dispatch(setVisitedCommunity(visitedCommunity));
-        const currentSub=community.subscriptions.find(subscription=>subscription.id.userId==loggedInUser.id);
+        const currentSub=community.subscriptions.find(subscription=>subscription.id.userId===loggedInUser.id);
         setIsSubscribed(
          currentSub?true:false
         );
@@ -96,6 +127,7 @@ export const CommunityPage = () => {
       }
     }
     getCommunity();
+    setIsPostEdited(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     dispatch,
@@ -104,6 +136,7 @@ export const CommunityPage = () => {
     community?.posts.length,
     community?.templates.length,
     isSubscribed,
+    isPostEdited
   ]);
   return (
     !isLoading && (
@@ -187,7 +220,8 @@ export const CommunityPage = () => {
           setIsOpen={setIsFilterOpen}
           templates={community.templates}
         ></AdvancedSearchModal>
-        <Posts posts={posts} onDelete={handleDeletePost}/> <Members members={community.subscriptions} />
+        <Posts posts={posts} onDelete={handleDeletePost} onEdit={(post) => setEditPost(post)} handleEditPost={handleEditPost}/>
+          <Members members={community.subscriptions} />
         <TemplateModal
           isOpen={isTemplateOpen}
           setIsOpen={setIsTemplateOpen}

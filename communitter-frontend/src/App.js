@@ -21,7 +21,7 @@ function App() {
             element={<CommunityCreationPage></CommunityCreationPage>}
           ></Route>
           <Route path="/user/:id" element={<UserPage></UserPage>}></Route>
-          <Route path="/posts/:id" element={<PostPage></PostPage>}></Route>
+          <Route path="/community/:communityId/posts/:id" element={<PostPage></PostPage>}></Route>
           <Route
             path="/community/:id"
             element={<CommunityPage></CommunityPage>}

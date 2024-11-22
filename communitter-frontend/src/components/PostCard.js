@@ -16,8 +16,11 @@ const PostCard = ({ post, onDelete, onEdit,handleEditPost }) => {
     const community = useSelector((state) => state.community.visitedCommunity);
     const [showEditModal,setShowEditModal]=useState(false);
     const [voteCount, setVoteCount] = useState(0);
+    const loggedInUser = useSelector((state) => state.user.loggedInUser);
     const navigate = useNavigate();
 
+    console.log(`community info = ${JSON.stringify(community)}`)
+    console.log(`post info = ${JSON.stringify(post)}`)
     // Function to fetch the latest vote count
     const fetchVoteCount = async () => {
         fetchWithOpts(`${url}/posts/${post.id}/voteCount`, {
@@ -100,9 +103,11 @@ const PostCard = ({ post, onDelete, onEdit,handleEditPost }) => {
               <Button variant="danger" onClick={handleDeleteClick} className="me-2">
                   Delete
               </Button>
+              {post.author.id === loggedInUser.id && (
               <Button variant="primary" onClick={handleEditClick}>
                   Edit
               </Button>
+              )}
           </div>
           <div className="vote-buttons mt-2  d-flex align-items-center" style={{ position: "absolute", bottom: "10px", right: "10px" }}>
               <i onClick={handleUpvote} className="bi bi-arrow-up me-2" style={{ cursor: "pointer", color: "green" }}></i>

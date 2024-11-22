@@ -34,7 +34,7 @@ const ActivityFeedCard = ({ activities, selectedAction, communityCreatorId }) =>
                                 </>
                             ) : activity.action === "UPVOTE" ? (
                                 <>{" "}upvoted the{" "}
-                                    <Link to={`/posts/${activity.postId}`} className="activity-link">
+                                        <Link to={`/posts/${activity.postId}`} className="activity-link">
                                         Post
                                     </Link>
                                 </>
@@ -50,7 +50,13 @@ const ActivityFeedCard = ({ activities, selectedAction, communityCreatorId }) =>
                                         {activity.communityName}
                                     </Link>
                                 </>
-                            ) : null}
+                            ) : activity.action === "COMMENT" ? (
+                                <>{" "}commented on a{" "}
+                                    <Link to={`/posts/${activity.postId}`} className="activity-link">
+                                        Post
+                                    </Link>
+                                </>
+                            ) :null}
                         </span>
                     </div>
                 ))}

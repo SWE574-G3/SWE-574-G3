@@ -1,0 +1,72 @@
+/* CommunityPage.css */
+
+.community-page {
+    display: flex;
+}
+
+.main-content {
+    flex: 3;
+    margin-right: 20px;
+}
+
+/*.mt-5{*/
+/*    max-width: 1000px;*/
+/*}*/
+
+.activity-feed {
+    flex: 1;
+    max-width: 300px;
+    margin-top: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    height: 100%;
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+
+.activity-feed h3 {
+    margin-bottom: 10px;
+}
+
+.activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.activity-item {
+    font-size: 14px;
+    padding: 5px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-time {
+    color: #888;
+    font-size: 12px;
+}
+
+.activity-description {
+    flex: 1;
+}
+
+.activity-item.highlight {
+    background-color: #f0f8ff; /* Light blue background */
+    border-left: 5px solid #007bff; /* Blue left border to highlight the activity */
+    font-weight: bold; /* Make text bold */
+    padding-left: 20px; /* Add padding to the left to fit the border */
+}
+
+.activity-item.highlight .activity-time {
+    color: #007bff; /* Make the timestamp blue for added emphasis */
+}
+
+.activity-item.highlight .activity-description {
+    color: #333; /* Keep the description color normal or adjust as needed */
+}
+

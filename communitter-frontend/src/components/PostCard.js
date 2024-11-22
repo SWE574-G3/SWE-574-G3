@@ -96,8 +96,8 @@ const PostCard = ({ post, onDelete, onEdit,handleEditPost }) => {
         {postFields.map((postField) => (
           <PostField key={postField.id} postField={postField} />
         ))}
-          <div className="d-flex justify-content-between">
-              <Button variant="danger" onClick={handleDeleteClick}>
+          <div className="d-flex">
+              <Button variant="danger" onClick={handleDeleteClick} className="me-2">
                   Delete
               </Button>
               <Button variant="primary" onClick={handleEditClick}>

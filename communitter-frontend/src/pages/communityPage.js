@@ -10,9 +10,9 @@ import { setErrorMessage } from "../features/errorSlice";
 import { TemplateModal } from "../components/templateModal";
 import MakePostModal from "../components/postModal";
 import AdvancedSearchModal from "../components/AdvancedSearch";
-import EditPostModal from "../components/EditPostModal";
 import { ModalWrapper } from "../components/ModalWrapper";
 import { WikidataInterface } from "../components/wikidataInterface";
+
 export const CommunityPage = () => {
   const community = useSelector((state) => state.community.visitedCommunity);
   const [posts, setPosts] = useState(community.posts);
@@ -69,16 +69,7 @@ export const CommunityPage = () => {
   };
 
   const handleEditPost = (updatedPost) => {
-    console.log("CCCC");
     const communityId = params.id;
-    console.log("ANAAAAA");
-
-    console.log(`updated post = ${JSON.stringify(updatedPost)}`);
-    console.log(`URL = ${url}/community/${communityId}/edit-post/${updatedPost.id}`);
-    console.log(`GONDERILEN POST = ${JSON.stringify({postFields: updatedPost.postFields})}`);
-
-    // Debug log before fetch call
-    console.log("Sending request...");
 
     fetchWithOpts(`${url}/community/${communityId}/edit-post/${updatedPost.id}`, {
       ...defaultFetchOpts,
@@ -91,8 +82,6 @@ export const CommunityPage = () => {
       }),
     })
         .then((response) => {
-          console.log("YYYYYY");
-
           dispatch(
               setVisitedCommunity({
                 ...community,
@@ -112,8 +101,6 @@ export const CommunityPage = () => {
   };
 
   useEffect(() => {
-    console.log("entered useEffect");
-    console.log(isSubscribed);
     async function getCommunity() {
       try {
         const visitedCommunity = await fetchWithOpts(
@@ -124,7 +111,7 @@ export const CommunityPage = () => {
           }
         );
         dispatch(setVisitedCommunity(visitedCommunity));
-        const currentSub=community.subscriptions.find(subscription=>subscription.id.userId==loggedInUser.id);
+        const currentSub=community.subscriptions.find(subscription=>subscription.id.userId===loggedInUser.id);
         setIsSubscribed(
          currentSub?true:false
         );

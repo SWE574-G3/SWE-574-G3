@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { fetchWithOpts } from "../utilities/fetchWithOptions";
-import {defaultFetchOpts, url} from "../utilities/config";
+import { defaultFetchOpts, url } from "../utilities/config";
 import PostCard from "../components/PostCard";
 import { PostComments } from '../components/PostComments';
 import { useParams, useNavigate } from "react-router-dom";
 import { CommentService } from "../utilities/CommentService";
-import {useDispatch, useSelector} from "react-redux";
-import {deletePost, setVisitedCommunity} from "../features/communitySlice";
-import {setErrorMessage} from "../features/errorSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { deletePost, setVisitedCommunity } from "../features/communitySlice";
+import { setErrorMessage } from "../features/errorSlice";
 
 export const PostPage = () => {
     //Post and Comment statements
@@ -31,7 +31,7 @@ export const PostPage = () => {
 
         console.log(`updated post = ${JSON.stringify(updatedPost)}`);
         console.log(`URL = ${url}/community/${communityId}/edit-post/${updatedPost.id}`);
-        console.log(`GONDERILEN POST = ${JSON.stringify({postFields: updatedPost.postFields})}`);
+        console.log(`GONDERILEN POST = ${JSON.stringify({ postFields: updatedPost.postFields })}`);
 
         // Debug log before fetch call
         console.log("Sending request...");
@@ -66,31 +66,54 @@ export const PostPage = () => {
                 dispatch(setErrorMessage(err.message));
             });
     };
-    const handleChange = (e) => {
+    const handleChangeComments = (e) => {
         setCommentingState({ ...commentingState, [e.target.name]: e.target.value });
     };
 
+    const handleEditComment = async (updatedComment, commentId) => {
+        if (!updatedComment || !updatedComment.id) {
+            console.error("Invalid comment object:", updatedComment);
+            return;
+        }
+
+        try {
+            const editedComment = await CommentService.editComment(updatedComment, commentId);
+            if (editedComment && editedComment.id) {
+                console.log("Comment updated successfully:", editedComment);
+                setComments((prevComments) =>
+                    prevComments.map((prevComment) =>
+                        prevComment.id === editedComment.id ? editedComment : prevComment
+                    )
+                );
+            } else {
+                console.error("Edited comment is missing 'id':", editedComment);
+            }
+        } catch (error) {
+            console.error("Failed to edit comment:", error.message);
+        }
+    };
+    
     const handleDeleteComment = async (commentId) => {
         if (commentId == null) {
             throw new Error("Comment ID is required");
-        }        
+        }
         try {
             await CommentService.deleteComment(commentId);
-    
+
             setComments((prevComments) => prevComments.filter((comment) => comment.id !== commentId));
         } catch (error) {
             console.error("Failed to delete comment:", error.message);
         }
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmitComment = async (e) => {
         e.preventDefault();
         try {
             const newComment = await CommentService.createComment(commentingState, id);
             console.log("New comment:", newComment);
 
             if (newComment && newComment.id) {
-                setComments([newComment, ...comments]); 
+                setComments([newComment, ...comments]);
             } else {
                 console.error("New comment is missing an 'id'.", newComment);
             }
@@ -98,7 +121,9 @@ export const PostPage = () => {
         } catch (error) {
             console.error(error.message);
         }
-    }
+    };
+
+
     const handleDeletePost = async (postId) => {
         try {
             const communityId = community.id;
@@ -145,14 +170,14 @@ export const PostPage = () => {
     return (
         <div>
             <h2>Post Details</h2>
-            <PostCard post={post} onDelete={handleDeletePost} handleEditPost={handleEditPost}/>
+            <PostCard post={post} onDelete={handleDeletePost} handleEditPost={handleEditPost} />
             <div className="mt-4">
                 <h3>Add a Comment</h3>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmitComment}>
                     <textarea
                         name="content"
                         value={commentingState.content}
-                        onChange={handleChange}
+                        onChange={handleChangeComments}
                         rows="4"
                         placeholder="Write your comment here..."
                         className="form-control"
@@ -160,7 +185,7 @@ export const PostPage = () => {
                     <button type="submit" className="btn btn-primary mt-2">Submit Comment</button>
                 </form>
             </div>
-            <PostComments comments={comments || []} onDeleteComment={handleDeleteComment} />
+            <PostComments comments={comments || []} onDeleteComment={handleDeleteComment} onEditComment={handleEditComment} />
         </div>
     );
 };

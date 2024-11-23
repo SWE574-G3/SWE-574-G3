@@ -22,4 +22,24 @@ export class CommentService {
             console.log(error.message);
         }
     }
+
+    static async deleteComment(commentId){
+        const token = localStorage.getItem(tokenName);
+        try {
+            const response = await fetch(`${url}/comments/delete/${commentId}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type" : "application/json",
+                    "Authorization" : `Bearer ${token}`
+                }
+            });
+
+            if (!response.ok){
+                throw new Error("Failed to delete comment: ", response);
+            }
+            return await response.json();
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
 }

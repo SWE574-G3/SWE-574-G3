@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 import CardBody from "react-bootstrap/CardBody";
 import Button from "react-bootstrap/esm/Button";
 
-export const CommentCard = ({ comment }) => {
+
+export const CommentCard = ({ comment, onDeleteComment}) => {
     const { author, date: timestamp, content, id } = comment;
     const navigate = useNavigate();
 
@@ -14,7 +15,7 @@ export const CommentCard = ({ comment }) => {
     };
 
     const handleDeleteComment = () => {
-
+        onDeleteComment(id);
     };
 
     return (

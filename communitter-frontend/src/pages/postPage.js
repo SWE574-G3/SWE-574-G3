@@ -70,6 +70,19 @@ export const PostPage = () => {
         setCommentingState({ ...commentingState, [e.target.name]: e.target.value });
     };
 
+    const handleDeleteComment = async (commentId) => {
+        if (commentId == null) {
+            throw new Error("Comment ID is required");
+        }        
+        try {
+            await CommentService.deleteComment(commentId);
+    
+            setComments((prevComments) => prevComments.filter((comment) => comment.id !== commentId));
+        } catch (error) {
+            console.error("Failed to delete comment:", error.message);
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -147,7 +160,7 @@ export const PostPage = () => {
                     <button type="submit" className="btn btn-primary mt-2">Submit Comment</button>
                 </form>
             </div>
-            <PostComments comments={comments || []} />
+            <PostComments comments={comments || []} onDeleteComment={handleDeleteComment} />
         </div>
     );
 };

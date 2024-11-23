@@ -4,34 +4,22 @@ import { Link } from "react-router-dom";
 import { fetchWithOpts } from "../utilities/fetchWithOptions";
 import { url } from "../utilities/config";
 import { setErrorMessage } from "../features/errorSlice";
-import { useSelector } from "react-redux";
 
 const Communities = () => {
   const [communities, setCommunities] = useState([]);
   const [showRecommended, setShowRecommended] = useState(false);
-  const loggedInUser = useSelector((state) => state.user.loggedInUser);
 
   useEffect(() => {
     let path = showRecommended
       ? "/recommendation/communities"
-      : "/community/all";
+      : "/community/all-public";
     fetchWithOpts(`${url}${path}`, {
       method: "GET",
       headers: {},
     })
-      .then((data) => {
-        const listedCommunities = data.filter(
-          (community) =>
-            community.public ||
-            community.subscriptions.some(
-              (subscription) => subscription.id.userId === loggedInUser.id
-            )
-        );
-
-        setCommunities(listedCommunities);
-      })
+      .then((data) => setCommunities(data))
       .catch((e) => setErrorMessage(e.message));
-  }, [loggedInUser.id, showRecommended]);
+  }, [showRecommended]);
   return (
     <div className="container mt-4">
       {/* Switch for toggling between Recommended and All Communities */}

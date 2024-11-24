@@ -300,6 +300,7 @@ export const CommunityPage = () => {
 
                         {/* Activity Feed Card */}
                         <ActivityStreamCard
+                            communityId={params.id}
                             activities={activities}
                             selectedAction={selectedAction}
                             communityCreatorId={communityCreatorId}

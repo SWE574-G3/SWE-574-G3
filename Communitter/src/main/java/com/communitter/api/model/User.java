@@ -76,6 +76,7 @@ public class User implements UserDetails {
     @ToString.Exclude
     private Set<Post> posts;
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "profile_image_id") // Specifies the foreign key in User
     @JsonManagedReference("user-profile-picture")

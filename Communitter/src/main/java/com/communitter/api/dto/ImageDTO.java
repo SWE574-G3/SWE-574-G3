@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ImageDTO {
-    private byte[] data;
-    private String mimeType;
+    private String base64Image; // Base64-encoded image data
+    private String mimeType;   // MIME type (e.g., "image/png")
 }

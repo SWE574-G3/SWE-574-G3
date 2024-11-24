@@ -4,7 +4,6 @@ const initialState = {
   loggedInUser: {
     id: "",
     about: "",
-    avatar: "",
     header: "",
     email: "",
     username: "",
@@ -13,7 +12,6 @@ const initialState = {
   visitedUser: {
     id: "",
     about: "",
-    avatar: "",
     header: "",
     email: "",
     username: "",

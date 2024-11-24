@@ -39,14 +39,18 @@ public class ImageController {
         return ResponseEntity.ok(response);
     }
 
-    
+
     @GetMapping("/user/{userId}/profile-picture")
-    public ResponseEntity<?> downloadUserProfilePicture(@PathVariable Long userId) throws IOException {
+    public ResponseEntity<String> downloadUserProfilePicture(@PathVariable Long userId) {
+        // Retrieve the image data DTO
         ImageDTO imageDataDTO = imageService.getUserProfilePicture(userId);
 
+        // Prepare the response with Base64-encoded data and MIME type
+        String base64ImageData = "data:" + imageDataDTO.getMimeType() + ";base64," + imageDataDTO.getBase64Image();
+
         return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.parseMediaType(imageDataDTO.getMimeType())) // Sets the correct MIME type
-                .body(imageDataDTO.getData()); // Returns binary data directly
+                .contentType(MediaType.TEXT_PLAIN) // Content type for Base64 strings
+                .body(base64ImageData);
     }
 
 
@@ -62,17 +66,21 @@ public class ImageController {
 
 
     @GetMapping("/community/{community_image_id}/community-picture")
-    public ResponseEntity<?> downloadUCommunityPicture(@PathVariable Long community_image_id) throws IOException {
+    public ResponseEntity<String> downloadCommunityPicture(@PathVariable Long community_image_id) {
+        // Retrieve the image data DTO
         ImageDTO imageDataDTO = imageService.getCommunityImage(community_image_id);
 
-        return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.parseMediaType(imageDataDTO.getMimeType())) // Sets the correct MIME type
-                .body(imageDataDTO.getData()); // Returns binary data directly
+        // Format the Base64 image data as a Data URI
+        String base64ImageData = "data:" + imageDataDTO.getMimeType() + ";base64," + imageDataDTO.getBase64Image();
 
+        return ResponseEntity.status(HttpStatus.OK)
+                .contentType(MediaType.TEXT_PLAIN) // Content type for Base64 strings
+                .body(base64ImageData);
     }
 
 
-    //______________________________________________________________________________________________________________________
+
+        //______________________________________________________________________________________________________________________
     // DELETE endpoint for deleting a user's and communities' profile picture
     //______________________________________________________________________________________________________________________
     @PreAuthorize("@authorizer.authorizerForUser(#root,#userId)")

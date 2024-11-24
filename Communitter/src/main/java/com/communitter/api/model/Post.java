@@ -73,4 +73,11 @@ public class Post {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<PostVote> postVotes;
+
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
+    @JsonIgnore
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Set<ActivityStream> activityStreams;
 }

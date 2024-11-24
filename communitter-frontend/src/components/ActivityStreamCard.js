@@ -1,10 +1,13 @@
 // components/ActivityFeedCard.js
 import { Link } from "react-router-dom";
 
-const ActivityFeedCard = ({ activities, selectedAction, communityCreatorId }) => {
+const ActivityFeedCard = ({ activities, selectedAction, communityCreatorId, communityId }) => {
     const filterActivities = () => {
-        if (!selectedAction) return activities;
-        return activities.filter(activity => activity.action === selectedAction);
+        const filteredActivities = !selectedAction
+            ? activities
+            : activities.filter(activity => activity.action === selectedAction);
+
+        return filteredActivities.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
     };
 
     return (
@@ -28,19 +31,19 @@ const ActivityFeedCard = ({ activities, selectedAction, communityCreatorId }) =>
                             {activity.action === "CREATE" && activity.postId ? (
                                 <>
                                     {" "}created a{" "}
-                                    <Link to={`/posts/${activity.postId}`} className="activity-link">
+                                    <Link to={`/community/${communityId}/posts/${activity.postId}`} className="activity-link">
                                         Post
                                     </Link>
                                 </>
                             ) : activity.action === "UPVOTE" ? (
                                 <>{" "}upvoted the{" "}
-                                        <Link to={`/posts/${activity.postId}`} className="activity-link">
+                                        <Link to={`/community/${communityId}/posts/${activity.postId}`} className="activity-link">
                                         Post
                                     </Link>
                                 </>
                             ) : activity.action === "DOWNVOTE" ? (
                                 <> {" "}downvoted the{" "}
-                                    <Link to={`/posts/${activity.postId}`} className="activity-link">
+                                    <Link to={`/community/${communityId}/posts/${activity.postId}`} className="activity-link">
                                         Post
                                     </Link>
                                 </>
@@ -52,7 +55,7 @@ const ActivityFeedCard = ({ activities, selectedAction, communityCreatorId }) =>
                                 </>
                             ) : activity.action === "COMMENT" ? (
                                 <>{" "}commented on a{" "}
-                                    <Link to={`/posts/${activity.postId}`} className="activity-link">
+                                    <Link to={`/community/${communityId}/posts/${activity.postId}`} className="activity-link">
                                         Post
                                     </Link>
                                 </>

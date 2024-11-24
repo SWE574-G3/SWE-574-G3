@@ -3,8 +3,11 @@ import { Link } from "react-router-dom";
 
 const ActivityFeedCard = ({ activities, selectedAction, communityCreatorId }) => {
     const filterActivities = () => {
-        if (!selectedAction) return activities;
-        return activities.filter(activity => activity.action === selectedAction);
+        const filteredActivities = !selectedAction
+            ? activities
+            : activities.filter(activity => activity.action === selectedAction);
+
+        return filteredActivities.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
     };
 
     return (

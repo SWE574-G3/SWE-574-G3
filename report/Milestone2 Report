@@ -1,0 +1,179 @@
+# Milestone 2 Report
+
+## SWE 574 - GROUP 3
+
+### Table of Contents
+
+1. [Introduction](#introduction)
+2. [New Features Added to the Project](#new-features-added-to-the-project)
+   - [2.1 Invitation System](#21-invitation-system)
+   - [2.2 Profile Customization](#22-profile-customization)
+   - [2.3 Recommendation Engine](#23-recommendation-engine)
+   - [2.4 Activity Stream](#24-activity-stream)
+   - [2.5 Comment Functionality](#25-comment-functionality)
+   - [2.6 Vote Functionality](#26-vote-functionality)
+   - [2.7 Default Template Functionality](#27-default-template-functionality)
+   - [2.8 Post Delete Functionality](#28-post-delete-functionality)
+   - [2.9 Post Edit Functionality](#29-post-edit-functionality)
+   - [2.10 Bugs Solved](#210-bugs-solved)
+3. [Future Aspects of the Project](#future-aspects-of-the-project)
+4. [Contributors and Their Contributions](#contributors-and-their-contributions)
+
+### Introduction
+
+This report provides an overview of the progress made by Group 3 for the second milestone. Building on the foundation from the first milestone, it highlights key advancements in coding, design, and project management.
+
+Milestone 2 focuses on implementing new features such as enhanced notifications, profile customization, and image storage, while improving the recommendation engine and activity stream. Backend optimizations and API integrations were also completed to support these updates.
+
+The report includes individual contributions, major accomplishments, and resolved issues, pointing out the team's commitment to meeting project goals and preparing for the next phases of the development.
+
+### New Features Added to the Project
+
+#### 2.1 Invitation System
+
+The Invitation System provides a structured way for community owners and moderators to manage memberships in private communities. It allows users to send, accept, reject, list, and cancel invitations, ensuring controlled access and privacy. Members can view and respond to invitations, while community managers have the authority to track and revoke them when necessary. This system supports secure and organized onboarding, promoting well-managed and exclusive community environments.
+
+Related Issues:
+- [Issue #55](https://github.com/SWE574-G3/SWE-574-G3/issues/55)
+- [Issue #67](https://github.com/SWE574-G3/SWE-574-G3/issues/67)
+- [Issue #75](https://github.com/SWE574-G3/SWE-574-G3/issues/75)
+- [Issue #76](https://github.com/SWE574-G3/SWE-574-G3/issues/76)
+
+#### 2.2 Profile Customization
+
+Profile customization enables users to create a unique identity on the platform. Possible options:
+- Profile Picture: Upload and edit avatars by cropping the image to see the size.
+- Header/About: Add/Update personal details and headers to the profile.
+- Update Password and Email: Email and passwords can now be updated with validation.
+
+Related Issues:
+- [Issue #47](https://github.com/SWE574-G3/SWE-574-G3/issues/47)
+- [Issue #48](https://github.com/SWE574-G3/SWE-574-G3/issues/48)
+
+#### 2.3 Recommendation Engine
+
+The recommendation engine system integrates Wikidata with Spring Boot to recommend communities based on user-selected interests. It uses semantic tagging via WikiEntity to link interests and communities, managed through REST endpoints. The frontend dynamically fetches recommendations by matching user interests with community tags using Wikidata relationships, ensuring scalability and relevance.
+
+Related Issues:
+- [Issue #77](https://github.com/SWE574-G3/SWE-574-G3/issues/77)
+- [Issue #78](https://github.com/SWE574-G3/SWE-574-G3/issues/78)
+
+#### 2.4 Activity Stream
+
+The Activity Stream provides a real-time feed of key actions within communities, ensuring members stay informed and engaged. It is designed to display activities in reverse chronological order, with filtering options allowing users to focus on specific types of actions. Community feeds are accessible only to registered members, maintaining privacy and relevance. The backend securely logs and retrieves activities, while the frontend presents them in an intuitive timeline view.
+
+Related Issues:
+- [Issue #44](https://github.com/SWE574-G3/SWE-574-G3/issues/44)
+- [Issue #66](https://github.com/SWE574-G3/SWE-574-G3/issues/66)
+- [Issue #118](https://github.com/SWE574-G3/SWE-574-G3/issues/118)
+
+#### 2.5 Comment Functionality
+
+The Comment Functionality enables users to engage with posts through adding, editing, and deleting comments. Comments are displayed contextually under posts. For the comment entry, users should click on the posts and give their input under the post view. The comments are editable and can be deleted by the comment author.
+
+Related Issues:
+- [Issue #42](https://github.com/SWE574-G3/SWE-574-G3/issues/42)
+- [Issue #69](https://github.com/SWE574-G3/SWE-574-G3/issues/69)
+- [Issue #71](https://github.com/SWE574-G3/SWE-574-G3/issues/71)
+- [Issue #80](https://github.com/SWE574-G3/SWE-574-G3/issues/80)
+- [Issue #82](https://github.com/SWE574-G3/SWE-574-G3/issues/82)
+- [Issue #113](https://github.com/SWE574-G3/SWE-574-G3/issues/113)
+
+#### 2.6 Vote Functionality
+
+This feature allows users to express their opinions about posts in the community hub by either upvoting or downvoting. Users can click an "Upvote" button to express approval or appreciation for a post. Users can click a "Downvote" button to indicate disapproval or disagreement. Implemented backend logic to track votes, ensuring each user can vote only once (upvote or downvote) per post. Stored vote counts in the database and updated them dynamically in real-time on the frontend.
+
+Related Issues:
+- [Issue #41](https://github.com/SWE574-G3/SWE-574-G3/issues/41)
+- [Issue #40](https://github.com/SWE574-G3/SWE-574-G3/issues/40)
+
+#### 2.7 Default Template Functionality
+
+This task involves providing a pre-defined structure or format for posts when a new community is created. Designed a default post template with title and comments. Configured the community setup process to include this template automatically upon creation.
+
+Related Issue:
+- [Issue #101](https://github.com/SWE574-G3/SWE-574-G3/issues/101)
+
+#### 2.8 Post Delete Functionality
+
+The post deletion feature allows users to take down their own posts when needed. Only the person who created the post and the community owner have the authority to delete it. This ensures that users maintain control over their content, while also preventing unauthorized deletions and protecting the community's integrity.
+
+Related Issues:
+- [Issue #33](https://github.com/SWE574-G3/SWE-574-G3/issues/33)
+- [Issue #51](https://github.com/SWE574-G3/SWE-574-G3/issues/51)
+
+#### 2.9 Post Edit Functionality
+
+The post editing feature allows users to modify their own posts as needed. This functionality is restricted to the post creator and the community owner, ensuring that only authorized individuals can make changes. Users are not permitted to edit posts created by others.
+
+Related Issues:
+- [Issue #34](https://github.com/SWE574-G3/SWE-574-G3/issues/34)
+- [Issue #65](https://github.com/SWE574-G3/SWE-574-G3/issues/65)
+
+#### 2.10 Bugs Solved
+
+The resolved bugs focused on making the system work better and improving the experience for users. Problems with the user interface, backend connections, and login process were fixed. Data handling and communication with other parts of the system were improved to make everything run more smoothly. Slow loading times were addressed, and issues with notifications and error messages were also fixed.
+
+Related Issues:
+- [Issue #32](https://github.com/SWE574-G3/SWE-574-G3/issues/32)
+- [Issue #38](https://github.com/SWE574-G3/SWE-574-G3/issues/38)
+- [Issue #57](https://github.com/SWE574-G3/SWE-574-G3/issues/57)
+- [Issue #69](https://github.com/SWE574-G3/SWE-574-G3/issues/69)
+- [Issue #89](https://github.com/SWE574-G3/SWE-574-G3/issues/89)
+- [Issue #91](https://github.com/SWE574-G3/SWE-574-G3/issues/91)
+- [Issue #92](https://github.com/SWE574-G3/SWE-574-G3/issues/92)
+- [Issue #95](https://github.com/SWE574-G3/SWE-574-G3/issues/95)
+- [Issue #101](https://github.com/SWE574-G3/SWE-574-G3/issues/101)
+- [Issue #105](https://github.com/SWE574-G3/SWE-574-G3/issues/105)
+- [Issue #110](https://github.com/SWE574-G3/SWE-574-G3/issues/110)
+- [Issue #117](https://github.com/SWE574-G3/SWE-574-G3/issues/117)
+- [Issue #121](https://github.com/SWE574-G3/SWE-574-G3/issues/121)
+
+### Future Aspects of the Project
+
+For the future part of the project, we plan to add some new features, and review our existing project so that the application runs smoothly on a browser and also on mobile devices. Here are some of the features we will be working on:
+- Existing bugs and lack of error handling will be resolved such as:
+  - The system doesn't throw any errors when there is a problem with the voting function.
+  - Geolocation and image parts of the editing posting functionality will be added.
+  - The buttons for editing the posts will be hidden for subscribers who are not the author of the post.
+  - Homepage will be revised to create different experiences for different users.
+  - While listing communities, there is no need to display public or private because the system will only display public communities.
+  - Community labels should be visible to other users so they can see why those communities are recommended.
+  - Replying to another comment and following a user functionality could be added.
+  - Improving user experience on mobile devices.
+  - Enumeration type fields will be implemented.
+
+### Contributors and Their Contributions
+
+- **Ahmet Dolma**
+  - Backend - Editing Profile Functionality
+  - Frontend - Editing Profile Functionality
+
+- **Mehmet Oğuz Özüer**
+  - Post Page View with Comments
+  - Comment Frontend
+  - Comment Backend
+  - Bug Fixes for Comment and Post Page
+
+- **Cankut ER**
+  - Wikidata Integration - Fullstack
+  - Recommendation Engine - Fullstack
+  - Bug fixes (Default template, advanced search, performance issues)
+  - Deployment & Maintenance
+
+- **Nilay Aydın**
+  - Activity Stream (Backend & Frontend)
+  - Post Deletion (Backend & Frontend)
+  - Post Edit (Backend & Frontend)
+  - Bug Fixes (Comment, Voting, Activity Stream, Post edit & delete)
+  - Deployment & Maintenance
+
+- **Ahmet Özmüş**
+  - Voting Mechanism
+  - Default Template Structure
+  - Bug Fixes (Template creation, voting post)
+
+- **Yunus Emre Korkmaz**
+  - Reviewing PRs
+  - Invitations - Community side
+  - Invitations - User side

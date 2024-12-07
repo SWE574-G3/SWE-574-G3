@@ -1,5 +1,7 @@
 import Communities from "../components/Communities";
 
 export function HomePage() {
-  return <Communities />;
+  return(
+    <p>SOON TO BE</p>
+  )
 }

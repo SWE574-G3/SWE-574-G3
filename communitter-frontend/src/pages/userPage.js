@@ -7,6 +7,7 @@ import { setVisitedUser } from "../features/userSlice";
 import { setErrorMessage } from "../features/errorSlice";
 import { UserProfile } from "../components/UserProfile";
 import { Subscriptions } from "../components/Subscriptions";
+import UserInvitations from "../components/UserInvitations";
 
 export function UserPage() {
   const loggedInUser = useSelector((state) => state.user.loggedInUser);
@@ -55,6 +56,7 @@ export function UserPage() {
     !isLoading && (
       <>
         <UserProfile shownUser={shownUser} />
+        <UserInvitations />
         <Subscriptions subscriptions={shownUser.subscriptions} />
       </>
     )

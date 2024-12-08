@@ -91,7 +91,7 @@ export const UserProfile = ({ shownUser }) => {
   const fetchProfilePicture = async () => {
     try {
       const response = await axios.get(
-          `${url}/Images/user/${localShownUser.id}/profile-picture`,
+          `${url}/images/user/${localShownUser.id}/profile-picture`,
           { headers: { Authorization: `Bearer ${token}` } }
       );
       setProfilePicture(response.data || defaultProfilePicture);

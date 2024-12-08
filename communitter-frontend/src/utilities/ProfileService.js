@@ -17,7 +17,7 @@ export class ProfileService {
 
         try {
             const response = await axios.post(
-                `${url}/Images/user/${userId}/profile-picture`,
+                `${url}/images/user/${userId}/profile-picture`,
                 formData,
                 {
                     headers: {

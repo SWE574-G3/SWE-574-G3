@@ -52,13 +52,23 @@ export function Navbar() {
   return (
     <nav className="nav">
       <ul className="nav nav-pills">
+
         <li
           className="nav-item"
           onClick={() => {
-            navigate("/home");
+            navigate("/home")
+          }}
+          >
+            <button className="nav-link">Home</button>
+          </li>
+
+        <li
+          className="nav-item"
+          onClick={() => {
+            navigate("/communities");
           }}
         >
-          <button className="nav-link">Home</button>
+          <button className="nav-link">Communities</button>
         </li>
         <li
           className="nav-item"

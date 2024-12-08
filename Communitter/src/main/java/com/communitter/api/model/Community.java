@@ -62,6 +62,7 @@ public class Community {
 
 
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "community_image_id") // Specifies the foreign key in User
     @JsonManagedReference("community-profile-picture")

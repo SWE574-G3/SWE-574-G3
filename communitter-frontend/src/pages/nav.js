@@ -18,7 +18,7 @@ export function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const handleSearchTermChange = (event) => {
     setSearchTerm(event.target.value);
-    if (event.target.value == "") {
+    if (event.target.value ==="") {
       setIsDropdownOpen(false);
     }
   };

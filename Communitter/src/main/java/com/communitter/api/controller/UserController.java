@@ -1,13 +1,20 @@
 package com.communitter.api.controller;
 
+import com.communitter.api.dto.ImageDTO;
 import com.communitter.api.dto.request.UserRequest;
 import com.communitter.api.model.User;
 import com.communitter.api.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import com.communitter.api.service.ImageService;
+import java.io.IOException;
+
 
 @RestController
 @CrossOrigin
@@ -15,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final ImageService imageService;
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserInfo(@P ("id") @PathVariable Long id){
@@ -56,11 +64,6 @@ public class UserController {
     public ResponseEntity<User> updateUserAbout(@P("id") @PathVariable Long id, @RequestParam String about) {
         return ResponseEntity.ok(userService.updateUserAbout(id, about));
     }
-
-
-
-
-
 
     @GetMapping("/healthcheck")
     public ResponseEntity<String> healthCheck(){

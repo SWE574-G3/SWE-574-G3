@@ -76,6 +76,14 @@ export function Navbar() {
         >
           <button className="nav-link">Profile</button>
         </li>
+        <li
+          className="nav-item"
+          onClick={() => {
+            navigate(`/user/interest`);
+          }}
+        >
+          <button className="nav-link">Interests</button>
+        </li>
         <li className="nav-item position-relative">
           <form
             className="d-flex align-items-center"

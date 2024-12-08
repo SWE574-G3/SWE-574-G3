@@ -8,13 +8,19 @@ import { fetchWithOpts } from "../utilities/fetchWithOptions";
 import { url } from "../utilities/config";
 import {setErrorMessage} from "../features/errorSlice";
 import { useNavigate } from "react-router-dom";
+import EditPostModal from "./EditPostModal";
+import {useSelector} from "react-redux";
 
-const PostCard = ({ post, onDelete }) => {
+const PostCard = ({ post, onDelete, onEdit,handleEditPost }) => {
   const { author, postFields, date: timestamp, id } = post; // Destructure post object
-
+    const community = useSelector((state) => state.community.visitedCommunity);
+    const [showEditModal,setShowEditModal]=useState(false);
     const [voteCount, setVoteCount] = useState(0);
+    const loggedInUser = useSelector((state) => state.user.loggedInUser);
     const navigate = useNavigate();
 
+    console.log(`community info = ${JSON.stringify(community)}`)
+    console.log(`post info = ${JSON.stringify(post)}`)
     // Function to fetch the latest vote count
     const fetchVoteCount = async () => {
         fetchWithOpts(`${url}/posts/${post.id}/voteCount`, {
@@ -24,6 +30,10 @@ const PostCard = ({ post, onDelete }) => {
             .then((data) => setVoteCount(data))
             .catch((e) => setErrorMessage(e.message));
     };
+    const handleEditClick = () => {
+        setShowEditModal(true)
+    };
+
 
     // Initial fetch of the vote count when the component mounts
     useEffect(() => {
@@ -32,10 +42,10 @@ const PostCard = ({ post, onDelete }) => {
 
     // Directing to postview
     const directToPostView = () => {
-        navigate(`/posts/${post.id}`);
+        navigate(`/community/${community.id}/posts/${post.id}`);
       };
 
-    // Handle upvote
+    // Handle upvotexs
     const handleUpvote = async () => {
         try {
             const response = await fetchWithOpts(`${url}/posts/${post.id}/vote?isUpvote=true`, {
@@ -70,6 +80,7 @@ const PostCard = ({ post, onDelete }) => {
             onDelete(id);
         }
     };
+
   return (
     <Card className="mb-3">
       <CardTitle onClick={directToPostView} style={{cursor: "pointer"}}>
@@ -82,16 +93,21 @@ const PostCard = ({ post, onDelete }) => {
           minute: "2-digit",
           hour12: false,
         })}{" "}
-        - Template: {post.template.name}
+        - Template: {post.template?.name}
       </CardTitle>
       <CardBody>
         {postFields.map((postField) => (
           <PostField key={postField.id} postField={postField} />
         ))}
-          <div className="d-flex justify-content-between">
-              <Button variant="danger" onClick={handleDeleteClick}>
+          <div className="d-flex">
+              <Button variant="danger" onClick={handleDeleteClick} className="me-2">
                   Delete
               </Button>
+              {post.author.id === loggedInUser.id && (
+              <Button variant="primary" onClick={handleEditClick}>
+                  Edit
+              </Button>
+              )}
           </div>
           <div className="vote-buttons mt-2  d-flex align-items-center" style={{ position: "absolute", bottom: "10px", right: "10px" }}>
               <i onClick={handleUpvote} className="bi bi-arrow-up me-2" style={{ cursor: "pointer", color: "green" }}></i>
@@ -99,6 +115,15 @@ const PostCard = ({ post, onDelete }) => {
               <i onClick={handleDownvote} className="bi bi-arrow-down ms-2" style={{ cursor: "pointer", color: "red" }}></i>
           </div>
       </CardBody>
+
+      {showEditModal && (
+            <EditPostModal
+                post={post}
+                show={showEditModal}
+                onClose={() => setShowEditModal(false)}
+                onSave={handleEditPost}
+            />
+        )}
     </Card>
   );
 };

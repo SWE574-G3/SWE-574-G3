@@ -20,6 +20,7 @@ export function SharedLayout() {
     async function protectRoute() {
       const isloggedIn = await checkLogin();
       if (!isloggedIn.ok) {
+        setIsAllowed(false);
         location.pathname !== "/" ? navigate("/") : setIsAllowed(true);
       } else {
         dispatch(setLoggedInUser(isloggedIn.userInfo));

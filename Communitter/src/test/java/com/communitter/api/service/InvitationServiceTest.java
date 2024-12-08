@@ -3,6 +3,12 @@ package com.communitter.api.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -47,6 +53,9 @@ class InvitationServiceTest {
 
     @InjectMocks
     private InvitationService invitationService;
+
+    @Mock
+    private CommunityService communityService;
 
     @BeforeEach
     void setUp() {
@@ -175,4 +184,179 @@ class InvitationServiceTest {
         assertEquals(1, result.size());
         assertEquals(invitationDto, result.get(0));
     }
+
+    @Test
+    void acceptOrRejectInvitation_ShouldAccept_WhenValidRequest() {
+        User authUser = new User();
+        authUser.setId(1L);
+
+        Community community = new Community();
+        community.setId(1L);
+
+        Role role = new Role();
+        role.setName("user");  // Set the role name to avoid null
+
+        Invitation invitation = new Invitation();
+        invitation.setId(1L);
+        invitation.setUser(authUser);
+        invitation.setInvitationStatus(InvitationStatus.PENDING);
+        invitation.setCommunity(community);
+        invitation.setRole(role);  // Set the role to the invitation
+
+        InvitationDto invitationDto = new InvitationDto();
+
+        when(invitationRepository.findByIdAndInvitationStatus(1L, InvitationStatus.PENDING))
+            .thenReturn(Optional.of(invitation));
+        when(invitationMapper.toDto(invitation)).thenReturn(invitationDto);
+
+        InvitationDto result = invitationService.acceptOrRejectInvitation(authUser, 1L, InvitationStatus.ACCEPTED);
+
+        verify(communityService, times(1))
+            .subscribeToCommunity(community.getId(), role.getName(), false);
+        assertEquals(invitationDto, result);
+    }
+
+    @Test
+    void acceptOrRejectInvitation_ShouldReject_WhenValidRequest() {
+        User authUser = new User();
+        authUser.setId(1L);
+
+        Invitation invitation = new Invitation();
+        invitation.setId(1L);
+        invitation.setUser(authUser);
+        invitation.setInvitationStatus(InvitationStatus.PENDING);
+
+        InvitationDto invitationDto = new InvitationDto();
+
+        when(invitationRepository.findByIdAndInvitationStatus(1L, InvitationStatus.PENDING))
+            .thenReturn(Optional.of(invitation));
+        when(invitationMapper.toDto(invitation)).thenReturn(invitationDto);
+
+        InvitationDto result = invitationService.acceptOrRejectInvitation(authUser, 1L,
+            InvitationStatus.REJECTED);
+
+        verify(communityService, never()).subscribeToCommunity(anyLong(), anyString(),
+            anyBoolean());
+        assertEquals(invitationDto, result);
+    }
+
+    @Test
+    void acceptOrRejectInvitation_ShouldThrowException_WhenInvitationDoesNotBelongToUser() {
+        User authUser = new User();
+        authUser.setId(1L);
+
+        User anotherUser = new User();
+        anotherUser.setId(2L);
+
+        Invitation invitation = new Invitation();
+        invitation.setId(1L);
+        invitation.setUser(anotherUser);
+        invitation.setInvitationStatus(InvitationStatus.PENDING);
+
+        when(invitationRepository.findByIdAndInvitationStatus(1L, InvitationStatus.PENDING))
+            .thenReturn(Optional.of(invitation));
+
+        assertThrows(RuntimeException.class, () ->
+            invitationService.acceptOrRejectInvitation(authUser, 1L, InvitationStatus.ACCEPTED));
+    }
+
+    @Test
+    void cancelInvitation_ShouldCancelInvitation_WhenAuthorized() {
+        User authUser = new User();
+        authUser.setId(1L);
+
+        Community community = new Community();
+        community.setId(1L);
+
+        Invitation invitation = new Invitation();
+        invitation.setCommunity(community);
+        invitation.setId(1L);
+        invitation.setInvitationStatus(InvitationStatus.PENDING);
+        invitation.setSentBy(authUser);
+
+        Role userRole = new Role();
+        userRole.setName("user");
+
+        Subscription subscription = new Subscription();
+        subscription.setRole(userRole);
+
+        InvitationDto invitationDto = new InvitationDto();
+
+        when(invitationRepository.findByIdAndInvitationStatus(1L, InvitationStatus.PENDING))
+            .thenReturn(Optional.of(invitation));
+        when(roleRepository.findByName("user")).thenReturn(Optional.of(userRole));
+        when(subscriptionRepository.findById(any(SubscriptionKey.class))).thenReturn(Optional.of(subscription));
+        when(invitationMapper.toDto(invitation)).thenReturn(invitationDto);
+
+        InvitationDto result = invitationService.cancelInvitation(authUser, 1L);
+
+        assertEquals(invitationDto, result);
+        assertEquals(InvitationStatus.CANCELLED, invitation.getInvitationStatus());
+    }
+
+    @Test
+    void cancelInvitation_ShouldThrowException_WhenUnauthorizedUserCancels() {
+        User authUser = new User();
+        authUser.setId(1L);
+
+        User senderUser = new User();
+        senderUser.setId(2L);
+
+        Invitation invitation = new Invitation();
+        invitation.setId(1L);
+        invitation.setInvitationStatus(InvitationStatus.PENDING);
+        invitation.setSentBy(senderUser);
+
+        Role userRole = new Role();
+        userRole.setName("user");
+
+        Subscription subscription = new Subscription();
+        subscription.setRole(userRole);
+
+        when(invitationRepository.findByIdAndInvitationStatus(1L, InvitationStatus.PENDING))
+            .thenReturn(Optional.of(invitation));
+        when(roleRepository.findByName("user")).thenReturn(Optional.of(userRole));
+        when(subscriptionRepository.findById(any(SubscriptionKey.class))).thenReturn(Optional.of(subscription));
+
+        assertThrows(RuntimeException.class, () -> invitationService.cancelInvitation(authUser, 1L));
+    }
+
+    @Test
+    void cancelInvitation_ShouldThrowException_WhenUserHasLowerRoleIdThanInvitation() {
+        User authUser = new User();
+        authUser.setId(1L);
+
+        Community community = new Community();
+        community.setId(1L);
+
+        Role userRole = new Role();
+        userRole.setId(2L);  // The authUser's role ID
+
+        Role invitationRole = new Role();
+        invitationRole.setId(3L);  // The role ID required for the invitation, higher than user's role ID
+
+        Invitation invitation = new Invitation();
+        invitation.setId(1L);
+        invitation.setCommunity(community);
+        invitation.setUser(authUser);
+        invitation.setSentBy(authUser);  // authUser sent this invitation
+        invitation.setInvitationStatus(InvitationStatus.PENDING);
+        invitation.setRole(invitationRole);
+
+        SubscriptionKey subsKey = new SubscriptionKey(authUser.getId(), community.getId());
+        Subscription subscription = new Subscription();
+        subscription.setRole(userRole);  // AuthUser's subscription role
+
+        when(invitationRepository.findByIdAndInvitationStatus(1L, InvitationStatus.PENDING))
+            .thenReturn(Optional.of(invitation));
+        when(roleRepository.findByName("user")).thenReturn(Optional.of(userRole));
+        when(subscriptionRepository.findById(subsKey)).thenReturn(Optional.of(subscription));
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () ->
+            invitationService.cancelInvitation(authUser, 1L)
+        );
+
+        assertEquals("You cannot cancel this invitation.", exception.getMessage());
+    }
+
 }

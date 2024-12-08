@@ -1,6 +1,6 @@
 import { CommentCard } from './CommentCard';
 
-export const PostComments = ({comments}) => {
+export const PostComments = ({comments, onDeleteComment, onEditComment}) => {
     if (!Array.isArray(comments) || comments.length === 0) {
         return <p>No Comments Found!</p>;
     }
@@ -15,7 +15,7 @@ export const PostComments = ({comments}) => {
                         .sort((a, b) => new Date(b.date) - new Date(a.date)) 
                         .map((comment) => (
                             <div key={comment.id} className="col">
-                                <CommentCard comment={comment} />
+                                <CommentCard comment={comment} onDeleteComment={onDeleteComment} onEditComment={onEditComment}/>
                             </div>
                         ))}
                 </div>

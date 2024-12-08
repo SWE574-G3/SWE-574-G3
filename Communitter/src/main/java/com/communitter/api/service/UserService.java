@@ -4,6 +4,7 @@ import com.communitter.api.dto.request.UserRequest;
 import com.communitter.api.repository.UserRepository;
 import com.communitter.api.model.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,4 +47,20 @@ public class UserService {
 
         return userRepo.save(existinguser);
     }
+
+    @Transactional
+    public User updateUserHeader(Long id, String header) {
+        User existingUser = userRepo.findById(id).orElseThrow(() -> new UsernameNotFoundException("User with ID " + id + " not found"));
+        existingUser.setHeader(header); // Update the header
+        return userRepo.save(existingUser); // Save and return the updated User object
+    }
+
+    @Transactional
+    public User updateUserAbout(Long id, String about) {
+        User existingUser = userRepo.findById(id).orElseThrow();
+        existingUser.setAbout(about);
+        return userRepo.save(existingUser);
+    }
+
+
 }

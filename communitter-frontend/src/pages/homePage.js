@@ -3,20 +3,20 @@ import { useSelector } from "react-redux";
 import { url } from "../utilities/config";
 import { fetchWithOpts } from "../utilities/fetchWithOptions";
 import PostCard from "../components/PostCard";
+import { setErrorMessage } from "../features/errorSlice";
 
 export function HomePage() {
   const loggedInUser = useSelector((state) => state.user.loggedInUser);
   const [joinedCommunities, setJoinedCommunities] = useState([]);
+  const [recommendedCommunities, setRecommendedCommunities] = useState([]);
+  const [combinedPosts, setCombinedPosts] = useState([]);
 
-  // Function to get random posts from the community's already available posts
   function getRandomPosts(posts) {
-    // Shuffle the posts and pick a maximum of 5
     return posts
-      .sort(() => 0.5 - Math.random()) // Shuffle the posts
-      .slice(0, 5); // Limit to 5 posts
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 5);
   }
 
-  // Fetch communities by their IDs
   async function fetchCommunitiesByIds(subscriptions) {
     try {
       const communities = await Promise.all(
@@ -39,12 +39,11 @@ export function HomePage() {
 
             const community = response;
 
-            // Use the existing posts in the community
             const randomPosts = getRandomPosts(community.posts);
 
             return {
               ...community,
-              posts: randomPosts, // Add the random posts to the community data
+              posts: randomPosts,
             };
           } catch (error) {
             console.error(`Error fetching community ID ${communityId}:`, error);
@@ -52,42 +51,100 @@ export function HomePage() {
           }
         })
       );
-
+      console.log(communities);
       setJoinedCommunities(communities);
     } catch (error) {
       console.error("Failed to fetch communities:", error);
     }
   }
 
+  async function fetchRecommendedCommunities() {
+    try {
+      const path = "/recommendation/communities";
+      const recommendedData = await fetchWithOpts(`${url}${path}`, {
+        method: "GET",
+        headers: {},
+      });
+  
+      const recommendedIds = recommendedData.map((community) => community.id);
+  
+      const recommendedDetails = await Promise.all(
+        recommendedIds.map(async (id) => {
+          try {
+            const community = await fetchWithOpts(`${url}/community/${id}`, {
+              method: "GET",
+              headers: {},
+            });
+            return community;
+          } catch (error) {
+            console.error(`Error fetching community with ID ${id}:`, error);
+            return null; // Handle failure for specific community
+          }
+        })
+      );
+  
+      const validCommunities = recommendedDetails.filter(Boolean);
+  
+      setRecommendedCommunities(validCommunities);
+    } catch (error) {
+      console.error("Failed to fetch recommended communities:", error);
+      setErrorMessage(error.message);
+    }
+  }
+  
+  function combinePosts() {
+    const joinedCommunityIds = new Set(joinedCommunities.map((community) => community.id));
+    const uniqueRecommendedCommunities = recommendedCommunities.filter(
+      (community) => !joinedCommunityIds.has(community.id)
+    );
+  
+    const allCommunities = [...joinedCommunities, ...uniqueRecommendedCommunities];
+  
+    let selectedPosts = [];
+  
+    allCommunities.forEach((community) => {
+      if (Array.isArray(community.posts) && community.posts.length > 0) {
+        const enrichedPost = community.posts.map(post => ({
+          ...post,
+          community: community
+        }));
+        
+        const randomCommunityPosts = getRandomPosts(enrichedPost);
+        selectedPosts = [...selectedPosts, ...randomCommunityPosts];
+      }
+    });
+  
+    selectedPosts.sort(() => Math.random() - 0.5);
+  
+    setCombinedPosts(selectedPosts);
+  }
+  
+  
   useEffect(() => {
     if (loggedInUser && loggedInUser.subscriptions) {
-      console.log("Logged in user data:", loggedInUser);
-
       fetchCommunitiesByIds(loggedInUser.subscriptions);
+      fetchRecommendedCommunities();
     }
+
   }, [loggedInUser]);
+
+  useEffect(() => {
+    if (joinedCommunities.length > 0 || recommendedCommunities.length > 0) {
+      combinePosts();
+    }
+  }, [joinedCommunities, recommendedCommunities]);
 
   return (
     <div>
       <h2>Welcome</h2>
-      {joinedCommunities.length > 0 ? (
-        <ul>
-          {joinedCommunities.map((community, index) => (
-            <li key={community.id || index}>
-              {community.posts.length > 0 ? (
-                <div>
-                  {community.posts.map((post, postIndex) => (
-                    <PostCard key={post.id || postIndex} post={post} />
-                  ))}
-                </div>
-              ) : (
-                <p>No posts available.</p>
-              )}
-            </li>
+      {combinedPosts.length > 0 ? (
+        <div>
+          {combinedPosts.map((post, postIndex) => (
+            <PostCard key={post.id || postIndex} post={post} />
           ))}
-        </ul>
+        </div>
       ) : (
-        <p>You haven't joined any communities yet.</p>
+        <p>No posts available.</p>
       )}
     </div>
   );

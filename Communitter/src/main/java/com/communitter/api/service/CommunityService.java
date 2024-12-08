@@ -1,5 +1,7 @@
 package com.communitter.api.service;
 
+import com.communitter.api.dto.CommunityDto;
+import com.communitter.api.mapper.CommunityMapper;
 import com.communitter.api.model.*;
 import com.communitter.api.repository.*;
 import com.communitter.api.model.*;
@@ -31,6 +33,7 @@ public class CommunityService {
     private  final DataFieldTypeRepository dataFieldTypeRepository;
     private final DataFieldRepository dataFieldRepository;
     private final TemplateRepository templateRepository;
+    private final CommunityMapper communityMapper;
     public Logger logger = LoggerFactory.getLogger(CommunityService.class);
 
     @Transactional
@@ -78,6 +81,11 @@ public class CommunityService {
 
     public List<Community> getAllCommunities(){
         return communityRepository.findAll();
+    }
+
+    public List<CommunityDto> getAllPublicCommunities(){
+        List<Community> publicCommunities = communityRepository.findAllByIsPublic(true).orElseThrow();
+        return publicCommunities.stream().map(communityMapper::toDto).toList();
     }
 
     private void addDefaultTemplate(Community community){

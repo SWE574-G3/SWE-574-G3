@@ -7,6 +7,7 @@ import { setVisitedUser } from "../features/userSlice";
 import { setErrorMessage } from "../features/errorSlice";
 import { UserProfile } from "../components/UserProfile";
 import { Subscriptions } from "../components/Subscriptions";
+import UserInvitations from "../components/UserInvitations";
 
 export function UserPage() {
   const loggedInUser = useSelector((state) => state.user.loggedInUser);
@@ -21,7 +22,7 @@ export function UserPage() {
   useEffect(() => {
     async function getUser() {
       // eslint-disable-next-line eqeqeq
-      if (params.id == loggedInUser.id) {
+      if (params.id === loggedInUser.id) {
         setShownUser(loggedInUser);
         setIsLoading(false);
         return;
@@ -52,9 +53,11 @@ export function UserPage() {
     visitedUser.subscriptions.length,
   ]);
   return (
+
     !isLoading && (
       <>
         <UserProfile shownUser={shownUser} />
+        <UserInvitations />
         <Subscriptions subscriptions={shownUser.subscriptions} />
       </>
     )

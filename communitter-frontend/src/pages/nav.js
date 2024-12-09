@@ -18,7 +18,7 @@ export function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const handleSearchTermChange = (event) => {
     setSearchTerm(event.target.value);
-    if (event.target.value == "") {
+    if (event.target.value ==="") {
       setIsDropdownOpen(false);
     }
   };
@@ -75,6 +75,14 @@ export function Navbar() {
           }}
         >
           <button className="nav-link">Profile</button>
+        </li>
+        <li
+          className="nav-item"
+          onClick={() => {
+            navigate(`/user/interest`);
+          }}
+        >
+          <button className="nav-link">Interests</button>
         </li>
         <li className="nav-item position-relative">
           <form

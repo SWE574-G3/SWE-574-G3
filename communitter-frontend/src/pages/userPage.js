@@ -22,7 +22,7 @@ export function UserPage() {
   useEffect(() => {
     async function getUser() {
       // eslint-disable-next-line eqeqeq
-      if (params.id == loggedInUser.id) {
+      if (params.id === loggedInUser.id) {
         setShownUser(loggedInUser);
         setIsLoading(false);
         return;
@@ -53,6 +53,7 @@ export function UserPage() {
     visitedUser.subscriptions.length,
   ]);
   return (
+
     !isLoading && (
       <>
         <UserProfile shownUser={shownUser} />

@@ -1,13 +1,7 @@
 package com.communitter.api.service;
 
-import com.communitter.api.repository.DataFieldRepository;
-import com.communitter.api.repository.DataFieldTypeRepository;
-import com.communitter.api.repository.TemplateRepository;
-import com.communitter.api.model.Community;
-import com.communitter.api.repository.CommunityRepository;
-import com.communitter.api.model.DataField;
-import com.communitter.api.model.DataFieldType;
-import com.communitter.api.model.Template;
+import com.communitter.api.model.*;
+import com.communitter.api.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +15,7 @@ public class TemplateService {
     private final TemplateRepository templateRepository;
     private  final DataFieldTypeRepository dataFieldTypeRepository;
     private final DataFieldRepository dataFieldRepository;
+    private final DataFieldEnumValueRepository dataFieldEnumValueRepository;
 
     @Transactional
     public Template createTemplate(Long id, Template template){
@@ -31,8 +26,14 @@ public class TemplateService {
             Template createdTemplate = templateRepository.save(template);
             for (DataField dataField : template.getDataFields()) {
                 dataField.setTemplate(createdTemplate);
+                DataField createdDataField = dataFieldRepository.save(dataField);
+                if(dataField.getDataFieldType().getType().equals("enumeration")){
+                    for(DataFieldEnumValue dataFieldEnumValue : dataField.getEnumValues()){
+                        dataFieldEnumValue.setDataField(createdDataField);
+                        dataFieldEnumValueRepository.save(dataFieldEnumValue);
+                    }
+                }
             }
-            dataFieldRepository.saveAll(template.getDataFields());
             return createdTemplate;
         }else{
             throw new RuntimeException("Template has to have data fields");

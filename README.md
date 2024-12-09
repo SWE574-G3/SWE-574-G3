@@ -2,6 +2,8 @@
 
 Welcome to the **SWE-574-G3** repository! This project aims to build a **Community Engagement Platform** that allows users to create and interact with communities, share posts, and leverage custom templates. The platform is developed using **Spring Boot**, **Hibernate**, **React** and **React Native** focusing on dynamic validation, advanced search features, and user role management.
 
+Application is running in here: http://34.141.124.71:3000
+
 ## Table of Contents
 
 - [Features](#features)

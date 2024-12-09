@@ -45,10 +45,9 @@ public class DataField {
     @JsonBackReference("template-datafields")
     private Template template;
 
-    @OneToMany(mappedBy = "dataField",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "dataField", fetch = FetchType.LAZY)
     @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
     @JsonManagedReference("data-field-enums")
-    @JsonIgnore
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<DataFieldEnumValue> enumValues;

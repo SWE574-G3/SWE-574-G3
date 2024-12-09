@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import com.communitter.api.model.User;
@@ -21,9 +22,9 @@ import com.communitter.api.dto.*;
 @Service
 public class ImageService {
 
-    private  ImageRepository imagerepository;
-    private  UserRepository userRepository;
-    private  CommunityRepository communityRepository;
+    private  final ImageRepository imagerepository;
+    private  final UserRepository userRepository;
+    private  final CommunityRepository communityRepository;
 
     public ImageService(ImageRepository imagerepository, UserRepository userRepository, CommunityRepository communityRepository) {
         this.imagerepository = imagerepository;
@@ -79,28 +80,31 @@ public class ImageService {
         return "Profile picture uploaded successfully: " + originalFileName;
     }
 
-    
 
     public ImageDTO getUserProfilePicture(Long userId) {
-        // Retrieve the user and handle if not found
+        // Retrieve user
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-    
-        // Retrieve ImageData for the given userId
+
+        // Retrieve ImageData
         ImageData imageData = imagerepository.findByUserId(userId);
         if (imageData == null || imageData.getData_image() == null) {
             throw new RuntimeException("Profile picture not found for user");
         }
-    
+
         // Decompress the image data
         byte[] decompressedImageData = ImageUtils.decompressImage(imageData.getData_image());
-    
-        // Return a DTO with decompressed image data and MIME type
+
+        // Encode decompressed data to Base64
+        String base64Image = Base64.getEncoder().encodeToString(decompressedImageData);
+
+        // Return DTO with Base64 and MIME type
         return ImageDTO.builder()
-                .data(decompressedImageData)
-                .mimeType(imageData.getType()) // MIME type stored in the database (e.g., "image/png")
+                .base64Image(base64Image) // Correctly use the field name defined in ImageDTO
+                .mimeType(imageData.getType())
                 .build();
     }
+
 
 
     //------------------------------------------------------------------------------------------------------------
@@ -156,30 +160,32 @@ public class ImageService {
 
     }
 
-    
+
 
     public ImageDTO getCommunityImage(Long communityId) {
         // Retrieve the user and handle if not found
         Community community = communityRepository.findById(communityId)
                 .orElseThrow(() -> new RuntimeException("Community not found"));
-    
+
         // Retrieve ImageData for the given userId
         ImageData imageData = imagerepository.findByCommunityId(communityId);
         if (imageData == null || imageData.getData_image() == null) {
             throw new RuntimeException("Image for the community is not found");
         }
-    
-        // Decompress the image data
+
         byte[] decompressedImageData = ImageUtils.decompressImage(imageData.getData_image());
-    
-        // Return a DTO with decompressed image data and MIME type
+
+        // Encode decompressed data to Base64
+        String base64Image = Base64.getEncoder().encodeToString(decompressedImageData);
+
+        // Return DTO with Base64 and MIME type
         return ImageDTO.builder()
-                .data(decompressedImageData)
-                .mimeType(imageData.getType()) // MIME type stored in the database (e.g., "image/png")
+                .base64Image(base64Image) // Correctly use the field name defined in ImageDTO
+                .mimeType(imageData.getType())
                 .build();
     }
-    
-    
+
+
     @Transactional
     public String deleteProfilePicture(Long userId) {
         // Retrieve user or throw a custom error if user not found

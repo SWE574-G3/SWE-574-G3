@@ -1,6 +1,7 @@
 package com.communitter.api.controller;
 
 import com.communitter.api.dto.ActivityStreamDto;
+import com.communitter.api.dto.CommunityDto;
 import com.communitter.api.exception.NotAuthorizedException;
 import com.communitter.api.model.ActivityStream;
 import com.communitter.api.model.Community;
@@ -52,6 +53,11 @@ public class CommunityController {
     @GetMapping("/all")
     public ResponseEntity<List<Community>> getAllCommunities(){
         return ResponseEntity.ok(communityService.getAllCommunities());
+    }
+
+    @GetMapping("/all-public")
+    public ResponseEntity<List<CommunityDto>> getAllPublicCommunities(){
+        return ResponseEntity.ok(communityService.getAllPublicCommunities());
     }
 
     @PreAuthorize("@authorizer.checkCreator(#root, #communityId) || @authorizer.checkAuthor(#root, #id)")

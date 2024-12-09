@@ -37,6 +37,10 @@ export const TemplateModal = ({ setIsOpen, isOpen }) => {
       id: 5,
       type: "geolocation",
     },
+    {
+      id: 6,
+      type: "enumeration",
+    },
   ]);
   const [chosenFieldType, setChosenFieldType] = useState(
     dataFieldTypes[0].type
@@ -50,7 +54,7 @@ export const TemplateModal = ({ setIsOpen, isOpen }) => {
 
   const handleAddfield = () => {
     const chosenTypeObject = dataFieldTypes.find(
-      (type) => type.type === chosenFieldType
+        (type) => type.type === chosenFieldType
     );
     setFields([
       ...fields,
@@ -58,6 +62,7 @@ export const TemplateModal = ({ setIsOpen, isOpen }) => {
         name: "",
         dataFieldType: { type: chosenFieldType, id: chosenTypeObject.id },
         required: true,
+        ...(chosenFieldType === "enumeration" ? { enumValues: [] } : {}),
       },
     ]);
   };
@@ -73,11 +78,18 @@ export const TemplateModal = ({ setIsOpen, isOpen }) => {
     setFields(updatedFields);
   };
   const handleFieldChange = (event, index) => {
+    console.log("fields", fields);
     const updatedFields = [...fields];
     updatedFields[index] = {
       ...updatedFields[index],
       [event.target.name]: event.target.value,
     };
+    setFields(updatedFields);
+  };
+  const handleFieldEnumValueChange = (event, index) => {
+    const updatedFields = [...fields];
+    const values = event.target.value.split(",").map((val) => ({ value: val.trim() }));
+    updatedFields[index].enumValues = values;
     setFields(updatedFields);
   };
 
@@ -134,6 +146,17 @@ export const TemplateModal = ({ setIsOpen, isOpen }) => {
             value={field.name}
             onChange={(e) => handleFieldChange(e, index)}
           />
+          {field.dataFieldType.type === "enumeration" && (
+              <div className="mt-2">
+                <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Enter enum values, separated by commas"
+                    value={field.enumValues.map((enumObj) => enumObj.value).join(", ")}
+                    onChange={(e) => handleFieldEnumValueChange(e, index)}
+                />
+              </div>
+          )}
         </div>
         <div className="w-50">
           <input

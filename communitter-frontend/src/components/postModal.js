@@ -14,6 +14,7 @@ import NumberPostField from "./NumberPostField";
 import DatePostField from "./DatePostField";
 import ImagePostField from "./ImagePostField";
 import GeolocationPostField from "./GeolocationPostField";
+import EnumerationPostField from "./EnumerationPostField";
 
 const MakePostModal = ({ templates, isOpen, setIsOpen }) => {
   const [selectedTemplate, setSelectedTemplate] = useState(null);
@@ -103,6 +104,9 @@ const MakePostModal = ({ templates, isOpen, setIsOpen }) => {
           break;
         case "geolocation":
           PostFieldComponent = GeolocationPostField;
+          break;
+        case "enumeration":
+          PostFieldComponent = EnumerationPostField;
           break;
         default:
           console.error(`Unknown data postField type: ${type}`);

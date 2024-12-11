@@ -1,14 +1,17 @@
 package com.communitter.api.controller;
 
+import com.communitter.api.dto.UserFollowDto;
 import com.communitter.api.dto.ImageDTO;
 import com.communitter.api.dto.request.UserRequest;
 import com.communitter.api.model.User;
 import com.communitter.api.service.UserService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -63,6 +66,27 @@ public class UserController {
     @PreAuthorize("@authorizer.authorizerForUser(#root,#id)")
     public ResponseEntity<User> updateUserAbout(@P("id") @PathVariable Long id, @RequestParam String about) {
         return ResponseEntity.ok(userService.updateUserAbout(id, about));
+    }
+
+    @GetMapping("/followers")
+    public ResponseEntity<List<UserFollowDto>> getFollowers(@AuthenticationPrincipal User authUser){
+        return ResponseEntity.ok(userService.getFollowersByFollowee(authUser));
+    }
+
+    @GetMapping("/followees")
+    public ResponseEntity<List<UserFollowDto>> getFollowees(@AuthenticationPrincipal User authUser){
+        return ResponseEntity.ok(userService.getFolloweesByFollower(authUser));
+    }
+
+    @PostMapping("/follow")
+    public ResponseEntity<UserFollowDto> follow(@AuthenticationPrincipal User authUser, @RequestParam("followee-id") Long followeeId){
+        return ResponseEntity.ok(userService.follow(authUser, followeeId));
+    }
+
+    @PostMapping("/unfollow")
+    public ResponseEntity<?> unfollow(@AuthenticationPrincipal User authUser, @RequestParam("followee-id") Long followeeId){
+        userService.unfollow(authUser, followeeId);
+        return (ResponseEntity<?>) ResponseEntity.ok();
     }
 
     @GetMapping("/healthcheck")

@@ -1,5 +1,6 @@
 package com.communitter.api.util;
 
+import com.communitter.api.model.DataField;
 import com.communitter.api.model.Post;
 import com.communitter.api.model.PostField;
 
@@ -39,6 +40,9 @@ public class PostValidator {
             case ("geolocation"):
                 result= isGeolocation(postField.getValue());
                 break;
+            case ("enumeration"):
+                result= isEnumeration(postField.getValue(), postField.getDataField());
+                break;
         }
         return result;
     }
@@ -76,5 +80,10 @@ public class PostValidator {
         }catch (NumberFormatException exc){
             return false;
         }
+    }
+
+    private static boolean isEnumeration(String value, DataField dataField){
+        return dataField.getEnumValues().stream()
+                .anyMatch(enumValue -> enumValue.getValue().equals(value));
     }
 }

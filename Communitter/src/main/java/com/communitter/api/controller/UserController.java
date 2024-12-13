@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import com.communitter.api.service.ImageService;
 import java.io.IOException;
+import java.util.List;
 
 
 @RestController
@@ -68,6 +69,17 @@ public class UserController {
     @GetMapping("/healthcheck")
     public ResponseEntity<String> healthCheck(){
         return ResponseEntity.ok("hello");
+    }
+
+    @PostMapping("/follow/{followedId}")
+    public ResponseEntity<String> followUser( @PathVariable Long followedId) {
+        String response = userService.followUser(followedId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/all-users")
+    public ResponseEntity<List<User>> getAllUsers(){
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 
 }

@@ -39,12 +39,12 @@ public class Follow {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "follower_id", nullable = false)
-    @JsonBackReference("user-followers")
+    @JsonBackReference("user-following")
     private User follower;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "followed_id", nullable = false)
-    @JsonBackReference("user-followers")
+    @JsonBackReference("user-followed")
     private User followed;
 
     @Column(nullable = false)

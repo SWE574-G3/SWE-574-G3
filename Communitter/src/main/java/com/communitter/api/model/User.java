@@ -107,7 +107,7 @@ public class User implements UserDetails {
     private Set<Follow> following;
 
     @OneToMany(mappedBy = "followed", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference("user-followers")
+    @JsonManagedReference("user-followed")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<Follow> followers;

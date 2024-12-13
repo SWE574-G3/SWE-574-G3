@@ -39,6 +39,7 @@ export const CommunityPage = () => {
   const params = useParams();
   const navigate = useNavigate();
 
+
   const userRoleValue = getUserRoleValue(loggedInUser, community.id);
 
   const handleSubscription = async () => {
@@ -204,61 +205,71 @@ export const CommunityPage = () => {
                 </div>
                 <div className="col-md-8">
                   <div className="card-body">
-                    <h5 className="card-title">
-                      Community Name: {community.name}
-                    </h5>
-                    <p className="card-text">About: {community.about}</p>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <span className="badge bg-success">
+                    <div  className="community-info-section">
+                      <div>
+                        <h5 className="card-title">
+                          {community.name}
+                        </h5>
+                        <p className="card-text">{community.about}</p>
+                        <span className="badge bg-success">
                         {community.public ? "Public" : "Private"}
                       </span>
+                      </div>
+
+                        <div className="join-button">
+                        <div className="d-flex justify-content-between align-items-center">
+
 
                       {community.public ? (
-                        <button
-                          className="btn btn-primary"
-                          onClick={handleSubscription}
-                        >
-                          {isSubscribed ? "Leave Community" : "Join Community"}
-                        </button>
+                          <button
+                              className="btn btn-primary"
+                              onClick={handleSubscription}
+                          >
+                            {isSubscribed ? "Leave Community" : "Join Community"}
+                          </button>
                       ) : (
-                        <button className="btn btn-secondary disabled">
-                          Private Community
-                        </button>
+                          <button className="btn btn-secondary disabled">
+                            Private Community
+                          </button>
                       )}
+
+                      </div>
+                     </div>
                     </div>
                     <button
-                      onClick={() => {
-                        setIsTemplateOpen(true);
-                      }}
-                      className="btn btn-primary mt-3"
+                        onClick={() => {
+                          setIsTemplateOpen(true);
+                        }}
+                        className="btn btn-primary mt-3"
+
                     >
                       Create Template
                     </button>
                     <button
-                      onClick={() => {
-                        setIsPostOpen(true);
-                      }}
-                      className="btn btn-primary mt-3 mx-3"
+                        onClick={() => {
+                          setIsPostOpen(true);
+                        }}
+                        className="btn btn-primary mt-3 mx-3"
                     >
                       Make a Post
                     </button>
                     {(role === "owner" || role === "creator") && (
-                      <button
-                        onClick={() => {
-                          setShowLabelModal(true);
-                        }}
-                        className="btn btn-primary mt-3 mx-3"
-                      >
-                        Labels
-                      </button>
+                        <button
+                            onClick={() => {
+                              setShowLabelModal(true);
+                            }}
+                            className="btn btn-primary mt-3 mx-3"
+                        >
+                          Labels
+                        </button>
                     )}
                   </div>
                 </div>
               </div>
             </div>
             <button
-              onClick={() => setIsFilterOpen(true)}
-              className="btn-secondary"
+                onClick={() => setIsFilterOpen(true)}
+                className="btn-secondary"
             >
               Filter Posts
             </button>
@@ -299,7 +310,8 @@ export const CommunityPage = () => {
             </ModalWrapper>
           </div>
         </div>
-        <div>
+
+        <div className="activity-feed-parent" >
           <div className="container mt-5">
             <div>
               <label htmlFor="actionFilter">Filter by action:</label>

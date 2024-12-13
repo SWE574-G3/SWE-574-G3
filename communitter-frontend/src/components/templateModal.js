@@ -78,7 +78,6 @@ export const TemplateModal = ({ setIsOpen, isOpen }) => {
     setFields(updatedFields);
   };
   const handleFieldChange = (event, index) => {
-    console.log("fields", fields);
     const updatedFields = [...fields];
     updatedFields[index] = {
       ...updatedFields[index],

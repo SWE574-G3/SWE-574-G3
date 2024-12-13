@@ -100,6 +100,18 @@ public class User implements UserDetails {
     @ToString.Exclude
     private Set<PostVote> votes;
 
+    @OneToMany(mappedBy = "follower", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("user-following")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Set<Follow> following;
+
+    @OneToMany(mappedBy = "followed", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("user-followers")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Set<Follow> followers;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

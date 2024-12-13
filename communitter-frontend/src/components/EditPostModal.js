@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
+import GeolocationCardField from "./GeolocationCardField";
+import ImageCardField from "./ImageCardField";
+import PostCardField from "./PostCardField";
 
 const EditPostModal = ({ post, show, onClose, onSave }) => {
     const [fields, setFields] = useState(post?.postFields || []);
+    const {postFields} = post
 
 
     const handleFieldChange = (index, value) => {
@@ -13,8 +17,8 @@ const EditPostModal = ({ post, show, onClose, onSave }) => {
         });
     };
 
-    const handleSave = () => {
-        onSave({ ...post, postFields: fields });
+    const handleSave = async () => {
+        await onSave({ ...post, postFields: fields });
         onClose();
     };
 
@@ -25,14 +29,12 @@ const EditPostModal = ({ post, show, onClose, onSave }) => {
             </Modal.Header>
             <Modal.Body>
                 {fields.map((field, index) => (
-                    <Form.Group key={field.id} className="mb-3">
-                        <Form.Label>{field.dataField.name}</Form.Label>
-                        <Form.Control
-                            type="text"
-                            value={field.value}
-                            onChange={(e) => handleFieldChange(index, e.target.value)}
-                        />
-                    </Form.Group>
+                    <PostCardField
+                        key={field.id}
+                        postField={field}
+                        isEditable={true}
+                        onFieldChange={(newValue) => handleFieldChange(index, newValue)}
+                    />
                 ))}
             </Modal.Body>
             <Modal.Footer>

@@ -19,8 +19,7 @@ const PostCard = ({ post, onDelete, onEdit,handleEditPost }) => {
     const loggedInUser = useSelector((state) => state.user.loggedInUser);
     const navigate = useNavigate();
 
-    console.log(`community info = ${JSON.stringify(community)}`)
-    console.log(`post info = ${JSON.stringify(post)}`)
+
     // Function to fetch the latest vote count
     const fetchVoteCount = async () => {
         fetchWithOpts(`${url}/posts/${post.id}/voteCount`, {

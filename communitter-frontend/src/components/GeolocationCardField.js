@@ -13,14 +13,13 @@ const GeolocationCardField = ({ value, dataField, isEditable, onChange }) => {
 
 
   useEffect(() => {
-    // Update the marker's position if the parent changes the value
     const [newLat, newLng] = value.split(",").map((coord) => parseFloat(coord.trim()));
     setLat(newLat);
     setLng(newLng);
     setMarkerPosition({ lat: newLat, lng: newLng });
   }, [value]);
 
-  console.log("VALUE", value)
+
   const mapContainerStyle = {
     width: "100%",
     height: "200px",
@@ -36,7 +35,7 @@ const GeolocationCardField = ({ value, dataField, isEditable, onChange }) => {
     setMarkerPosition({ lat: newLat, lng: newLng });
     const newValue = `${newLat},${newLng}`;
     if (onChange) {
-      onChange(newValue); // Pass the new value to the parent component
+      onChange(newValue);
     }
   };
 
@@ -54,7 +53,7 @@ const GeolocationCardField = ({ value, dataField, isEditable, onChange }) => {
                   style={mapContainerStyle}
                   onClick={ handleMapClick}
                   onLoad={(map) => {
-                    mapRef.current = map; // Store the map instance in the ref
+                    mapRef.current = map;
                   }}
               >
                 {dataField && (

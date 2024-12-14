@@ -94,12 +94,21 @@
         text-align: center;
     }
 
-    .card img {
-        margin-top: 10px;
-        width: 80px;
-        height: 80px;
-        object-fit: cover;
-    }
+    /*.community-image{*/
+    /*    display: flex;*/
+    /*    justify-content: center;*/
+    /*    margin-top: 10px;*/
+    /*    height: 60%;*/
+    /*    !*height: 60px;*!*/
+    /*    !*width: 60px;*!*/
+    /*}*/
+
+    /*.card img {*/
+    /*    margin-top: 10px;*/
+    /*    width: 70%;*/
+    /*    height: 100%;*/
+    /*    object-fit: cover;*/
+    /*}*/
 
     .card .btn {
         font-size: 12px;

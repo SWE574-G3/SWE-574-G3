@@ -21,6 +21,9 @@
     background-color: #f44336; /* Red for error */
 }
 
+.user-image-update-image-button button{
+    margin-top:10px;
+}
 @keyframes fade-in-out {
     0% {
         opacity: 0;
@@ -35,4 +38,21 @@
         opacity: 0;
         transform: translateX(-50%) translateY(-20px);
     }
+}
+
+@media (max-width: 768px) {
+    .user-image-update-image-button{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .user-image-update-image-button button{
+        margin:10px;
+    }
+
+    .container img{
+        height:90%;
+        width: 60%;
+    }
+
 }

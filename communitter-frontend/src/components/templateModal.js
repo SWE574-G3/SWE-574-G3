@@ -147,13 +147,59 @@ export const TemplateModal = ({ setIsOpen, isOpen }) => {
           />
           {field.dataFieldType.type === "enumeration" && (
               <div className="mt-2">
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Enter enum values, separated by commas"
-                    value={field.enumValues.map((enumObj) => enumObj.value).join(", ")}
-                    onChange={(e) => handleFieldEnumValueChange(e, index)}
-                />
+                <label className="form-label">Enumeration Values</label>
+                <div className="d-flex">
+                  <input
+                      type="text"
+                      className="form-control me-2"
+                      placeholder="Add enum value"
+                      value={field.newEnumValue || ""}
+                      onChange={(e) => {
+                        const updatedFields = [...fields];
+                        updatedFields[index].newEnumValue = e.target.value;
+                        setFields(updatedFields);
+                      }}
+                  />
+                  <button
+                      type="button"
+                      className="btn btn-success btn-sm"
+                      onClick={() => {
+                        const updatedFields = [...fields];
+                        const currentValues = updatedFields[index].enumValues || [];
+                        if (updatedFields[index].newEnumValue?.trim()) {
+                          updatedFields[index].enumValues = [
+                            ...currentValues,
+                            { value: updatedFields[index].newEnumValue.trim() },
+                          ];
+                          updatedFields[index].newEnumValue = ""; // Clear input
+                          setFields(updatedFields);
+                        }
+                      }}
+                  >
+                    Add
+                  </button>
+                </div>
+                <ul className="list-group mt-2">
+                  {field.enumValues.map((enumObj, enumIndex) => (
+                      <li
+                          key={enumIndex}
+                          className="list-group-item d-flex justify-content-between align-items-center"
+                      >
+                        {enumObj.value}
+                        <button
+                            type="button"
+                            className="btn btn-danger btn-sm"
+                            onClick={() => {
+                              const updatedFields = [...fields];
+                              updatedFields[index].enumValues.splice(enumIndex, 1);
+                              setFields(updatedFields);
+                            }}
+                        >
+                          Delete
+                        </button>
+                      </li>
+                  ))}
+                </ul>
               </div>
           )}
         </div>

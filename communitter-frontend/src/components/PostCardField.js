@@ -9,6 +9,7 @@ const PostCardField = ({ postField }) => {
   switch (type) {
     case "string":
     case "number":
+    case "enumeration":
     case "date":
       return (
         <CardText>

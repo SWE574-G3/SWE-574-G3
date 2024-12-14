@@ -16,6 +16,7 @@ const PostCardField = ({ postField, isEditable, onFieldChange }) => {
   switch (type) {
     case "string":
     case "number":
+    case "enumeration":
     case "date":
 
         return isEditable ? (

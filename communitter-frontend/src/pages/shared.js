@@ -46,7 +46,7 @@ export function SharedLayout() {
   return (
     <div className="d-flex flex-column vh-100">
       {error && <ErrorMessage message={error} />}
-      <header className="header sticky-top bg-light shadow-sm">
+      <header className="header fixed-top bg-light shadow-sm">
         {location.pathname !== "/" && isAllowed && <Navbar></Navbar>}
       </header>
       <main className="container flex-grow-1">

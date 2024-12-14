@@ -1,8 +1,7 @@
 package com.communitter.api.controller;
 
 import com.communitter.api.dto.UserFollowInfoDto;
-import com.communitter.api.dto.UserFolloweeDto;
-import com.communitter.api.dto.UserFollowerDto;
+import com.communitter.api.dto.UserFollowerOrFolloweeDto;
 import com.communitter.api.dto.request.UserRequest;
 import com.communitter.api.model.User;
 import com.communitter.api.service.UserService;
@@ -86,12 +85,12 @@ public class UserController {
     }
 
     @GetMapping("/{id}/followers")
-    public ResponseEntity<List<UserFollowerDto>> getFollowers(@PathVariable Long id) {
+    public ResponseEntity<List<UserFollowerOrFolloweeDto>> getFollowers(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getFollowersByFolloweeId(id));
     }
 
     @GetMapping("/{id}/followees")
-    public ResponseEntity<List<UserFolloweeDto>> getFollowees(@PathVariable Long id) {
+    public ResponseEntity<List<UserFollowerOrFolloweeDto>> getFollowees(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getFolloweesByFollowerId(id));
     }
 

@@ -234,7 +234,7 @@ export const CommunityPage = () => {
 
                             {community.public ? (
                                 <button
-                                    className="btn btn-primary"
+                                    className={`btn ${isSubscribed ? "btn-danger" : "btn-primary"}`}
                                     onClick={handleSubscription}
                                 >
                                   {isSubscribed ? "Leave Community" : "Join Community"}
@@ -275,16 +275,11 @@ export const CommunityPage = () => {
                             Labels
                           </button>
                       )}
-                      <button
-                          className="activity-drawer-toggle d-md-none" // Bootstrap class hides on larger screens
-                          onClick={handleModalOpen}
-                      >
-                        Open Activity Stream
-                      </button>
                     </div>
                   </div>
                 </div>
               </div>
+              <div className="filter-post-reset-filter-buttons">
               <button
                   onClick={() => setIsFilterOpen(true)}
                   className="btn-secondary"
@@ -297,6 +292,17 @@ export const CommunityPage = () => {
               >
                 Reset Filters
               </button>
+
+
+              <button
+                  className="activity-drawer-toggle d-md-none"
+                  onClick={handleModalOpen}
+              >
+                Open Activity Stream
+              </button>
+              </div>
+
+
               <AdvancedSearchModal
                   posts={posts}
                   setPosts={setPosts}

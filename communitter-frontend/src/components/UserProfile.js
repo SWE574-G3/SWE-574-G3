@@ -199,7 +199,7 @@ export const UserProfile = ({ shownUser }) => {
   }, [fetchFollowInfo, fetchProfilePicture, localShownUser.id]);
 
   return (
-    <div className="container mt-5">
+    <div className="container" style={{ marginTop: "64px" }}>
       {/* Notification Pop-Up */}
       {notification.message && (
         <div
@@ -229,23 +229,23 @@ export const UserProfile = ({ shownUser }) => {
       {/* Profile Image & Info */}
       <div className="row mt-3">
         <div className="col-md-2">
-          <img
-            src={profilePicture}
-            alt="Profile"
-            className="img-thumbnail rounded-circle d-block img-fluid mx-auto"
-          />
-          {OwnProfile && editMode && (
-            <div className="mt-3">
+          <div className="user-image-update-image-button">
+            <img
+              src={profilePicture}
+              alt="Profile"
+              className="img-thumbnail rounded-circle d-block img-fluid mx-auto"
+            />
+            {OwnProfile && editMode && (
               <button
                 className="btn btn-primary"
                 onClick={() => setShowCropper(!showCropper)}
               >
                 Update Profile Image
               </button>
-            </div>
-          )}
+            )}
+          </div>
         </div>
-        <div className="col-md-8">
+        <div className="col-md-10">
           <div className="card">
             <div className="card-header d-flex justify-content-between align-items-center">
               <div>

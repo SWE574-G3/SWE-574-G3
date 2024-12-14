@@ -1,8 +1,9 @@
 package com.communitter.api.service;
 
-import com.communitter.api.dto.UserFollowDto;
+import com.communitter.api.dto.UserFollowInfoDto;
+import com.communitter.api.dto.UserFolloweeDto;
+import com.communitter.api.dto.UserFollowerDto;
 import com.communitter.api.dto.request.UserRequest;
-import com.communitter.api.key.UserFollowKey;
 import com.communitter.api.mapper.UserMapper;
 import com.communitter.api.model.User;
 import com.communitter.api.model.UserFollow;
@@ -10,6 +11,7 @@ import com.communitter.api.repository.UserFollowRepository;
 import com.communitter.api.repository.UserRepository;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -76,46 +78,68 @@ public class UserService {
     }
 
     @Transactional
-    public List<UserFollowDto> getFollowersByFollowee(User followee) {
+    public List<UserFollowerDto> getFollowersByFollowee(Long followeeId) {
 
-        List<UserFollow> followers = userFollowRepository.findAllByFollowee(followee);
+        List<UserFollow> followers = userFollowRepository.findAllByFolloweeId(followeeId);
 
-        return followers.stream().map(userMapper::toUserFollowDto).toList();
+        return followers.stream().map(userMapper::toUserFollowerDto).toList();
     }
 
     @Transactional
-    public List<UserFollowDto> getFolloweesByFollower(User follower) {
+    public List<UserFolloweeDto> getFolloweesByFollower(Long followerId) {
 
-        List<UserFollow> followers = userFollowRepository.findAllByFollower(follower);
+        List<UserFollow> followees = userFollowRepository.findAllByFollowerId(followerId);
 
-        return followers.stream().map(userMapper::toUserFollowDto).toList();
+        return followees.stream().map(userMapper::toUserFolloweeDto).toList();
     }
 
     @Transactional
-    public UserFollowDto follow(User follower, Long followeeId) {
+    public void follow(User follower, Long followeeId) {
 
-        UserFollowKey userFollowKey = new UserFollowKey(follower.getId(), followeeId);
-        if (userFollowRepository.findById(userFollowKey).isPresent()) {
+        if(Objects.equals(follower.getId(), followeeId)){
+            throw new RuntimeException("You cannot follow yourself");
+        }
+
+        if (userFollowRepository.findByFollowerIdAndFolloweeId(follower.getId(),
+            followeeId).isPresent()) {
             throw new RuntimeException("You are already followed this user");
         }
 
         User followee = userRepo.findById(followeeId).orElseThrow();
 
-        UserFollow userFollow = userFollowRepository.save(
-            UserFollow.builder()
-                .id(userFollowKey)
-                .followedAt(new Date())
-                .build());
-
-        return userMapper.toUserFollowDto(userFollow);
+        userFollowRepository.save(
+            userMapper.toUserFollowEntity(follower, followee, new Date()));
     }
 
     @Transactional
     public void unfollow(User follower, Long followeeId) {
 
-        UserFollowKey userFollowKey = new UserFollowKey(follower.getId(), followeeId);
-        UserFollow userFollow = userFollowRepository.findById(userFollowKey).orElseThrow();
+        if(Objects.equals(follower.getId(), followeeId)){
+            throw new RuntimeException("You cannot unfollow yourself");
+        }
+
+        UserFollow userFollow = userFollowRepository.findByFollowerIdAndFolloweeId(follower.getId(),
+            followeeId).orElseThrow();
 
         userFollowRepository.delete(userFollow);
+    }
+
+    public UserFollowInfoDto getUserFollowInfo(Long userId, Long currentUserId) {
+        // Count followers
+        Long followerCount = userFollowRepository.countByFolloweeId(userId);
+
+        // Count followees
+        Long followeeCount = userFollowRepository.countByFollowerId(userId);
+
+        // Check if current user is following the target user
+        boolean followed = userFollowRepository.existsByFollowerIdAndFolloweeId(currentUserId,
+            userId);
+
+        // Build the DTO
+        return UserFollowInfoDto.builder()
+            .followerCount(followerCount)
+            .followeeCount(followeeCount)
+            .followed(followed)
+            .build();
     }
 }

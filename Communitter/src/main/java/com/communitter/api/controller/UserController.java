@@ -1,6 +1,8 @@
 package com.communitter.api.controller;
 
-import com.communitter.api.dto.UserFollowDto;
+import com.communitter.api.dto.UserFolloweeDto;
+import com.communitter.api.dto.UserFollowerDto;
+import com.communitter.api.dto.UserFollowInfoDto;
 import com.communitter.api.dto.ImageDTO;
 import com.communitter.api.dto.request.UserRequest;
 import com.communitter.api.model.User;
@@ -25,7 +27,6 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-    private final ImageService imageService;
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserInfo(@P ("id") @PathVariable Long id){
@@ -68,25 +69,31 @@ public class UserController {
         return ResponseEntity.ok(userService.updateUserAbout(id, about));
     }
 
-    @GetMapping("/followers")
-    public ResponseEntity<List<UserFollowDto>> getFollowers(@AuthenticationPrincipal User authUser){
-        return ResponseEntity.ok(userService.getFollowersByFollowee(authUser));
+    @GetMapping("/{id}/follow-info")
+    public ResponseEntity<UserFollowInfoDto> getFollowInfo(@AuthenticationPrincipal User authUser, @PathVariable Long id){
+        return ResponseEntity.ok(userService.getUserFollowInfo(id, authUser.getId()));
     }
 
-    @GetMapping("/followees")
-    public ResponseEntity<List<UserFollowDto>> getFollowees(@AuthenticationPrincipal User authUser){
-        return ResponseEntity.ok(userService.getFolloweesByFollower(authUser));
+    @GetMapping("/{id}/followers")
+    public ResponseEntity<List<UserFollowerDto>> getFollowers(@PathVariable Long id){
+        return ResponseEntity.ok(userService.getFollowersByFollowee(id));
     }
 
-    @PostMapping("/follow")
-    public ResponseEntity<UserFollowDto> follow(@AuthenticationPrincipal User authUser, @RequestParam("followee-id") Long followeeId){
-        return ResponseEntity.ok(userService.follow(authUser, followeeId));
+    @GetMapping("/{id}/followees")
+    public ResponseEntity<List<UserFolloweeDto>> getFollowees(@PathVariable Long id){
+        return ResponseEntity.ok(userService.getFolloweesByFollower(id));
     }
 
-    @PostMapping("/unfollow")
-    public ResponseEntity<?> unfollow(@AuthenticationPrincipal User authUser, @RequestParam("followee-id") Long followeeId){
-        userService.unfollow(authUser, followeeId);
-        return (ResponseEntity<?>) ResponseEntity.ok();
+    @PostMapping("/{id}/follow")
+    public ResponseEntity<String> follow(@AuthenticationPrincipal User authUser, @PathVariable Long id){
+        userService.follow(authUser, id);
+        return ResponseEntity.ok("Successfully followed user with ID " + id);
+    }
+
+    @DeleteMapping("/{id}/unfollow")
+    public ResponseEntity<String> unfollow(@AuthenticationPrincipal User authUser, @PathVariable Long id){
+        userService.unfollow(authUser, id);
+        return ResponseEntity.ok("Successfully unfollowed user with ID " + id);
     }
 
     @GetMapping("/healthcheck")

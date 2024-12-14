@@ -78,7 +78,7 @@ public class UserService {
     }
 
     @Transactional
-    public List<UserFollowerDto> getFollowersByFollowee(Long followeeId) {
+    public List<UserFollowerDto> getFollowersByFolloweeId(Long followeeId) {
 
         List<UserFollow> followers = userFollowRepository.findAllByFolloweeId(followeeId);
 
@@ -86,7 +86,7 @@ public class UserService {
     }
 
     @Transactional
-    public List<UserFolloweeDto> getFolloweesByFollower(Long followerId) {
+    public List<UserFolloweeDto> getFolloweesByFollowerId(Long followerId) {
 
         List<UserFollow> followees = userFollowRepository.findAllByFollowerId(followerId);
 
@@ -102,7 +102,7 @@ public class UserService {
 
         if (userFollowRepository.findByFollowerIdAndFolloweeId(follower.getId(),
             followeeId).isPresent()) {
-            throw new RuntimeException("You are already followed this user");
+            throw new RuntimeException("You are already following this user");
         }
 
         User followee = userRepo.findById(followeeId).orElseThrow();
@@ -125,6 +125,7 @@ public class UserService {
     }
 
     public UserFollowInfoDto getUserFollowInfo(Long userId, Long currentUserId) {
+        userRepo.findById(userId).orElseThrow();
         // Count followers
         Long followerCount = userFollowRepository.countByFolloweeId(userId);
 

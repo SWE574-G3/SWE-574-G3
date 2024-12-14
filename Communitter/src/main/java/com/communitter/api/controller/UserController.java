@@ -87,12 +87,12 @@ public class UserController {
 
     @GetMapping("/{id}/followers")
     public ResponseEntity<List<UserFollowerDto>> getFollowers(@PathVariable Long id) {
-        return ResponseEntity.ok(userService.getFollowersByFollowee(id));
+        return ResponseEntity.ok(userService.getFollowersByFolloweeId(id));
     }
 
     @GetMapping("/{id}/followees")
     public ResponseEntity<List<UserFolloweeDto>> getFollowees(@PathVariable Long id) {
-        return ResponseEntity.ok(userService.getFolloweesByFollower(id));
+        return ResponseEntity.ok(userService.getFolloweesByFollowerId(id));
     }
 
     @PostMapping("/{id}/follow")

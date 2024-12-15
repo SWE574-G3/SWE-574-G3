@@ -46,7 +46,13 @@ const PostCard = ({ post, onDelete, onEdit,handleEditPost }) => {
 
     // Directing to postview
     const directToPostView = () => {
-        navigate(`/community/${community.id}/posts/${post.id}`);
+        let communityId;
+        if(currentPath==="/home") {
+            communityId = post.community.id
+        } else{
+            communityId=community.id
+        }
+        navigate(`/community/${communityId}/posts/${post.id}`);
       };
 
     // Handle upvotexs

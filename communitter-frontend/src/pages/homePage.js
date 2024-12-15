@@ -66,7 +66,7 @@ export function HomePage() {
         headers: {},
       });
   
-      const recommendedIds = recommendedData.map((community) => community.id);
+      const recommendedIds = recommendedData.filter((community) => community.public===true).map((community) => community.id)
   
       const recommendedDetails = await Promise.all(
         recommendedIds.map(async (id) => {

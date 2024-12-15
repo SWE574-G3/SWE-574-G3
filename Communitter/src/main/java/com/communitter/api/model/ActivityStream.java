@@ -1,9 +1,8 @@
 package com.communitter.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -24,8 +23,11 @@ public class ActivityStream {
             generator = "activity_stream_sequence")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"posts","labels","creator","subscriptions"})
     @JoinColumn(name = "community_id", nullable = false)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Community community;
 
     @Column(nullable = false)
@@ -35,11 +37,17 @@ public class ActivityStream {
     @Column(nullable = false)
     private ActivityAction action;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @JsonIgnoreProperties({"avatar","about","subscriptions","interests","posts","createdCommunities","accountNonExpired","accountNonLocked","credentialsNonExpired","authorities"})
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", nullable = true)
+    @JsonIgnoreProperties({"community","activityStreams","author","comments","postFields","template","postVotes"})
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Post post;
 }

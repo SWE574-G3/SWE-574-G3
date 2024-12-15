@@ -35,11 +35,23 @@ export const CommunityPage = () => {
   const [communityCreatorId, setCommunityCreatorId] = useState(0);
   const [selectedAction, setSelectedAction] = useState("");
   const [activities, setActivities] = useState([]);
+  const [isActivityModelOpen, setIsActivityModelOpen] = useState(false);
+
   const dispatch = useDispatch();
   const params = useParams();
   const navigate = useNavigate();
 
+
   const userRoleValue = getUserRoleValue(loggedInUser, community.id);
+
+  const handleModalOpen = () => {
+    setIsActivityModelOpen(true);
+    console.log(`is activity model oepn = ${isActivityModelOpen}`)
+  };
+
+  const handleModalClose = () => {
+    setIsActivityModelOpen(false);
+  };
 
   const handleSubscription = async () => {
     setSubsButton(false);
@@ -188,125 +200,180 @@ export const CommunityPage = () => {
     isSubscribed,
     isPostEdited,
   ]);
+
   return (
     !isLoading && (
-      <div className="community-page">
-        <div>
-          <div className="container mt-5">
-            <div className="card mb-3">
-              <div className="row g-0">
-                <div className="col-md-4">
-                  <img
-                    src="https://beforeigosolutions.com/wp-content/uploads/2021/12/dummy-profile-pic-300x300-1.png"
-                    alt={community.name}
-                    className="img-fluid rounded-start"
-                  />
-                </div>
-                <div className="col-md-8">
-                  <div className="card-body">
-                    <h5 className="card-title">
-                      Community Name: {community.name}
-                    </h5>
-                    <p className="card-text">About: {community.about}</p>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <span className="badge bg-success">
+        <div className="community-page">
+          <div>
+            <div className="container mt-5">
+              <div className="card mb-3">
+                <div className="row g-0">
+                  <div className="col-md-4">
+                    <img
+                        src="https://beforeigosolutions.com/wp-content/uploads/2021/12/dummy-profile-pic-300x300-1.png"
+                        alt={community.name}
+                        className="img-fluid rounded-start"
+                    />
+                  </div>
+                  <div className="col-md-8">
+                    <div className="card-body">
+                      <div className="community-info-section">
+                        <div>
+                          <h5 className="card-title">
+                            {community.name}
+                          </h5>
+                          <p className="card-text">{community.about}</p>
+                          <span className="badge bg-success">
                         {community.public ? "Public" : "Private"}
                       </span>
+                        </div>
 
-                      {community.public ? (
-                        <button
-                          className="btn btn-primary"
-                          onClick={handleSubscription}
-                        >
-                          {isSubscribed ? "Leave Community" : "Join Community"}
-                        </button>
-                      ) : (
-                        <button className="btn btn-secondary disabled">
-                          Private Community
-                        </button>
+                        <div className="join-button">
+                          <div className="d-flex justify-content-between align-items-center">
+
+
+                            {community.public ? (
+                                <button
+                                    className={`btn ${isSubscribed ? "btn-danger" : "btn-primary"}`}
+                                    onClick={handleSubscription}
+                                >
+                                  {isSubscribed ? "Leave Community" : "Join Community"}
+                                </button>
+                            ) : (
+                                <button className="btn btn-secondary disabled">
+                                  Private Community
+                                </button>
+                            )}
+
+                          </div>
+                        </div>
+                      </div>
+                      <button
+                          onClick={() => {
+                            setIsTemplateOpen(true);
+                          }}
+                          className="btn btn-primary mt-3"
+
+                      >
+                        Create Template
+                      </button>
+                      <button
+                          onClick={() => {
+                            setIsPostOpen(true);
+                          }}
+                          className="btn btn-primary mt-3 mx-3"
+                      >
+                        Make a Post
+                      </button>
+                      {(role === "owner" || role === "creator") && (
+                          <button
+                              onClick={() => {
+                                setShowLabelModal(true);
+                              }}
+                              className="btn btn-primary mt-3 mx-3"
+                          >
+                            Labels
+                          </button>
                       )}
                     </div>
-                    <button
-                      onClick={() => {
-                        setIsTemplateOpen(true);
-                      }}
-                      className="btn btn-primary mt-3"
-                    >
-                      Create Template
-                    </button>
-                    <button
-                      onClick={() => {
-                        setIsPostOpen(true);
-                      }}
-                      className="btn btn-primary mt-3 mx-3"
-                    >
-                      Make a Post
-                    </button>
-                    {(role === "owner" || role === "creator") && (
-                      <button
-                        onClick={() => {
-                          setShowLabelModal(true);
-                        }}
-                        className="btn btn-primary mt-3 mx-3"
-                      >
-                        Labels
-                      </button>
-                    )}
                   </div>
                 </div>
               </div>
-            </div>
-            <button
-              onClick={() => setIsFilterOpen(true)}
-              className="btn-secondary"
-            >
-              Filter Posts
-            </button>
-            <button
-              onClick={() => setPosts(community.posts)}
-              className="btn-secondary mx-3"
-            >
-              Reset Filters
-            </button>
-            <AdvancedSearchModal
-              posts={posts}
-              setPosts={setPosts}
-              isOpen={isFilterOpen}
-              setIsOpen={setIsFilterOpen}
-              templates={community.templates}
-            ></AdvancedSearchModal>
-            <Posts
-              posts={posts}
-              onDelete={handleDeletePost}
-              onEdit={(post) => setEditPost(post)}
-              handleEditPost={handleEditPost}
-            />
-            <Members members={community.subscriptions} />
-            {!community.public && userRoleValue !== 0 ? <Invitations /> : null}
-            <TemplateModal
-              isOpen={isTemplateOpen}
-              setIsOpen={setIsTemplateOpen}
-            ></TemplateModal>
-            <MakePostModal
-              templates={community.templates}
-              isOpen={isPostOpen}
-              setIsOpen={setIsPostOpen}
-            />
-            <ModalWrapper show={showLabelModal} handleClose={setShowLabelModal}>
-              <WikidataInterface
-                url={`${url}/recommendation/community/${community.id}/labels`}
+              <div className="filter-post-reset-filter-buttons">
+              <button
+                  onClick={() => setIsFilterOpen(true)}
+                  className="btn-secondary"
+              >
+                Filter Posts
+              </button>
+              <button
+                  onClick={() => setPosts(community.posts)}
+                  className="btn-secondary mx-3"
+              >
+                Reset Filters
+              </button>
+
+
+              <button
+                  className="activity-drawer-toggle d-md-none"
+                  onClick={handleModalOpen}
+              >
+                Open Activity Stream
+              </button>
+              </div>
+
+
+              <AdvancedSearchModal
+                  posts={posts}
+                  setPosts={setPosts}
+                  isOpen={isFilterOpen}
+                  setIsOpen={setIsFilterOpen}
+                  templates={community.templates}
+              ></AdvancedSearchModal>
+              <Posts
+                  posts={posts}
+                  onDelete={handleDeletePost}
+                  onEdit={(post) => setEditPost(post)}
+                  handleEditPost={handleEditPost}
               />
-            </ModalWrapper>
+              <Members members={community.subscriptions}/>
+              {!community.public && userRoleValue !== 0 ? <Invitations/> : null}
+              <TemplateModal
+                  isOpen={isTemplateOpen}
+                  setIsOpen={setIsTemplateOpen}
+              ></TemplateModal>
+              <MakePostModal
+                  templates={community.templates}
+                  isOpen={isPostOpen}
+                  setIsOpen={setIsPostOpen}
+              />
+              <ModalWrapper show={showLabelModal} handleClose={setShowLabelModal}>
+                <WikidataInterface
+                    url={`${url}/recommendation/community/${community.id}/labels`}
+                />
+              </ModalWrapper>
+            </div>
           </div>
-        </div>
-        <div>
-          <div className="container mt-5">
-            <div>
+
+          {isActivityModelOpen && (
+              <div className="activity-modal-overlay">
+                <div className="activity-modal">
+                  <button className="close-modal-button" onClick={handleModalClose}>
+                    X
+                  </button>
+                  <div>
+                    <h3>Activity Stream</h3>
+                    <label htmlFor="actionFilter">Filter by action:</label>
+                    <select
+                        id="actionFilter"
+                        onChange={handleActionFilterChange}
+                        value={selectedAction}
+                    >
+                      <option value="">All Actions</option>
+                      <option value="CREATE">Create</option>
+                      <option value="UPVOTE">Upvote</option>
+                      <option value="DOWNVOTE">Downvote</option>
+                      <option value="JOIN">Join</option>
+                      <option value="COMMENT">Comment</option>
+                    </select>
+                    <ActivityStreamCard
+                        activities={activities}
+                        selectedAction={selectedAction}
+                        communityCreatorId={communityCreatorId}
+                    />
+                  </div>
+                </div>
+              </div>
+          )}
+
+          {/* Normal Activity Feed for larger screens */}
+          <div className="activity-feed-parent d-none d-md-block">
+            <div className="container mt-5">
               <label htmlFor="actionFilter">Filter by action:</label>
               <select
-                id="actionFilter"
-                onChange={handleActionFilterChange}
-                value={selectedAction}
+                  id="actionFilter"
+                  onChange={handleActionFilterChange}
+                  value={selectedAction}
               >
                 <option value="">All Actions</option>
                 <option value="CREATE">Create</option>
@@ -315,17 +382,15 @@ export const CommunityPage = () => {
                 <option value="JOIN">Join</option>
                 <option value="COMMENT">Comment</option>
               </select>
+              <ActivityStreamCard
+                  activities={activities}
+                  selectedAction={selectedAction}
+                  communityCreatorId={communityCreatorId}
+              />
             </div>
-
-            {/* Activity Feed Card */}
-            <ActivityStreamCard
-              activities={activities}
-              selectedAction={selectedAction}
-              communityCreatorId={communityCreatorId}
-            />
           </div>
         </div>
-      </div>
+
     )
   );
 };

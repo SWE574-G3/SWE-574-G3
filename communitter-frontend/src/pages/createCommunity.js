@@ -37,7 +37,7 @@ export function CommunityCreationPage() {
       });
       console.log(data);
       setIsLoading(false);
-      navigate("/home");
+      navigate(`/community/${data.id}`);
     } catch (err) {
       dispatch(setErrorMessage(err.message));
       setIsLoading(false);

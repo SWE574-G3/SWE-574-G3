@@ -352,6 +352,7 @@ export const CommunityPage = () => {
                   <option value="COMMENT">Comment</option>
                 </select>
                 <ActivityStreamCard
+                  communityId={community.id}
                   activities={activities}
                   selectedAction={selectedAction}
                   communityCreatorId={communityCreatorId}
@@ -378,6 +379,7 @@ export const CommunityPage = () => {
               <option value="COMMENT">Comment</option>
             </select>
             <ActivityStreamCard
+              communityId={community.id}
               activities={activities}
               selectedAction={selectedAction}
               communityCreatorId={communityCreatorId}

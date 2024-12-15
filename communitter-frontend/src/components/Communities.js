@@ -41,7 +41,6 @@ const Communities = () => {
             <tr>
               <th>Community Name</th>
               <th>About</th>
-              <th>Public/Private</th>
             </tr>
           </thead>
           <tbody>
@@ -53,7 +52,6 @@ const Communities = () => {
                   </Link>
                 </td>
                 <td>{community.about}</td>
-                <td>{community.public ? "Public" : "Private"}</td>
               </tr>
             ))}
           </tbody>

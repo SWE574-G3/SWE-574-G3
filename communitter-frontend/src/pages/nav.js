@@ -65,7 +65,7 @@ export function Navbar() {
           ☰
         </button>
 
-        <Link to="/" className="text-dark text-decoration-none fs-4">
+        <Link to="/home" className="text-dark text-decoration-none fs-4">
           Communitter
         </Link>
 
@@ -168,6 +168,7 @@ export function Navbar() {
                 className="nav-item"
                 onClick={() => {
                   navigate("/communities");
+                  setIsDrawerOpen(false);
                 }}
             >
               <button className="nav-link">Communities</button>

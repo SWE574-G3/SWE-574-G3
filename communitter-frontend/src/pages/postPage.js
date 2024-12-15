@@ -90,6 +90,7 @@ export const PostPage = () => {
             }
         } catch (error) {
             console.error("Failed to edit comment:", error.message);
+            dispatch(setErrorMessage(error.message));
         }
     };
     
@@ -103,6 +104,7 @@ export const PostPage = () => {
             setComments((prevComments) => prevComments.filter((comment) => comment.id !== commentId));
         } catch (error) {
             console.error("Failed to delete comment:", error.message);
+            dispatch(setErrorMessage(error.message));
         }
     };
 
@@ -120,6 +122,7 @@ export const PostPage = () => {
             setCommentingState({ content: "" });
         } catch (error) {
             console.error(error.message);
+            dispatch(setErrorMessage(error.message));
         }
     };
 

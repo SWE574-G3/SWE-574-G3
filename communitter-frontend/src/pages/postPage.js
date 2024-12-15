@@ -119,7 +119,6 @@ export const PostPage = () => {
 
     const handleDeletePost = async (postId) => {
         try {
-            const communityId = community.id;
 
             const response = await fetchWithOpts(`${url}/community/${communityId}/delete-post/${postId}`, {
                 ...defaultFetchOpts,

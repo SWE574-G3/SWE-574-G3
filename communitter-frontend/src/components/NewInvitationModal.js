@@ -50,11 +50,11 @@ const NewInvitationModal = ({ show, onHide, onSubmit, isLoading }) => {
             <Form.Label>Role</Form.Label>
             <Form.Select value={role} onChange={(e) => setRole(e.target.value)}>
               {roles.map((role) =>
-                userRoleValue > role.value ? (
+                userRoleValue >= role.value ? (
                   <option
                     key={role.value}
                     value={role.value}
-                    disabled={userRoleValue <= role.value}
+                    disabled={userRoleValue > 1 && userRoleValue <= role.value}
                   >
                     {role.label}
                   </option>

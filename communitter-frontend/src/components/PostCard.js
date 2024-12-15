@@ -10,6 +10,7 @@ import {setErrorMessage} from "../features/errorSlice";
 import { useNavigate } from "react-router-dom";
 import EditPostModal from "./EditPostModal";
 import {useSelector} from "react-redux";
+import { useLocation } from "react-router-dom";
 
 const PostCard = ({ post, onDelete, onEdit,handleEditPost }) => {
   const { author, postFields, date: timestamp, id } = post; // Destructure post object
@@ -18,8 +19,12 @@ const PostCard = ({ post, onDelete, onEdit,handleEditPost }) => {
     const [voteCount, setVoteCount] = useState(0);
     const loggedInUser = useSelector((state) => state.user.loggedInUser);
     const navigate = useNavigate();
+    const location = useLocation();
+    const currentPath = location.pathname;
 
-
+    console.log(currentPath);
+    console.log(`community info = ${JSON.stringify(community)}`)
+    console.log(`post info = ${JSON.stringify(post)}`)
     // Function to fetch the latest vote count
     const fetchVoteCount = async () => {
         fetchWithOpts(`${url}/posts/${post.id}/voteCount`, {
@@ -41,7 +46,13 @@ const PostCard = ({ post, onDelete, onEdit,handleEditPost }) => {
 
     // Directing to postview
     const directToPostView = () => {
-        navigate(`/community/${community.id}/posts/${post.id}`);
+        let communityId;
+        if(currentPath==="/home") {
+            communityId = post.community.id
+        } else{
+            communityId=community.id
+        }
+        navigate(`/community/${communityId}/posts/${post.id}`);
       };
 
     // Handle upvotexs
@@ -82,26 +93,51 @@ const PostCard = ({ post, onDelete, onEdit,handleEditPost }) => {
 
   return (
     <Card className="mb-3">
-      <CardTitle onClick={directToPostView} style={{cursor: "pointer"}}>
+    <CardTitle
+    style={{
+        cursor: "pointer",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+    }}
+    >
+    <span onClick={directToPostView}>
         {author.username} -{" "}
         {new Date(timestamp).toLocaleDateString("tr-TR", {
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: false,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
         })}{" "}
         - Template: {post.template?.name}
-      </CardTitle>
+    </span>
+    {currentPath=="/home" && (<span
+        onClick={() => navigate(`/community/${post.community?.id}`)}
+        style={{
+        fontStyle: "italic",
+        fontWeight: "normal",
+        fontSize: "0.85rem",
+        color: "blue",
+        cursor: "pointer",
+        textDecoration: "underline",
+        }}
+    >
+        via {post.community?.name}
+    </span>)}
+
+    </CardTitle>
       <CardBody>
         {postFields.map((postField) => (
           <PostField key={postField.id} postField={postField} />
         ))}
           <div className="d-flex">
+            {post.author.id == loggedInUser.id && (
               <Button variant="danger" onClick={handleDeleteClick} className="me-2">
-                  Delete
-              </Button>
+                    Delete
+                </Button>
+                )}
               {post.author.id === loggedInUser.id && (
               <Button variant="primary" onClick={handleEditClick}>
                   Edit

@@ -156,38 +156,46 @@ export function Navbar() {
           </button>
           <ul className="nav nav-pills">
             <li
-              className="nav-item"
-              onClick={() => {
-                navigate("/home");
-                setIsDrawerOpen(false);
-              }}
+                className="nav-item"
+                onClick={() => {
+                  navigate("/home");
+                  setIsDrawerOpen(false);
+                }}
             >
               <button className="nav-link">Home</button>
             </li>
             <li
-              className="nav-item"
-              onClick={() => {
-                navigate("/community/create");
-                setIsDrawerOpen(false);
-              }}
+                className="nav-item"
+                onClick={() => {
+                  navigate("/communities");
+                }}
+            >
+              <button className="nav-link">Communities</button>
+            </li>
+            <li
+                className="nav-item"
+                onClick={() => {
+                  navigate("/community/create");
+                  setIsDrawerOpen(false);
+                }}
             >
               <button className="nav-link">Create Community</button>
             </li>
             <li
-              className="nav-item"
-              onClick={() => {
-                navigate(`/user/${loggedInUser.id}`);
-                setIsDrawerOpen(false);
-              }}
+                className="nav-item"
+                onClick={() => {
+                  navigate(`/user/${loggedInUser.id}`);
+                  setIsDrawerOpen(false);
+                }}
             >
               <button className="nav-link">Profile</button>
             </li>
             <li
-              className="nav-item"
-              onClick={() => {
-                navigate(`/user/interest`);
-                setIsDrawerOpen(false);
-              }}
+                className="nav-item"
+                onClick={() => {
+                  navigate(`/user/interest`);
+                  setIsDrawerOpen(false);
+                }}
             >
               <button className="nav-link">Interests</button>
             </li>
@@ -199,34 +207,42 @@ export function Navbar() {
 
         <ul className="nav nav-pills desktop-nav">
           <li
-            className="nav-item"
-            onClick={() => {
-              navigate("/home");
-            }}
+              className="nav-item"
+              onClick={() => {
+                navigate("/home");
+              }}
           >
             <button className="nav-link">Home</button>
           </li>
           <li
-            className="nav-item"
-            onClick={() => {
-              navigate("/community/create");
-            }}
+              className="nav-item"
+              onClick={() => {
+                navigate("/communities");
+              }}
+          >
+            <button className="nav-link">Communities</button>
+          </li>
+          <li
+              className="nav-item"
+              onClick={() => {
+                navigate("/community/create");
+              }}
           >
             <button className="nav-link">Create Community</button>
           </li>
           <li
-            className="nav-item"
-            onClick={() => {
-              navigate(`/user/${loggedInUser.id}`);
-            }}
+              className="nav-item"
+              onClick={() => {
+                navigate(`/user/${loggedInUser.id}`);
+              }}
           >
             <button className="nav-link">Profile</button>
           </li>
           <li
-            className="nav-item"
-            onClick={() => {
-              navigate(`/user/interest`);
-            }}
+              className="nav-item"
+              onClick={() => {
+                navigate(`/user/interest`);
+              }}
           >
             <button className="nav-link">Interests</button>
           </li>

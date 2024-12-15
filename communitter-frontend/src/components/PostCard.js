@@ -12,7 +12,7 @@ import EditPostModal from "./EditPostModal";
 import {useDispatch, useSelector} from "react-redux";
 import { useLocation } from "react-router-dom";
 
-const PostCard = ({ post, onDelete, onEdit,handleEditPost, dontShowEditDeleteButtons }) => {
+const PostCard = ({ post, onDelete, onEdit,handleEditPost, dontShowEditDeleteButtons, communityId }) => {
   const { author, postFields, date: timestamp, id } = post; // Destructure post object
     const community = useSelector((state) => state.community.visitedCommunity);
     const [showEditModal,setShowEditModal]=useState(false);
@@ -47,11 +47,8 @@ const PostCard = ({ post, onDelete, onEdit,handleEditPost, dontShowEditDeleteBut
 
     // Directing to postview
     const directToPostView = () => {
-        let communityId;
         if(currentPath==="/home") {
-            communityId = post.community.id
-        } else{
-            communityId=community.id
+             communityId = post.community.id
         }
         navigate(`/community/${communityId}/posts/${post.id}`);
       };

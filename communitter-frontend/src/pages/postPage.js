@@ -26,14 +26,7 @@ export const PostPage = () => {
         content: ""
     });
     const handleEditPost = (updatedPost) => {
-        console.log("CCCC");
 
-
-        console.log(`updated post = ${JSON.stringify(updatedPost)}`);
-        console.log(`URL = ${url}/community/${communityId}/edit-post/${updatedPost.id}`);
-        console.log(`GONDERILEN POST = ${JSON.stringify({ postFields: updatedPost.postFields })}`);
-
-        // Debug log before fetch call
         console.log("Sending request...");
 
         fetchWithOpts(`${url}/community/${communityId}/edit-post/${updatedPost.id}`, {
@@ -47,7 +40,6 @@ export const PostPage = () => {
             }),
         })
             .then((response) => {
-                console.log("YYYYYY");
 
                 dispatch(
                     setVisitedCommunity({
@@ -62,7 +54,6 @@ export const PostPage = () => {
                 navigate(`/community/${communityId}`)
             })
             .catch((err) => {
-                console.error("Request error:", err.message);
                 dispatch(setErrorMessage(err.message));
             });
     };
@@ -79,7 +70,6 @@ export const PostPage = () => {
         try {
             const editedComment = await CommentService.editComment(updatedComment, commentId);
             if (editedComment && editedComment.id) {
-                console.log("Comment updated successfully:", editedComment);
                 setComments((prevComments) =>
                     prevComments.map((prevComment) =>
                         prevComment.id === editedComment.id ? editedComment : prevComment
@@ -173,7 +163,8 @@ export const PostPage = () => {
     return (
         <div style={{marginTop: "56px"}}>
             <h2>Post Details</h2>
-            <PostCard post={post} onDelete={handleDeletePost} handleEditPost={handleEditPost} />
+
+            <PostCard post={post} onDelete={handleDeletePost} handleEditPost={handleEditPost} communityId={communityId} />
             <div className="mt-4">
                 <h3>Add a Comment</h3>
                 <form onSubmit={handleSubmitComment}>

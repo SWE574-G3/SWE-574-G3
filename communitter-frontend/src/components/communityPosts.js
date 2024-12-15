@@ -1,6 +1,6 @@
 import PostCard from "./PostCard";
 
-export const Posts = ({ posts, onDelete, onEdit,handleEditPost }) => {
+export const Posts = ({ posts, onDelete, onEdit,handleEditPost, communityId }) => {
   return (
     <div className="mt-4">
       <h2>Posts</h2>
@@ -11,7 +11,7 @@ export const Posts = ({ posts, onDelete, onEdit,handleEditPost }) => {
             .sort((a, b) => new Date(b.date) - new Date(a.date))
             .map((post) => (
               <div key={post.id} className="col">
-                <PostCard post={post} onDelete={onDelete} onEdit={onEdit} handleEditPost={handleEditPost} />
+                <PostCard post={post} onDelete={onDelete} onEdit={onEdit} handleEditPost={handleEditPost} communityId={communityId} />
               </div>
             ))}
         </div>

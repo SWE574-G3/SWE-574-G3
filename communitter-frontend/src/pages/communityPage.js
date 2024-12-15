@@ -307,9 +307,11 @@ export const CommunityPage = () => {
             ></AdvancedSearchModal>
             <Posts
               posts={posts}
+              communityId={community.id}
               onDelete={handleDeletePost}
               onEdit={(post) => setEditPost(post)}
               handleEditPost={handleEditPost}
+
             />
             <Members members={community.subscriptions} />
             {!community.public && userRoleValue !== 0 ? <Invitations /> : null}

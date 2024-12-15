@@ -24,6 +24,8 @@ export const UserProfile = ({ shownUser }) => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
+  console.log("dsfafsz");
+
   const token = localStorage.getItem(tokenName);
   const loggedInUser = useSelector((state) => state.user.loggedInUser);
   const OwnProfile = localShownUser.id === loggedInUser.id;
@@ -196,7 +198,8 @@ export const UserProfile = ({ shownUser }) => {
   useEffect(() => {
     fetchProfilePicture();
     fetchFollowInfo();
-  }, [fetchFollowInfo, fetchProfilePicture, localShownUser.id]);
+    setLocalShownUser(shownUser);
+  }, [fetchFollowInfo, fetchProfilePicture, shownUser.id]);
 
   return (
     <div className="container" style={{ marginTop: "64px" }}>

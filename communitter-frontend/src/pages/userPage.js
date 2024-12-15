@@ -27,7 +27,7 @@ export function UserPage() {
         setIsOwnProfile(true);
         setShownUser(loggedInUser);
         setIsLoading(false);
-        console.log("my profile");
+        console.log("my profile", loggedInUser);
         return;
       }
       try {
@@ -55,6 +55,7 @@ export function UserPage() {
     loggedInUser.subscriptions.length,
     visitedUser.subscriptions.length,
     isOwnProfile,
+    shownUser.id,
   ]);
   return (
     !isLoading && (

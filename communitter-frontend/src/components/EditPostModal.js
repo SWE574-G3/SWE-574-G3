@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
+import PostCardField from "./PostCardField";
 
 const EditPostModal = ({ post, show, onClose, onSave }) => {
     const [fields, setFields] = useState(post?.postFields || []);
@@ -36,20 +37,18 @@ const EditPostModal = ({ post, show, onClose, onSave }) => {
                 );
             default:
                 return (
-                    <Form.Group key={field.id} className="mb-3">
-                        <Form.Label>{name}</Form.Label>
-                        <Form.Control
-                            type="text"
-                            value={field.value || ""}
-                            onChange={(e) => handleFieldChange(index, e.target.value)}
-                        />
-                    </Form.Group>
+                    <PostCardField
+                        key={field.id}
+                        postField={field}
+                        isEditable={true}
+                        onFieldChange={(newValue) => handleFieldChange(index, newValue)}
+                    />
                 );
         }
     };
 
-    const handleSave = () => {
-        onSave({ ...post, postFields: fields });
+    const handleSave = async () => {
+        await onSave({ ...post, postFields: fields });
         onClose();
     };
 

@@ -9,7 +9,7 @@ import { url } from "../utilities/config";
 import {setErrorMessage} from "../features/errorSlice";
 import { useNavigate } from "react-router-dom";
 import EditPostModal from "./EditPostModal";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { useLocation } from "react-router-dom";
 
 const PostCard = ({ post, onDelete, onEdit,handleEditPost }) => {
@@ -21,6 +21,7 @@ const PostCard = ({ post, onDelete, onEdit,handleEditPost }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const currentPath = location.pathname;
+    const dispatch = useDispatch();
 
     console.log(currentPath);
     console.log(`community info = ${JSON.stringify(community)}`)
@@ -66,7 +67,7 @@ const PostCard = ({ post, onDelete, onEdit,handleEditPost }) => {
                 await fetchVoteCount();
             }
         } catch (error) {
-            setErrorMessage("Failed to upvote: " + error.message);
+            dispatch(setErrorMessage("Failed to upvote: " + error.message));
         }
     };
 
@@ -81,7 +82,7 @@ const PostCard = ({ post, onDelete, onEdit,handleEditPost }) => {
                 await fetchVoteCount();
             }
         } catch (error) {
-            setErrorMessage("Failed to downvote: " + error.message);
+            dispatch(setErrorMessage("Failed to downvote: " + error.message));
         }
     };
     

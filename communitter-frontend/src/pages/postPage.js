@@ -168,7 +168,7 @@ export const PostPage = () => {
     }
 
     return (
-        <div>
+        <div style={{marginTop: "56px"}}>
             <h2>Post Details</h2>
             <PostCard post={post} onDelete={handleDeletePost} handleEditPost={handleEditPost} />
             <div className="mt-4">

@@ -246,7 +246,7 @@ export const UserProfile = ({ shownUser }) => {
           </div>
         </div>
         <div className="col-md-10">
-          <div className="card">
+          <div className="card text-start">
             <div className="card-header d-flex justify-content-between align-items-center">
               <div>
                 <h2>{localShownUser.username}</h2>

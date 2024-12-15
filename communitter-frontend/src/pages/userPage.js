@@ -61,7 +61,10 @@ export function UserPage() {
       <>
         <UserProfile shownUser={shownUser} />
         {isOwnProfile ? <UserInvitations /> : null}
-        <Subscriptions subscriptions={shownUser.subscriptions} />
+        <Subscriptions
+          subscriptions={shownUser.subscriptions}
+          isOwnProfile={isOwnProfile}
+        />
       </>
     )
   );

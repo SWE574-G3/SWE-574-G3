@@ -58,12 +58,11 @@ export class CommentService {
                     "Authorization" : `Bearer ${token}`
                 }
             });
-
             if (!response.ok){
                 const message = await response.text();
                 throw new Error(message);
             }
-            return await response.json();
+            return await response.text();
         /*} catch (error) {
             console.log(error.message);
             this.dispatch(setErrorMessage(error.message));

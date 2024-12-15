@@ -39,7 +39,7 @@ export function LoginPage() {
         setWarning(registerResult[1]);
       } else {
         const id = extractId(localStorage.getItem(tokenName));
-        navigate("/user/" + id);
+        navigate("/user/interest");
         console.log(registerResult);
       }
     } else {
@@ -64,137 +64,152 @@ export function LoginPage() {
 
   return (
     <section className="position-relative h-100 d-grid align-items-center justify-content-center">
-      <div className="text-center warning-container position-absolute top-0 start-50 translate-middle-x">
-        <span className="warning">{warning}</span>
-      </div>
-      <section className="d-grid justify-content-center align-content-center">
-        <form onSubmit={handleSubmit}>
-          {isSignUp && (
-            <>
-              <div className="mb-3">
-                <label htmlFor="username" className="form-label">
-                  Username
-                </label>
-                <input
-                  type="text"
-                  id="username"
-                  name="username"
-                  className="form-control"
-                  value={registerState.username}
-                  onChange={handleChange}
-                  required={true}
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="about" className="form-label">
-                  About
-                </label>
-                <input
-                  type="text"
-                  id="about"
-                  name="about"
-                  className="form-control"
-                  value={registerState.about}
-                  onChange={handleChange}
-                  required={false}
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="header" className="form-label">
-                  Header
-                </label>
-                <input
-                  type="text"
-                  id="header"
-                  name="header"
-                  className="form-control"
-                  value={registerState.header}
-                  onChange={handleChange}
-                  required={false}
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="avatar" className="form-label">
-                  Avatar
-                </label>
-                <input
-                  type="text"
-                  id="avatar"
-                  name="avatar"
-                  className="form-control"
-                  value={registerState.avatar}
-                  onChange={handleChange}
-                  required={false}
-                />
-              </div>
-            </>
-          )}
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              className="form-control"
-              value={loginState.email}
-              onChange={handleChange}
-              required={true}
-            />
+      <div className="container">
+        {/* Page Title */}
+        <div className="row">
+          <div className="col-12 text-center my-3">
+            <h1 className="page-title">Communitter</h1>
           </div>
+        </div>
 
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              className="form-control"
-              value={loginState.password}
-              onChange={handleChange}
-              required={true}
-              minLength={8}
-            />
-            <div id="passwordHelp" className="form-text">
-              At least 8 characters
+        <div className="row align-items-center justify-content-center">
+          <div className="col-12">
+            <div className="text-center warning-container position-absolute top-0 start-50 translate-middle-x">
+              <span className="warning">{warning}</span>
             </div>
           </div>
-          <button
-            className={`btn btn-primary d-block mx-auto`}
-            disabled={isLoading}
-          >
-            {isSignUp ? "Sign Up" : "Sign In"}
-          </button>
-        </form>
-        <p className="mx-auto"> Do you have an Account?</p>
-        <button
-          className={`btn ${isSignUp ? "" : "btn-info"}`}
-          onClick={() => {
-            setIsSignUp(false);
-            setRegisterState({
-              password: "",
-              email: "",
-              username: "",
-              about: "",
-              header: "",
-              avatar: "",
-            });
-          }}
-        >
-          YES
-        </button>
-        <button
-          className={`btn ${isSignUp ? "btn-info" : ""}`}
-          onClick={() => {
-            setIsSignUp(true);
-          }}
-        >
-          NO
-        </button>
-      </section>
+          <div className="col-12 col-lg-6 mb-4">
+            <section className="d-flex flex-column align-items-center">
+              <form className="row g-3" onSubmit={handleSubmit}>
+                {isSignUp && (
+                  <>
+                    <div className="col-12 col-lg-6 mb-3">
+                      <label htmlFor="username" className="form-label">
+                        Username
+                      </label>
+                      <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        className="form-control"
+                        value={registerState.username}
+                        onChange={handleChange}
+                        required={true}
+                      />
+                    </div>
+                    <div className="col-12 col-lg-6 mb-3">
+                      <label htmlFor="about" className="form-label">
+                        About
+                      </label>
+                      <input
+                        type="text"
+                        id="about"
+                        name="about"
+                        className="form-control"
+                        value={registerState.about}
+                        onChange={handleChange}
+                        required={false}
+                      />
+                    </div>
+                    <div className="col-12 col-lg-6 mb-3">
+                      <label htmlFor="header" className="form-label">
+                        Header
+                      </label>
+                      <input
+                        type="text"
+                        id="header"
+                        name="header"
+                        className="form-control"
+                        value={registerState.header}
+                        onChange={handleChange}
+                        required={false}
+                      />
+                    </div>
+                    <div className="col-12 col-lg-6 mb-3">
+                      <label htmlFor="avatar" className="form-label">
+                        Avatar
+                      </label>
+                      <input
+                        type="text"
+                        id="avatar"
+                        name="avatar"
+                        className="form-control"
+                        value={registerState.avatar}
+                        onChange={handleChange}
+                        required={false}
+                      />
+                    </div>
+                  </>
+                )}
+                <div className={`mb-3 ${isSignUp ? "col-12 col-lg-6" : ""}`}>
+                  <label htmlFor="email" className="form-label">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    className="form-control"
+                    value={loginState.email}
+                    onChange={handleChange}
+                    required={true}
+                  />
+                </div>
+
+                <div className={`mb-3 ${isSignUp ? "col-12 col-lg-6" : ""}`}>
+                  <label htmlFor="password" className="form-label">
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    className="form-control"
+                    value={loginState.password}
+                    onChange={handleChange}
+                    required={true}
+                    minLength={8}
+                  />
+                  <div id="passwordHelp" className="form-text">
+                    At least 8 characters
+                  </div>
+                </div>
+                <button
+                  className={`btn btn-primary d-block mx-auto`}
+                  disabled={isLoading}
+                >
+                  {isSignUp ? "Sign Up" : "Sign In"}
+                </button>
+              </form>
+              <p className="mx-auto"> Do you have an Account?</p>
+              <button
+                className={`btn ${isSignUp ? "" : "btn-info"}`}
+                onClick={() => {
+                  setIsSignUp(false);
+                  setRegisterState({
+                    password: "",
+                    email: "",
+                    username: "",
+                    about: "",
+                    header: "",
+                    avatar: "",
+                  });
+                }}
+              >
+                YES
+              </button>
+              <button
+                className={`btn ${isSignUp ? "btn-info" : ""}`}
+                onClick={() => {
+                  setIsSignUp(true);
+                }}
+              >
+                NO
+              </button>
+            </section>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

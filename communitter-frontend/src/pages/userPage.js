@@ -7,6 +7,7 @@ import { setVisitedUser } from "../features/userSlice";
 import { setErrorMessage } from "../features/errorSlice";
 import { UserProfile } from "../components/UserProfile";
 import { Subscriptions } from "../components/Subscriptions";
+import UserInvitations from "../components/UserInvitations";
 
 export function UserPage() {
   const loggedInUser = useSelector((state) => state.user.loggedInUser);
@@ -17,13 +18,16 @@ export function UserPage() {
   const [shownUser, setShownUser] = useState(loggedInUser);
   const params = useParams();
   const [isLoading, setIsLoading] = useState(true);
+  const [isOwnProfile, setIsOwnProfile] = useState(true);
 
   useEffect(() => {
     async function getUser() {
       // eslint-disable-next-line eqeqeq
-      if (params.id == loggedInUser.id) {
+      if (params.id === String(loggedInUser.id)) {
+        setIsOwnProfile(true);
         setShownUser(loggedInUser);
         setIsLoading(false);
+        console.log("my profile", loggedInUser);
         return;
       }
       try {
@@ -34,6 +38,7 @@ export function UserPage() {
         dispatch(setVisitedUser(data));
         setShownUser(data);
         setIsLoading(false);
+        setIsOwnProfile(false);
       } catch (err) {
         dispatch(setErrorMessage(err.message));
         navigate(`/user/${loggedInUser.id}`);
@@ -41,7 +46,6 @@ export function UserPage() {
       }
     }
     getUser();
-    console.log(shownUser);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -50,12 +54,18 @@ export function UserPage() {
     params,
     loggedInUser.subscriptions.length,
     visitedUser.subscriptions.length,
+    isOwnProfile,
+    shownUser.id,
   ]);
   return (
     !isLoading && (
       <>
         <UserProfile shownUser={shownUser} />
-        <Subscriptions subscriptions={shownUser.subscriptions} />
+        {isOwnProfile ? <UserInvitations /> : null}
+        <Subscriptions
+          subscriptions={shownUser.subscriptions}
+          isOwnProfile={isOwnProfile}
+        />
       </>
     )
   );

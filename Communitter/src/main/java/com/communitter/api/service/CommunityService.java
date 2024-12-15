@@ -1,6 +1,10 @@
 package com.communitter.api.service;
 
-import com.communitter.api.model.Community;
+import com.communitter.api.dto.CommunityDto;
+import com.communitter.api.mapper.CommunityMapper;
+import com.communitter.api.model.*;
+import com.communitter.api.repository.*;
+import com.communitter.api.model.*;
 import com.communitter.api.repository.CommunityRepository;
 import com.communitter.api.repository.SubscriptionRepository;
 import com.communitter.api.model.Role;
@@ -25,6 +29,11 @@ public class CommunityService {
     private final CommunityRepository communityRepository;
     private final SubscriptionRepository subscriptionRepository;
     private final RoleRepository roleRepository;
+    private final ActivityStreamService activityStreamService;
+    private  final DataFieldTypeRepository dataFieldTypeRepository;
+    private final DataFieldRepository dataFieldRepository;
+    private final TemplateRepository templateRepository;
+    private final CommunityMapper communityMapper;
     public Logger logger = LoggerFactory.getLogger(CommunityService.class);
 
     @Transactional
@@ -36,6 +45,7 @@ public class CommunityService {
         SubscriptionKey subsKey= new SubscriptionKey(creator.getId(), createdCommunity.getId());
         Role creatorRole= roleRepository.findByName("creator").orElseThrow();
         subscriptionRepository.save(new Subscription(subsKey,creator,createdCommunity,creatorRole));
+        addDefaultTemplate(createdCommunity);
         return createdCommunity;
     }
 
@@ -44,13 +54,18 @@ public class CommunityService {
     }
 
     @Transactional
-    public Subscription subscribeToCommunity(Long id){
+    public Subscription subscribeToCommunity(Long id, String roleName, Boolean checkPrivate){
         User subscriber= (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Community community = communityRepository.findById(id).orElseThrow();
+
+        if (checkPrivate && !community.isPublic())
+            throw new RuntimeException("You cannot join private communities directly.");
+
         SubscriptionKey subsKey= new SubscriptionKey(subscriber.getId(), community.getId());
-        Role userRole= roleRepository.findByName("user").orElseThrow();
+        Role userRole= roleRepository.findByName(roleName).orElseThrow();
         Optional<Subscription> currentSub=subscriptionRepository.findById(subsKey);
         if(currentSub.isPresent()) throw new RuntimeException("User already subscribed");
+        activityStreamService.createActivity(ActivityAction.JOIN, subscriber,community, null);
         return subscriptionRepository.save(new Subscription(subsKey,subscriber,community,userRole));
     }
     @Transactional
@@ -63,7 +78,30 @@ public class CommunityService {
         subscriptionRepository.delete(currentSub);
         return "User unsubscribed";
     }
+
     public List<Community> getAllCommunities(){
         return communityRepository.findAll();
+    }
+
+    public List<CommunityDto> getAllPublicCommunities(){
+        List<Community> publicCommunities = communityRepository.findAllByIsPublic(true).orElseThrow();
+        return publicCommunities.stream().map(communityMapper::toDto).toList();
+    }
+
+    private void addDefaultTemplate(Community community){
+        Template createdTemplate = templateRepository.save(Template.builder()
+                .name("Default Template")
+                .community(community)
+                .build());
+        dataFieldRepository.save(DataField.builder().name("Title")
+                .isRequired(true)
+                .dataFieldType(dataFieldTypeRepository.findByType("string"))
+                .template(createdTemplate)
+                .build());
+        dataFieldRepository.save(DataField.builder().name("Comment")
+                .isRequired(true)
+                .dataFieldType(dataFieldTypeRepository.findByType("string"))
+                .template(createdTemplate)
+                .build());
     }
 }

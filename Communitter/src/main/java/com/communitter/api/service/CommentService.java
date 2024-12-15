@@ -1,10 +1,13 @@
 package com.communitter.api.service;
 
-import java.util.*;
+import java.util.Date;
+import java.util.Set;
 
+import com.communitter.api.model.ActivityAction;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.communitter.api.dto.CommentAuthorDto;
 import com.communitter.api.dto.CommentDto;
 import com.communitter.api.model.Comment;
 import com.communitter.api.model.Post;
@@ -20,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 public class CommentService {
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
+    private final ActivityStreamService activityStreamService;
 
     @Transactional
     public CommentDto createComment(Long postId, CommentDto commentDto){
@@ -36,8 +40,26 @@ public class CommentService {
 
         post.getComments().add(createdComment);
         postRepository.save(post);
+        activityStreamService.createActivity(ActivityAction.COMMENT, author, post.getCommunity(), post);
+        return CommentDto.builder()
+        .id(createdComment.getId())
+        .author(
+            CommentAuthorDto.builder()
+            .id(author.getId())
+            .username(author.getUsername())
+            .build()
+        )
+        .date(createdComment.getDate())
+        .content(createdComment.getContent())
+        .build();   
+    }
 
-        return commentDto;
+    @Transactional
+    public CommentDto editComment(CommentDto editedComment){
+        Comment originalComment = getCommentById(editedComment.getId());
+        originalComment.setContent(editedComment.getContent());
+        
+        return editedComment;
     }
 
     @Transactional
@@ -47,11 +69,13 @@ public class CommentService {
         return "Comment deleted";
     }
 
+    @Transactional
     public Comment getCommentById(Long id) {
         Comment comment = commentRepository.findById(id).orElseThrow();
         return comment;
     }
 
+    @Transactional
     public Set<Comment> getAllPostComments(Long postId) {
         Post post = postRepository.findById(postId).orElseThrow();
         Set<Comment> comments = post.getComments();

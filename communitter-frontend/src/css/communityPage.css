@@ -1,0 +1,201 @@
+/* CommunityPage.css */
+
+.community-page {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  margin-top: 56px;
+}
+
+.main-content {
+  flex: 3;
+}
+
+.activity-feed {
+  flex: 1;
+  max-width: 300px;
+  margin-top: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  height: 100%;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+.activity-feed h3 {
+  margin-bottom: 10px;
+}
+
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.activity-item {
+  font-size: 14px;
+  padding: 5px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+.activity-time {
+  color: #888;
+  font-size: 12px;
+}
+
+.activity-description {
+  flex: 1;
+}
+
+.community-info-section {
+  display: flex;
+  justify-content: space-between;
+}
+
+.activity-item.highlight {
+  background-color: #f0f8ff;
+  border-left: 5px solid #007bff;
+  font-weight: bold;
+  padding-left: 20px;
+}
+
+.activity-item.highlight .activity-time {
+  color: #007bff;
+}
+
+.activity-item.highlight .activity-description {
+  color: #333;
+}
+
+/* Media Query for tablets and smaller devices */
+@media (max-width: 768px) {
+  .community-page {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .main-content {
+    margin: 0;
+  }
+
+  .activity-feed-parent {
+    display: none;
+  }
+
+  .card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  /*.community-image{*/
+  /*    display: flex;*/
+  /*    justify-content: center;*/
+  /*    margin-top: 10px;*/
+  /*    height: 60%;*/
+  /*    !*height: 60px;*!*/
+  /*    !*width: 60px;*!*/
+  /*}*/
+
+  /*.card img {*/
+  /*    margin-top: 10px;*/
+  /*    width: 70%;*/
+  /*    height: 100%;*/
+  /*    object-fit: cover;*/
+  /*}*/
+
+  .card .btn {
+    font-size: 12px;
+    /*padding: 6px;*/
+    margin: 5px 0;
+    width: 120px;
+  }
+
+  .badge {
+    font-size: 10px;
+  }
+  .community-info-section {
+    display: flex;
+    flex-direction: column;
+  }
+  .join-button {
+    display: flex;
+    justify-content: center;
+  }
+
+  .filter-post-reset-filter-buttons {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .filter-post-reset-filter-buttons button {
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    line-height: 1.2;
+  }
+}
+
+@media (max-width: 480px) {
+  .activity-item {
+    font-size: 12px;
+    padding: 3px 0;
+  }
+
+  .card img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .card .btn {
+    font-size: 10px;
+    padding: 5px;
+  }
+}
+
+/* Modal Overlay */
+.activity-modal-overlay {
+  position: fixed;
+  top: 20px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal Content */
+.activity-modal {
+  background-color: white;
+  width: 90%;
+  max-width: 600px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 1100;
+}
+
+/* Close Button */
+.close-modal-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #333;
+}
+
+.close-modal-button:hover {
+  color: red;
+}

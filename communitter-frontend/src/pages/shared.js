@@ -20,6 +20,7 @@ export function SharedLayout() {
     async function protectRoute() {
       const isloggedIn = await checkLogin();
       if (!isloggedIn.ok) {
+        setIsAllowed(false);
         location.pathname !== "/" ? navigate("/") : setIsAllowed(true);
       } else {
         dispatch(setLoggedInUser(isloggedIn.userInfo));
@@ -45,13 +46,8 @@ export function SharedLayout() {
   return (
     <div className="d-flex flex-column vh-100">
       {error && <ErrorMessage message={error} />}
-      <header className="header sticky-top bg-light shadow-sm">
-        <div className="container d-flex justify-content-between align-items-center">
-          <Link to="/" className="text-dark text-decoration-none fs-4">
-            Communitter
-          </Link>
-          {location.pathname !== "/" && isAllowed && <Navbar></Navbar>}
-        </div>
+      <header className="header fixed-top bg-light shadow-sm">
+        {location.pathname !== "/" && isAllowed && <Navbar></Navbar>}
       </header>
       <main className="container flex-grow-1">
         {isAllowed && <Outlet></Outlet>}

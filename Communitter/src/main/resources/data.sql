@@ -10,5 +10,6 @@ INSERT INTO data_field_type (id,type) VALUES
     (2,'number'),
     (3,'date'),
     (4,'image'),
-    (5,'geolocation')
+    (5,'geolocation'),
+    (6,'enumeration')
 ON CONFLICT DO NOTHING;

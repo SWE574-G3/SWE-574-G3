@@ -2,7 +2,7 @@ import PostCard from "./PostCard";
 
 export const Posts = ({ posts, onDelete, onEdit,handleEditPost }) => {
   return (
-    <div className="mt-5">
+    <div className="mt-4">
       <h2>Posts</h2>
       {posts.length > 0 ? (
         <div className="row row-cols-1 g-4">

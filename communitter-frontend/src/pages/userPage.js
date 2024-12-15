@@ -18,13 +18,16 @@ export function UserPage() {
   const [shownUser, setShownUser] = useState(loggedInUser);
   const params = useParams();
   const [isLoading, setIsLoading] = useState(true);
+  const [isOwnProfile, setIsOwnProfile] = useState(true);
 
   useEffect(() => {
     async function getUser() {
       // eslint-disable-next-line eqeqeq
-      if (params.id === loggedInUser.id) {
+      if (params.id === String(loggedInUser.id)) {
+        setIsOwnProfile(true);
         setShownUser(loggedInUser);
         setIsLoading(false);
+        console.log("my profile");
         return;
       }
       try {
@@ -35,6 +38,7 @@ export function UserPage() {
         dispatch(setVisitedUser(data));
         setShownUser(data);
         setIsLoading(false);
+        setIsOwnProfile(false);
       } catch (err) {
         dispatch(setErrorMessage(err.message));
         navigate(`/user/${loggedInUser.id}`);
@@ -42,7 +46,6 @@ export function UserPage() {
       }
     }
     getUser();
-    console.log(shownUser);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -51,13 +54,13 @@ export function UserPage() {
     params,
     loggedInUser.subscriptions.length,
     visitedUser.subscriptions.length,
+    isOwnProfile,
   ]);
   return (
-
     !isLoading && (
       <>
         <UserProfile shownUser={shownUser} />
-        <UserInvitations />
+        {isOwnProfile ? <UserInvitations /> : null}
         <Subscriptions subscriptions={shownUser.subscriptions} />
       </>
     )

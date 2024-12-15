@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserFolloweeDto {
+public class UserFollowerOrFolloweeDto {
 
-    private UserDto followee;
+    private UserDto user;
 
     private Date followedAt;
 }

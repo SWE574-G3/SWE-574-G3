@@ -1,8 +1,7 @@
 package com.communitter.api.mapper;
 
 import com.communitter.api.dto.UserDto;
-import com.communitter.api.dto.UserFolloweeDto;
-import com.communitter.api.dto.UserFollowerDto;
+import com.communitter.api.dto.UserFollowerOrFolloweeDto;
 import com.communitter.api.model.User;
 import com.communitter.api.model.UserFollow;
 import java.util.Date;
@@ -19,9 +18,11 @@ public interface UserMapper {
 
     User toEntity(UserDto userDto);
 
-    UserFollowerDto toUserFollowerDto(UserFollow userFollow);
+    @Mapping(target = "user", source = "follower")
+    UserFollowerOrFolloweeDto toUserFollowerDto(UserFollow userFollow);
 
-    UserFolloweeDto toUserFolloweeDto(UserFollow userFollow);
+    @Mapping(target = "user", source = "followee")
+    UserFollowerOrFolloweeDto  toUserFolloweeDto(UserFollow userFollow);
 
     @Mapping(target = "id", ignore = true)
     UserFollow toUserFollowEntity(User follower, User followee, Date followedAt);

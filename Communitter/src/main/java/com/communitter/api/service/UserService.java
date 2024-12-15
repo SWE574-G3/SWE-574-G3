@@ -1,8 +1,7 @@
 package com.communitter.api.service;
 
 import com.communitter.api.dto.UserFollowInfoDto;
-import com.communitter.api.dto.UserFolloweeDto;
-import com.communitter.api.dto.UserFollowerDto;
+import com.communitter.api.dto.UserFollowerOrFolloweeDto;
 import com.communitter.api.dto.request.UserRequest;
 import com.communitter.api.mapper.UserMapper;
 import com.communitter.api.model.User;
@@ -78,7 +77,7 @@ public class UserService {
     }
 
     @Transactional
-    public List<UserFollowerDto> getFollowersByFolloweeId(Long followeeId) {
+    public List<UserFollowerOrFolloweeDto> getFollowersByFolloweeId(Long followeeId) {
 
         List<UserFollow> followers = userFollowRepository.findAllByFolloweeId(followeeId);
 
@@ -86,7 +85,7 @@ public class UserService {
     }
 
     @Transactional
-    public List<UserFolloweeDto> getFolloweesByFollowerId(Long followerId) {
+    public List<UserFollowerOrFolloweeDto> getFolloweesByFollowerId(Long followerId) {
 
         List<UserFollow> followees = userFollowRepository.findAllByFollowerId(followerId);
 

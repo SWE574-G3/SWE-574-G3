@@ -12,9 +12,7 @@ export function HomePage() {
   const [combinedPosts, setCombinedPosts] = useState([]);
 
   function getRandomPosts(posts) {
-    return posts
-      .sort(() => 0.5 - Math.random())
-      .slice(0, 5);
+    return posts.sort(() => 0.5 - Math.random()).slice(0, 5);
   }
 
   async function fetchCommunitiesByIds(subscriptions) {
@@ -24,7 +22,10 @@ export function HomePage() {
           const communityId = subscription.id.communityId;
 
           if (!communityId) {
-            console.error("No communityId found for subscription:", subscription);
+            console.error(
+              "No communityId found for subscription:",
+              subscription
+            );
             return { id: null, name: "Unknown Community", posts: [] };
           }
 
@@ -65,9 +66,11 @@ export function HomePage() {
         method: "GET",
         headers: {},
       });
-  
-      const recommendedIds = recommendedData.filter((community) => community.public===true).map((community) => community.id)
-  
+
+      const recommendedIds = recommendedData
+        .filter((community) => community.public === true)
+        .map((community) => community.id);
+
       const recommendedDetails = await Promise.all(
         recommendedIds.map(async (id) => {
           try {
@@ -82,50 +85,53 @@ export function HomePage() {
           }
         })
       );
-  
+
       const validCommunities = recommendedDetails.filter(Boolean);
-  
+
       setRecommendedCommunities(validCommunities);
     } catch (error) {
       console.error("Failed to fetch recommended communities:", error);
       setErrorMessage(error.message);
     }
   }
-  
+
   function combinePosts() {
-    const joinedCommunityIds = new Set(joinedCommunities.map((community) => community.id));
+    const joinedCommunityIds = new Set(
+      joinedCommunities.map((community) => community.id)
+    );
     const uniqueRecommendedCommunities = recommendedCommunities.filter(
       (community) => !joinedCommunityIds.has(community.id)
     );
-  
-    const allCommunities = [...joinedCommunities, ...uniqueRecommendedCommunities];
-  
+
+    const allCommunities = [
+      ...joinedCommunities,
+      ...uniqueRecommendedCommunities,
+    ];
+
     let selectedPosts = [];
-  
+
     allCommunities.forEach((community) => {
       if (Array.isArray(community.posts) && community.posts.length > 0) {
-        const enrichedPost = community.posts.map(post => ({
+        const enrichedPost = community.posts.map((post) => ({
           ...post,
-          community: community
+          community: community,
         }));
-        
+
         const randomCommunityPosts = getRandomPosts(enrichedPost);
         selectedPosts = [...selectedPosts, ...randomCommunityPosts];
       }
     });
-  
+
     selectedPosts.sort(() => Math.random() - 0.5);
-  
+
     setCombinedPosts(selectedPosts);
   }
-  
-  
+
   useEffect(() => {
     if (loggedInUser && loggedInUser.subscriptions) {
       fetchCommunitiesByIds(loggedInUser.subscriptions);
       fetchRecommendedCommunities();
     }
-
   }, [loggedInUser]);
 
   useEffect(() => {
@@ -135,7 +141,7 @@ export function HomePage() {
   }, [joinedCommunities, recommendedCommunities]);
 
   return (
-    <div>
+    <div style={{ marginTop: "56px" }}>
       <h2>Welcome</h2>
       {combinedPosts.length > 0 ? (
         <div>

@@ -88,7 +88,14 @@ const UserInvitations = () => {
                 <tr key={index}>
                   <td>{invitation.community.name}</td>
                   <td>{invitation.role.name}</td>
-                  <td>{invitation.sentBy.username}</td>
+                  <td>
+                    <a
+                      href={`/user/${invitation.sentBy.id}`}
+                      className="text-decoration-none"
+                    >
+                      {invitation.sentBy.username}
+                    </a>
+                  </td>
                   <td>
                     {new Date(invitation.sentAt).toLocaleDateString("tr-TR", {
                       year: "numeric",
@@ -106,6 +113,7 @@ const UserInvitations = () => {
                         variant="success"
                         onClick={() => handleAcceptInvitation(invitation.id)}
                         size="sm"
+                        disabled={isLoading}
                       >
                         <BsCheckCircle />
                       </Button>
@@ -113,6 +121,7 @@ const UserInvitations = () => {
                         variant="danger"
                         onClick={() => handleRejectInvitation(invitation.id)}
                         size="sm"
+                        disabled={isLoading}
                       >
                         <BsXCircle />
                       </Button>

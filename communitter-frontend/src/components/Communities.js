@@ -21,7 +21,7 @@ const Communities = () => {
       .catch((e) => setErrorMessage(e.message));
   }, [showRecommended]);
   return (
-    <div className="container mt-4">
+    <div className="container" style={{marginTop: "64px"}}>
       {/* Switch for toggling between Recommended and All Communities */}
       <div className="d-flex align-items-center mb-4">
         <label className="me-2">Recommended Communities</label>

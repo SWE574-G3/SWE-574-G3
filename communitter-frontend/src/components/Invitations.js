@@ -107,9 +107,23 @@ const Invitations = () => {
             <tbody>
               {invitations.map((invitation, index) => (
                 <tr key={index}>
-                  <td>{invitation.user.username}</td>
+                  <td>
+                    <a
+                      href={`/user/${invitation.user.id}`}
+                      className="text-decoration-none"
+                    >
+                      {invitation.user.username}
+                    </a>
+                  </td>
                   <td>{invitation.role.name}</td>
-                  <td>{invitation.sentBy.username}</td>
+                  <td>
+                    <a
+                      href={`/user/${invitation.sentBy.id}`}
+                      className="text-decoration-none"
+                    >
+                      {invitation.sentBy.username}
+                    </a>
+                  </td>
                   <td>
                     {new Date(invitation.sentAt).toLocaleDateString("tr-TR", {
                       year: "numeric",

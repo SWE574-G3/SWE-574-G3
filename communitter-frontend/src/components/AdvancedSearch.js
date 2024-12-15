@@ -61,6 +61,9 @@ const AdvancedSearchModal = ({
         case "image":
           filterObject = { type: "image"};
           break;
+        case "enumeration":
+          filterObject = {type: "enumeration"}
+          break;
         case "geolocation":
           filterObject = {
             type: "geolocation",
@@ -119,6 +122,10 @@ const AdvancedSearchModal = ({
         case "image":
           return (
             <p>{`${searchField.name}`}: Filter is not possible for image.</p>
+          );
+        case "enumeration":
+          return (
+              <p>{`${searchField.name}`}: Filter is not possible for enumeration types.</p>
           );
         case "geolocation":
           SearchFieldComponent = GeolocationSearchField;

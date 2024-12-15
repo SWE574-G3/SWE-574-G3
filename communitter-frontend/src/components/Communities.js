@@ -44,7 +44,7 @@ const Communities = () => {
             </tr>
           </thead>
           <tbody>
-            {communities.map((community) => (
+            {communities.filter((community) => community.public).map((community) => (
               <tr key={community.id}>
                 <td>
                   <Link to={`/community/${community.id}`}>

@@ -12,7 +12,7 @@ import EditPostModal from "./EditPostModal";
 import {useDispatch, useSelector} from "react-redux";
 import { useLocation } from "react-router-dom";
 
-const PostCard = ({ post, onDelete, onEdit,handleEditPost }) => {
+const PostCard = ({ post, onDelete, onEdit,handleEditPost, dontShowEditDeleteButtons }) => {
   const { author, postFields, date: timestamp, id } = post; // Destructure post object
     const community = useSelector((state) => state.community.visitedCommunity);
     const [showEditModal,setShowEditModal]=useState(false);
@@ -134,12 +134,12 @@ const PostCard = ({ post, onDelete, onEdit,handleEditPost }) => {
           <PostField key={postField.id} postField={postField} />
         ))}
           <div className="d-flex">
-            {post.author.id == loggedInUser.id && (
+            {!dontShowEditDeleteButtons && post.author.id == loggedInUser.id && (
               <Button variant="danger" onClick={handleDeleteClick} className="me-2">
                     Delete
                 </Button>
                 )}
-              {post.author.id === loggedInUser.id && (
+              {!dontShowEditDeleteButtons && post.author.id === loggedInUser.id && (
               <Button variant="primary" onClick={handleEditClick}>
                   Edit
               </Button>

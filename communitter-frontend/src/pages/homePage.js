@@ -146,7 +146,7 @@ export function HomePage() {
       {combinedPosts.length > 0 ? (
         <div>
           {combinedPosts.map((post, postIndex) => (
-            <PostCard key={post.id || postIndex} post={post} />
+            <PostCard key={post.id || postIndex} post={post} dontShowEditDeleteButtons={true} />
           ))}
         </div>
       ) : (

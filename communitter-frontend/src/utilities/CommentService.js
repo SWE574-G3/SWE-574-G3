@@ -3,7 +3,7 @@ import { tokenName, url } from "./config";
 export class CommentService {
     static async createComment(comment, postId) {
         const token = localStorage.getItem(tokenName);
-        try {
+        //try {
             console.log(postId);
             const commentResponse = await fetch(`${url}/comments/posts/${postId}`, {
                 method: "POST",
@@ -14,18 +14,20 @@ export class CommentService {
                 body: JSON.stringify(comment),
             });
 
-            if (!commentResponse.ok) {
-                throw new Error("Failed to create comment: ", commentResponse);
+           if (!commentResponse.ok) {
+               const message = await commentResponse.text();
+               throw new Error(message);
             }
             return await commentResponse.json(); 
-        } catch (error) {
+        /*} catch (error) {
             console.log(error.message);
-        }
+           throw new Error(error)
+        }*/
     }
 
     static async editComment(comment,commentId){
         const token = localStorage.getItem(tokenName);
-        try {
+        //try {
             const response = await fetch(`${url}/comments/edit/${commentId}`, {
                 method: "POST",
                 headers: {
@@ -36,17 +38,19 @@ export class CommentService {
             });
 
             if(!response.ok){
-                throw new Error("Failed to edit the comment:", response)
+                const message = await response.text();
+                throw new Error(message);
             }
             return await response.json();
-        } catch (error) {
+        /*} catch (error) {
             console.log(error.message);
-        }
+            this.dispatch(setErrorMessage(error.message));
+        }*/
     }
 
     static async deleteComment(commentId){
         const token = localStorage.getItem(tokenName);
-        try {
+        //try {
             const response = await fetch(`${url}/comments/delete/${commentId}`, {
                 method: "DELETE",
                 headers: {
@@ -56,11 +60,13 @@ export class CommentService {
             });
 
             if (!response.ok){
-                throw new Error("Failed to delete comment: ", response);
+                const message = await response.text();
+                throw new Error(message);
             }
             return await response.json();
-        } catch (error) {
+        /*} catch (error) {
             console.log(error.message);
-        }
+            this.dispatch(setErrorMessage(error.message));
+        }*/
     }
 }

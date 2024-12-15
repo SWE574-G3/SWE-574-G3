@@ -27,6 +27,7 @@ public class CommentController {
     
     private final CommentService commentService;
 
+    @PreAuthorize("@authorizer.checkSubscriptionByPostId(#root,#id)")
     @PostMapping("/posts/{id}")
     public ResponseEntity<CommentDto> createComment(@P("id") @PathVariable Long id, @RequestBody CommentDto comment){
         return ResponseEntity.ok(commentService.createComment(id, comment));

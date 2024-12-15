@@ -24,7 +24,6 @@ export const UserProfile = ({ shownUser }) => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
-  console.log("dsfafsz");
 
   const token = localStorage.getItem(tokenName);
   const loggedInUser = useSelector((state) => state.user.loggedInUser);

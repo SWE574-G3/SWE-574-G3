@@ -1598,7 +1598,9 @@ Lastly, I enhanced the user interface by making the header menu mobile-friendly,
 
 * Update the ER diagram
   https://github.com/SWE574-G3/SWE-574-G3/issues/37
-  **Code-Related Significant Issues:**
+  
+**Code-Related Significant Issues:**
+  
 * Invitation System (Backend)
   [https://github.com/SWE574-G3/SWE-574-G3/issues/45](https://github.com/SWE574-G3/SWE-574-G3/issues/45)
 * Sending invitation (Backend)
@@ -1798,11 +1800,11 @@ This feature streamlines the process of adding new members to the community. Onc
 
 The Invitations section allows the user to manage pending invitations to join communities, displaying details such as the community name, the role they would have (e.g., "owner"), the inviter's name, the date of the invitation, and its status (e.g., "PENDING"). The user can take action by accepting the invitation (✔), which adds them to the community, or declining it (✖), which removes the invitation. Once accepted, the community will likely appear in the Memberships section, while declined invitations are simply dismissed. In the example, the user "nilo" has a pending invitation to the "Private Photography Club" sent by "Barışcan" with the role of "owner". The **Followers** and **Following** sections on a user's profile indicate their social connections within the platform. **Followers** represent people who follow the user, while **Following** shows the number of people the user follows. For instance, the user "OUZ" has **2 followers** and is following **2 people**. When you visit another user's profile, a **Follow button** appears, allowing you to follow them and add yourself to their list of followers. This button encourages interaction and builds a network of connected users.
 
-**2.1.9 Challenges Faced During Implementation**
+**2.4.9 Challenges Faced During Implementation**
 
 At first, it was challenging to write code for a project I wasn’t familiar with. I especially struggled with front-end development. In modern development, UI libraries compatible with the chosen framework, like Material or Ant Design, are often used to avoid duplicating efforts. However, in our initial project, the absence of such a library forced us to rely on Bootstrap classes and custom CSS. Due to the project's tight timeline, implementing a major change like integrating a new UI library wasn’t feasible, so we had to proceed with the existing setup. Another challenge I faced was the lack of a decision-maker to guide the project as a team. This sometimes required each team member to take their own initiative to move forward.
 
-**2.1.10 Code Reviews (Provided and Received)**
+**2.4.10 Code Reviews (Provided and Received)**
 
 The following links provide an overview of my contributions and reviews in the project:
 

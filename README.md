@@ -16,13 +16,6 @@ Application is running in here: [34.155.21.219:3000](http://34.155.21.219:3000/)
 - [License](#license)
 - [Contact](#contact)
 
-## Features
-
-- **Community Management**: Create, update, delete, and manage different communities.
-- **Role-Based Access**: User roles and permissions to access and interact within communities.
-- **Dynamic Post Templates**: Customizable post templates for different community needs.
-- **Advanced Search**: Search community posts with filters based on roles, status, and content.
-- **Interactive UI**: A responsive user interface with **Thymeleaf** for rendering dynamic content.
 
 ## Technologies Used
 

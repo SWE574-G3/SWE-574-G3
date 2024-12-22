@@ -1754,6 +1754,7 @@ The **Default Template Creation** task aimed to streamline the onboarding proces
  <img width="1187" alt="Screenshot 2024-12-22 at 05 35 25" src="https://github.com/user-attachments/assets/2f78bc96-2fc1-4fb7-9ca8-6699041ebd9e" />
  <img width="1427" alt="Screenshot 2024-12-22 at 05 36 42" src="https://github.com/user-attachments/assets/8f3609da-81a0-4ea2-b743-85c1982611e4" />
  <img width="1123" alt="Screenshot 2024-12-22 at 05 42 15" src="https://github.com/user-attachments/assets/5210d0be-f263-4c1d-98d3-0e0f4cba1a09" />
+ 
 * **2.1.9 Challenges Faced During Implementation**  
   **Describe any significant challenges or obstacles you encountered and how you overcame them. Be specific and provide actionable details.**  
   **Understanding and Refactoring Legacy Code**  

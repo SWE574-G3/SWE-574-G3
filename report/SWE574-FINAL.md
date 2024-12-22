@@ -1550,38 +1550,388 @@ The **Activity Stream** feature included [8 different requirements](https://gith
 
 * **2.1.13 Other Contributions**
 
+#### **2.4 Yunus Emre Korkmaz**
 
-#### **2.4 Yunus Emre Korkmaz** {#2.4-yunus-emre-korkmaz}
+**2.4.1 Related Requirements and Contributions**
 
-* **2.1.1 Related Requirements and Contributions**  
-  **Specify which project requirements your contributions relate to. Clearly mention the requirement ID or description and explain how your work addresses them.**  
-* **2.1.2 Description of Major Efforts**  
-  **Provide a brief overview of the major tasks you performed during the project. Include details about your involvement in the implementation, testing, or documentation.**  
-* **2.1.3 Related Issue URLs**  
-  **List the issue URLs you worked on. Use references (e.g., \#48) that were created during the project. These should have been documented during development.**  
-* **2.1.4 Relevant Content Links (Source Code, Documentation, Tests)**  
-  **Include URLs pointing to relevant source code, documentation, test cases, or any other significant contributions you made.**  
-* **2.1.5 Video Demonstration**  
-  **Provide a link to a short video (maximum 5 minutes) demonstrating the functionality you implemented. Ensure the video clearly showcases your contributions, including any relevant user interfaces.**  
-* **2.1.6 Executive Summary of Contributions**  
-  **Summarize your contributions by explaining how they align with the project requirements, design, and management. Include references to corresponding issues and documentation.**  
-* **2.1.7 Code Explanation and Documentation**  
-  **Provide an overview of the code you wrote. Describe its purpose and functionality, and include details about any documentation or unit tests you added.**  
-* **2.1.8 Screenshots of Implemented Functionality**  
-  **Add screenshots to demonstrate the most complex features or functionality you implemented. These should highlight significant contributions or challenges.**  
-* **2.1.9 Challenges Faced During Implementation**  
-  **Describe any significant challenges or obstacles you encountered and how you overcame them. Be specific and provide actionable details.**  
-* **2.1.10 Code Reviews (Provided and Received)**  
-  * **Provided Reviews: List the code you reviewed, the team members you helped, and the relevant pull requests or comments. Explain the impact of your reviews.**  
-  * **Received Reviews: Describe the feedback you received, the issues it addressed, and how you incorporated it into your work.**  
-* **2.1.11 Major Pull Requests**  
-  **Document the major pull requests you created, with details on what they included and their significance to the project. Include URLs for each.**  
-* **2.1.12 Issues (Created and Assigned)**  
-  **Provide a table listing the issues you:**  
-  * **Created (with URLs and titles).**  
-  * **Were assigned (with URLs and titles).**  
-* **2.1.13 Other Contributions**  
-  **Mention any additional contributions not covered above, such as team coordination, troubleshooting, or unexpected tasks you took on.**
+**Invitation System and Related Functionalities**
+
+* User Invitation List and Accept, Reject or Cancel Invitations: I developed the user invitation list to facilitate invitation management for private communities. I implemented both frontend and backend features for accepting, rejecting, or canceling invitations. This ensures that only invited users can join private communities.
+* Adding link to items in invitation table: I added links to items in the invitation table to enable users to easily access invitation details in private communities. This enhancement allows users to quickly and conveniently review their invitation information.
+* List invitations for users: I developed a feature to list invitations for users, enhancing their experience by making it easier to access all invitations sent to them, specifically for private communities.
+* List invitations in community: I created a feature to list the invitations sent by private communities to individual users. This functionality allows community members or administrators to manage invitation processes with individual users more effectively.
+* Sending Invitation (Frontend & Backend): I designed and developed the invitation sending process for private communities to invite individual users. I handled this process on both the frontend and backend, ensuring the system is user-friendly, secure, and seamless.
+
+**User Follow Functionality (Frontend & Backend)**
+
+I developed a feature that allows users to follow other users to enhance interactions within the community. This feature helps users discover others who share similar interests. On the backend, I implemented the necessary APIs and optimized database operations to ensure this functionality works efficiently and reliably.
+
+**User Interface and Mobile Responsiveness**
+
+I made the header menu compatible with mobile devices, improving the application's accessibility and enhancing the mobile user experience.
+
+**Documentation**
+
+* Design and Update of ER Diagram: I made updates and additions to the previously created ER diagram to ensure the accuracy and consistency of the data models used in the project. Through this task, I strengthened the fundamental framework required for database design and ensured that it served as an essential guide during the project development process. With this work, I contributed to the improvement of the existing data model.
+* Adding Invitation Requirements to Wiki: I added the invitation requirements to the wiki, strengthening team communication and ensuring a clearer understanding of project requirements. With this work, I contributed to team knowledge sharing.
+* Adding Invitations Mock-ups to Wiki: I created mock-ups for the invitation system and added them to the documentation. This process provided guidance for the user interface design process within the team. With this work, I contributed to the design process.
+* Coding Standards: I established coding standards to ensure that team members write consistent and high-quality code. This work contributed to the project's maintainability.
+* Branch Protection Rules: I defined branch protection rules as part of team collaboration to secure the branches. These rules ensured code integrity and maintained quality standards, thus making team collaboration more effective.
+
+**2.4.2 Description of Major Efforts**
+
+In the initial phase of the project, we held a meeting to discuss how we would collaborate as a team, manage the repository, implement branch protection rules, and establish our development strategy within the same repository. My responsibilities during this phase included researching and implementing branch protection rules, establishing coding standards for both backend and frontend development, updating and extending the existing ER diagram for new features, and creating mockup scenarios for the invitation system.
+
+One of my first major contributions was focusing on branch protection rules. During the meeting, we decided on the basic rules; however, I discovered that GitHub's new Ruleset system offered a more advanced way to enforce these rules. After conducting thorough research, I created new Rulesets for our two main branches, enhancing the security and structure of our repository. Following this, I worked with the team to finalize coding standards. We collectively agreed to adopt the standards I had been using in my previous professional projects, ensuring consistent and maintainable code throughout the project.
+
+Additionally, after a meeting with Nilay and Cankut, where we decided on the structure of the recommendation and activity stream systems, I updated the ER diagram to incorporate these new features. My work on the diagram not only strengthened the database design but also provided a clear reference for future development. For the invitation system, I determined the requirements and designed detailed mockup scenarios, laying a solid foundation for its implementation.
+
+Beyond the initial phase, I contributed to the implementation of key functionalities. For example, I developed the invitation management system, which includes features such as listing, accepting, rejecting, and canceling invitations for private communities. I also added links to the invitation table, improving navigation and access to invitation details. For private communities, I created functionality to list invitations sent to individual users, allowing for better invitation process management. Furthermore, I designed and implemented the user follow feature, enabling users to discover others with similar interests. On the backend, I ensured these features were supported by efficient APIs and optimized database operations.
+
+Lastly, I enhanced the user interface by making the header menu mobile-friendly, significantly improving the application's accessibility for mobile users. My documentation efforts included updating the invitation requirements in the project wiki, creating mockups for the invitation system, and defining branch protection rules. These contributions helped improve team communication, maintain high-quality standards, and ensure the project's overall success.
+
+**2.4.3 Related Issue URLs**
+
+**Non-Code Related Significant Issues:** 
+
+* The coding standards which will be used by the team to ensure code quality needs to be defined. 
+  [https://github.com/SWE574-G3/SWE-574-G3/issues/10](https://github.com/SWE574-G3/SWE-574-G3/issues/10)
+* Researching and establishing rulesets for branch protection. [https://github.com/SWE574-G3/SWE-574-G3/issues/2](https://github.com/SWE574-G3/SWE-574-G3/issues/2)
+* Contributing Documentation
+  [https://github.com/SWE574-G3/SWE-574-G3/issues/3](https://github.com/SWE574-G3/SWE-574-G3/issues/3)
+* Creation of the ER diagram for the Database Design of the application [https://github.com/SWE574-G3/SWE-574-G3/issues/16](https://github.com/SWE574-G3/SWE-574-G3/issues/16)
+* Create ER diagram for the application
+  [https://github.com/SWE574-G3/SWE-574-G3/issues/21](https://github.com/SWE574-G3/SWE-574-G3/issues/21)
+* Adding Invitation Requirements to Wiki [https://github.com/SWE574-G3/SWE-574-G3/issues/27](https://github.com/SWE574-G3/SWE-574-G3/issues/27)
+* Adding Invitations Mock-ups to Wiki
+
+[https://github.com/SWE574-G3/SWE-574-G3/issues/26](https://github.com/SWE574-G3/SWE-574-G3/issues/26)
+
+* Update the ER diagram
+  https://github.com/SWE574-G3/SWE-574-G3/issues/37
+  **Code-Related Significant Issues:**
+* Invitation System (Backend)
+  [https://github.com/SWE574-G3/SWE-574-G3/issues/45](https://github.com/SWE574-G3/SWE-574-G3/issues/45)
+* Sending invitation (Backend)
+  https://github.com/SWE574-G3/SWE-574-G3/issues/55
+* Sending invitation (Frontend)
+  [https://github.com/SWE574-G3/SWE-574-G3/issues/56](https://github.com/SWE574-G3/SWE-574-G3/issues/56)
+* List Invitations in community
+  [https://github.com/SWE574-G3/SWE-574-G3/issues/67](https://github.com/SWE574-G3/SWE-574-G3/issues/67)
+* List Invitations for users
+  [https://github.com/SWE574-G3/SWE-574-G3/issues/75](https://github.com/SWE574-G3/SWE-574-G3/issues/75)
+* Accept, Reject or Cancel An Invitation
+  [https://github.com/SWE574-G3/SWE-574-G3/issues/76](https://github.com/SWE574-G3/SWE-574-G3/issues/76)
+* User Invitation List and Accept or Reject
+  [https://github.com/SWE574-G3/SWE-574-G3/issues/100](https://github.com/SWE574-G3/SWE-574-G3/issues/100)
+* Making header menu mobile friendly
+  https://github.com/SWE574-G3/SWE-574-G3/issues/133
+* User follow functionality (Backend)
+  https://github.com/SWE574-G3/SWE-574-G3/issues/140
+* User follow functionality (Frontend)
+  https://github.com/SWE574-G3/SWE-574-G3/issues/148
+* Adding link to items in invitation table
+  [https://github.com/SWE574-G3/SWE-574-G3/issues/151](https://github.com/SWE574-G3/SWE-574-G3/issues/151)
+
+**2.4.4 Relevant Content Links (Source Code, Documentation, Tests)**
+
+  Source Code: [https://github.com/SWE574-G3/SWE-574-G3](https://github.com/SWE574-G3/SWE-574-G3)
+* Coding Standards
+  [https://github.com/SWE574-G3/SWE-574-G3/wiki/Coding-Standards](https://github.com/SWE574-G3/SWE-574-G3/wiki/Coding-Standards)
+* Researching and establishing rulesets for branch protection. [https://github.com/SWE574-G3/SWE-574-G3/issues/2](https://github.com/SWE574-G3/SWE-574-G3/issues/2)
+* Creation of the ER diagram for the Database Design of the application [https://github.com/SWE574-G3/SWE-574-G3/wiki/Design-Representations\#entity-relation-diagram](https://github.com/SWE574-G3/SWE-574-G3/wiki/Design-Representations#entity-relation-diagram)
+* Create ER diagram for the application
+  [https://github.com/SWE574-G3/SWE-574-G3/wiki/Design-Representations\#entity-relation-diagram](https://github.com/SWE574-G3/SWE-574-G3/wiki/Design-Representations#entity-relation-diagram)
+* Adding Invitation Requirements to Wiki [https://github.com/SWE574-G3/SWE-574-G3/wiki/Requirements\#functional-requirements](https://github.com/SWE574-G3/SWE-574-G3/wiki/Requirements#functional-requirements)
+* Adding Invitations Mock-ups to Wiki
+[https://github.com/SWE574-G3/SWE-574-G3/wiki/Mock-Up-Screens\#invitation-mock-up](https://github.com/SWE574-G3/SWE-574-G3/wiki/Mock-Up-Screens#invitation-mock-up)
+
+* Update the ER diagram
+  [https://github.com/SWE574-G3/SWE-574-G3/wiki/Design-Representations\#entity-relation-diagram](https://github.com/SWE574-G3/SWE-574-G3/wiki/Design-Representations#entity-relation-diagram)
+* Sending invitation (Backend)
+  [https://github.com/SWE574-G3/SWE-574-G3/pull/60](https://github.com/SWE574-G3/SWE-574-G3/pull/60)
+* Sending invitation (Frontend)
+  [https://github.com/SWE574-G3/SWE-574-G3/pull/114](https://github.com/SWE574-G3/SWE-574-G3/pull/114)
+* List Invitations in community
+  [https://github.com/SWE574-G3/SWE-574-G3/pull/74](https://github.com/SWE574-G3/SWE-574-G3/pull/74)
+* List Invitations for users
+  [https://github.com/SWE574-G3/SWE-574-G3/pull/81](https://github.com/SWE574-G3/SWE-574-G3/pull/81)
+* Accept, Reject or Cancel An Invitation
+  [https://github.com/SWE574-G3/SWE-574-G3/pull/88](https://github.com/SWE574-G3/SWE-574-G3/pull/88)
+* User Invitation List and Accept or Reject
+  [https://github.com/SWE574-G3/SWE-574-G3/pull/114](https://github.com/SWE574-G3/SWE-574-G3/pull/114)
+* Making header menu mobile friendly
+  [https://github.com/SWE574-G3/SWE-574-G3/pull/135](https://github.com/SWE574-G3/SWE-574-G3/pull/135)
+* User follow functionality (Backend)
+  [https://github.com/SWE574-G3/SWE-574-G3/pull/147](https://github.com/SWE574-G3/SWE-574-G3/pull/147)
+* User follow functionality (Frontend)
+  [https://github.com/SWE574-G3/SWE-574-G3/pull/149](https://github.com/SWE574-G3/SWE-574-G3/pull/149)
+* Adding link to items in invitation table
+  [https://github.com/SWE574-G3/SWE-574-G3/pull/157](https://github.com/SWE574-G3/SWE-574-G3/pull/157)
+
+**2.4.5 Video Demonstration**
+  
+  [Demo Video](https://youtu.be/NB3EmeFuH0g)
+
+**2.4.6 Executive Summary of Contributions**
+
+Throughout the project, I made significant contributions by designing and developing the core functionalities of the application and organizing internal team processes, thereby playing a key role in the project's success. My efforts were aligned with both technical requirements and team collaboration, aiming to deliver a user-friendly product.
+
+* Invitation System and User Interactions: I designed and implemented the invitation system for private communities, creating a secure environment where users could join only by invitation. This included developing features such as creating invitation lists, accepting/rejecting invitations, sending invitations to individual users, and managing community-based invitations. Additionally, I developed a user follow system that allows users to discover and follow others with similar interests.
+* User Interface and Mobile-Responsive Design: To enhance accessibility, I optimized the header menu for mobile devices. This improvement enhanced the mobile user experience, making the application easily usable by everyone.
+* Data Structure and ER Diagram Updates: I expanded and updated the existing ER diagram with new features, ensuring the accuracy and consistency of data models used in the project. These updates strengthened the database design and provided a vital reference for future development processes.
+* Documentation and Standards: I defined the requirements for the invitation system and added them to the wiki, along with creating mockup scenarios for the system to guide the design process. I established coding standards to ensure consistent and high-quality code across the team. Furthermore, I researched and implemented new GitHub Rulesets for branch protection, contributing to the organization of collaborative workflows.
+* General Contributions to Project Management: I took active roles in technical discussions and team meetings, strengthening team collaboration. In addition to technical solutions, I contributed to ensuring that processes ran smoothly and effectively.
+
+This summary reflects my technical and managerial efforts, which ensured the project’s progress and laid the foundation for a maintainable and user-friendly application.
+
+**2.4.7 Code Explanation and Documentation**
+  **Provide an overview of the code you wrote. Describe its purpose and functionality, and include details about any documentation or unit tests you added.**
+
+[**InvitationService.java**](https://github.com/SWE574-G3/SWE-574-G3/blob/dev/Communitter/src/main/java/com/communitter/api/service/InvitationService.java)
+
+**Class Overview**
+
+The `InvitationService` class provides methods for managing invitations within a community-based application. It includes operations like inviting users, retrieving invitations, accepting/rejecting invitations, and canceling them.
+
+1. `inviteUser` Method
+   
+    This method allows an authenticated user (authUser) to invite another user to a private community. It checks several conditions:
+
+   * Ensures the community is not public.
+   * Verifies that the invited user is not already subscribed or invited.
+   * Creates and saves the invitation if all checks pass. The invitation details are then mapped to a DTO and returned.
+
+1. `getCommunityInvitations` Method
+   
+    This method retrieves all invitations for a specific community (communityId). It fetches the community's invitations and converts them into DTOs for use in the application.
+
+1. `getUserPendingInvitations` Method
+   
+    This method retrieves all pending invitations for a specific user. It looks up invitations with the status PENDING and maps them into DTOs for further use.
+
+1. `acceptOrRejectInvitation` Method
+   
+    This method allows a user (authUser) to accept or reject an invitation:
+
+      * Ensures the invitation belongs to the user and is still pending.
+      * If accepted, the user is subscribed to the community using their assigned role.
+      * Updates the invitation status to `ACCEPTED` or `REJECTED` and saves the changes.
+
+1. `cancelInvitation` Method
+   
+    This method lets an authenticated user cancel an invitation:
+
+      * Ensures the user has the authority to cancel the invitation (based on role and ownership).
+      * Updates the invitation's status to `CANCELLED` and saves it. If the user doesn't have the required privileges, an exception is thrown.
+
+[**UserService.java**](https://github.com/SWE574-G3/SWE-574-G3/blob/dev/Communitter/src/main/java/com/communitter/api/service/UserService.java)
+
+1. `getFollowersByFolloweeId(Long followeeId)`
+   
+     * Retrieves all users who follow the specified user (followeeId).
+     * Uses the repository to fetch the followers and maps them into DTOs using userMapper.
+
+1. `getFolloweesByFollowerId(Long followerId)`
+   
+    * Retrieves all users whom the specified user (followerId) is following.
+    * Fetches the followees from the repository and maps them into DTOs using userMapper.
+  
+1. `follow(User follower, Long followeeId)`
+   
+    * Allows a user (follower) to follow another user (followeeId).
+Validates that:
+      * A user cannot follow themselves.
+      * A user cannot follow the same user multiple times.
+    * Fetches the followee from the repository and saves the follow relationship as an entity.
+
+1. `unfollow(User follower, Long followeeId)`
+   
+    * Allows a user (follower) to unfollow another user (followeeId).
+    * Validates that:
+      * A user cannot unfollow themselves.
+      * The follow relationship exists before attempting to unfollow.
+    * Deletes the follow relationship from the repository.
+
+1. `getUserFollowInfo(Long userId, Long currentUserId)`
+   
+    * Retrieves detailed follow information for a specific user (userId), including:
+      * The number of followers (followerCount).
+      * The number of users they are following (followeeCount).
+      * Whether the current user (currentUserId) is following the target user.
+    * Constructs and returns a UserFollowInfoDto containing these details.
+
+**2.4.8 Screenshots of Implemented Functionality**
+
+  **Private Community Invitations**
+
+![Screenshot 2024-12-22 182204](https://github.com/user-attachments/assets/4adaa638-fbb0-4c6f-859b-4b927a29c2cb)
+
+The Invitations section shows a list of all the invites that have been sent out for people to join the community, along with some details about each invite:
+
+* Username: The username of the person invited.
+* Role: The role they will have if they accept (e.g., moderator, user, owner).
+* Invited By: Which existing member sent them the invitation.
+* Date: When the invitation was created.
+* Status: Whether the invite is still “PENDING,” has been “ACCEPTED”, “REJECTED” or “CANCELLED”.
+* Actions: Usually lets you cancel or delete the invitation if you no longer need it.
+
+Essentially, this table lets you keep track of who has been invited, who sent each invite, and whether or not the invitee has joined.
+
+**Private Community New Invitation**
+
+![Screenshot 2024-12-22 182300](https://github.com/user-attachments/assets/e28248fa-26a6-4b30-a0dc-1cb455fa782f)
+
+"New Invitation" modal form from your application. It allows a user (likely someone with appropriate permissions) to create a new invitation for another person to join the community.
+
+Key Elements in the Modal:
+
+1. Username Field
+
+   * This is where you enter the username of the person you want to invite to the community. In the example, the username "nilo" is entered.
+2. Role Dropdown
+
+   * This dropdown lets you select the role for the invited person (e.g., owner, moderator, user). The role defines the permissions or responsibilities the invited user will have in the community. In the example, the selected role is "owner."
+3. Buttons
+
+   * Close: Closes the modal without submitting the invitation.
+   * Submit: Sends the invitation request to the system, creating a new entry in the "Invitations" table (visible in the background of the page).
+
+   Purpose
+
+This feature streamlines the process of adding new members to the community. Once you submit, the new invitation will appear in the "Invitations" table, where its status will be tracked (e.g., pending, accepted).
+
+**My Invitations, Followers and Followings on Profile**
+
+![Screenshot 2024-12-22 182646](https://github.com/user-attachments/assets/97135393-9f56-49ed-97f9-6dde6b397b8b)
+
+![Screenshot 2024-12-22 185234](https://github.com/user-attachments/assets/aa631bcc-7530-4cf5-925f-645230257e84)
+
+The Invitations section allows the user to manage pending invitations to join communities, displaying details such as the community name, the role they would have (e.g., "owner"), the inviter's name, the date of the invitation, and its status (e.g., "PENDING"). The user can take action by accepting the invitation (✔), which adds them to the community, or declining it (✖), which removes the invitation. Once accepted, the community will likely appear in the Memberships section, while declined invitations are simply dismissed. In the example, the user "nilo" has a pending invitation to the "Private Photography Club" sent by "Barışcan" with the role of "owner". The **Followers** and **Following** sections on a user's profile indicate their social connections within the platform. **Followers** represent people who follow the user, while **Following** shows the number of people the user follows. For instance, the user "OUZ" has **2 followers** and is following **2 people**. When you visit another user's profile, a **Follow button** appears, allowing you to follow them and add yourself to their list of followers. This button encourages interaction and builds a network of connected users.
+
+**2.1.9 Challenges Faced During Implementation**
+
+At first, it was challenging to write code for a project I wasn’t familiar with. I especially struggled with front-end development. In modern development, UI libraries compatible with the chosen framework, like Material or Ant Design, are often used to avoid duplicating efforts. However, in our initial project, the absence of such a library forced us to rely on Bootstrap classes and custom CSS. Due to the project's tight timeline, implementing a major change like integrating a new UI library wasn’t feasible, so we had to proceed with the existing setup. Another challenge I faced was the lack of a decision-maker to guide the project as a team. This sometimes required each team member to take their own initiative to move forward.
+
+**2.1.10 Code Reviews (Provided and Received)**
+
+The following links provide an overview of my contributions and reviews in the project:
+
+* [Pull Requests I Reviewed:](https://github.com/SWE574-G3/SWE-574-G3/pulls?q=is%3Aclosed+is%3Apr++reviewed-by%3Aynsmrkrkmz) This link lists all the pull requests that were reviewed by me.
+
+* [Pull Requests I Created:](https://github.com/SWE574-G3/SWE-574-G3/pulls?q=is%3Apr+author%3A%40me+is%3Aclosed) This link lists all the pull requests I created and contributed to the project.
+
+These links highlight my involvement in both reviewing my teammates' work and contributing to the project's development through my own pull requests.
+  
+**2.4.11 Major Pull Requests**
+
+**Sending invitation (Backend)**
+
+Implements the backend functionality required for sending invitations within private communities. The implementation allows community owners and moderators to invite individual users to their private communities.Key components of this pull request include:
+
+* **Invitation Controller**: Handles API requests related to invitations, providing endpoints for sending and managing them.
+
+* **Invitation Service**: Implements the business logic for creating and processing invitation records.
+
+* **Invitation Repository**: Manages database operations for storing and retrieving invitation data.
+
+* **Invitation Model**: Defines the structure and relationships of invitation data within the system.
+
+* **DTOs (Data Transfer Objects)**: InvitationDto and InvitationCreateRequestDto were added to streamline data flow between layers.
+
+Furthermore, updates were made to the data.sql file to modify test data, and local profile properties were added for enhanced development and testing compatibility.
+
+This pull request is crucial as it lays the foundation for the invitation system, a feature central to the exclusivity and access control mechanisms for private communities.
+
+[https://github.com/SWE574-G3/SWE-574-G3/pull/60](https://github.com/SWE574-G3/SWE-574-G3/pull/60)
+
+**Sending invitation (Frontend)**
+
+  Introduces frontend functionalities for the invitation system in private communities. It enables users to send invitations, accept or reject received invitations, and view their invitation list. This enhancement improves user interaction by providing a seamless interface for managing community invitations.
+
+  [https://github.com/SWE574-G3/SWE-574-G3/pull/114](https://github.com/SWE574-G3/SWE-574-G3/pull/114)
+
+**List Invitations in community**
+
+  Introduces backend functionality that enables community owners and moderators to retrieve and view all invitations associated with their community. This enhancement facilitates effective management of community membership by providing a comprehensive overview of pending and responded invitations. Key additions include the implementation of a service method to fetch invitations linked to a specific community and the integration of Data Transfer Objects (DTOs) for Community, User, Role, and Invitation to streamline data handling across the application layers. This development is significant as it empowers community administrators with the tools necessary to oversee and manage invitations, thereby maintaining the integrity and exclusivity of private communities.
+
+  [https://github.com/SWE574-G3/SWE-574-G3/pull/74](https://github.com/SWE574-G3/SWE-574-G3/pull/74)
+
+**List Invitations for users**
+
+  Introduces backend functionality that enables users to view their pending invitations. This enhancement allows users to manage their community memberships more effectively by providing a clear overview of outstanding invitations. Key additions include the implementation of a service method to fetch pending invitations for a specific user and the integration of unit tests to ensure the reliability of the invitation service. This development is significant as it enhances user experience by facilitating efficient management of community invitations.
+
+  [https://github.com/SWE574-G3/SWE-574-G3/pull/81](https://github.com/SWE574-G3/SWE-574-G3/pull/81)
+
+**Accept, Reject or Cancel An Invitation**
+
+  Introduces backend functionalities that enable users to manage invitations within private communities. Invited users can now accept or reject invitations, while community members have the capability to cancel sent invitations. This enhancement improves the management of community memberships by providing essential controls over invitation statuses. Key additions include service methods for updating invitation statuses and corresponding API endpoints to handle these actions. This development is significant as it empowers both users and community administrators to effectively manage invitations, ensuring proper access control and membership management within private communities.
+
+  [https://github.com/SWE574-G3/SWE-574-G3/pull/88](https://github.com/SWE574-G3/SWE-574-G3/pull/88)
+
+**User Invitation List and Accept or Reject**
+
+  Introduces frontend functionalities for managing invitations within private communities. It enables users to send invitations, accept or reject received invitations, and view their invitation list. This enhancement improves user interaction by providing a seamless interface for managing community invitations.
+
+  [https://github.com/SWE574-G3/SWE-574-G3/pull/114](https://github.com/SWE574-G3/SWE-574-G3/pull/114)
+
+**Making header menu mobile friendly**
+
+  Enhances the application's frontend by optimizing the header menu for mobile devices. This update ensures that the header menu is responsive and user-friendly across various screen sizes, thereby improving the overall user experience on mobile platforms. Key modifications include adjustments to the menu layout and styling to accommodate smaller screens, ensuring accessibility and functionality for mobile users.
+
+  [https://github.com/SWE574-G3/SWE-574-G3/pull/135](https://github.com/SWE574-G3/SWE-574-G3/pull/135)
+
+**User follow functionality (Backend)**
+
+  Introduces backend features that enable users to follow and unfollow other users within the application. This functionality enhances user interaction by allowing individuals to connect with others who share similar interests. Key components include the implementation of service methods to manage follow relationships, the addition of necessary API endpoints, and updates to the database schema to support this feature. This development is significant as it fosters community building and personalized content discovery within the platform.
+
+  [https://github.com/SWE574-G3/SWE-574-G3/pull/147](https://github.com/SWE574-G3/SWE-574-G3/pull/147)
+
+**User follow functionality (Frontend)**
+
+  Introduces frontend features that enable users to follow and unfollow other users within the application. This enhancement improves user interaction by allowing individuals to connect with others who share similar interests. Key components include the implementation of user interface elements that allow users to follow or unfollow others, visual indicators to display the follow status, and integration with backend services to manage follow relationships. This development is significant as it fosters community building and personalized content discovery within the platform.
+
+  [https://github.com/SWE574-G3/SWE-574-G3/pull/149](https://github.com/SWE574-G3/SWE-574-G3/pull/149)
+
+**Adding link to items in invitation table**
+
+  Enhances the user interface by adding hyperlinks to items in the invitation list. This improvement allows users to easily navigate to relevant community or user profiles directly from their invitations, streamlining the user experience and improving accessibility within the application.
+
+  [https://github.com/SWE574-G3/SWE-574-G3/pull/157](https://github.com/SWE574-G3/SWE-574-G3/pull/157)
+
+**2.4.12 Issues (Created and Assigned)**
+
+**Non-Code Related Significant Issues**
+
+
+| Issue Title                                          | URL                                                             | Description                                                              |
+| :----------------------------------------------------- | :---------------------------------------------------------------- | :------------------------------------------------------------------------- |
+| Defining Coding Standards                            | [Issue \#10](https://github.com/SWE574-G3/SWE-574-G3/issues/10) | Established coding standards to ensure code quality across the team.     |
+| Researching and Establishing Branch Protection Rules | [Issue \#2](https://github.com/SWE574-G3/SWE-574-G3/issues/2)   | Researched and implemented GitHub Rulesets for branch protection.        |
+| Creation of ER Diagram for Database Design           | [Issue \#16](https://github.com/SWE574-G3/SWE-574-G3/issues/16) | Designed the ER diagram for the application’s database.                 |
+| Create ER Diagram for the Application                | [Issue \#21](https://github.com/SWE574-G3/SWE-574-G3/issues/21) | Updated and structured the ER diagram based on new requirements.         |
+| Adding Invitation Requirements to Wiki               | [Issue \#27](https://github.com/SWE574-G3/SWE-574-G3/issues/27) | Defined and documented the invitation system requirements.               |
+| Adding Invitations Mock-ups to Wiki                  | [Issue \#26](https://github.com/SWE574-G3/SWE-574-G3/issues/26) | Created and added mockups for the invitation system to the project wiki. |
+| Update the ER Diagram                                | [Issue \#37](https://github.com/SWE574-G3/SWE-574-G3/issues/37) | Updated the ER diagram to include new features and maintain accuracy.    |
+
+**Code-Related Significant Issues**
+
+
+| Issue Title                               | URL                                                               | Description                                                                            |
+| :------------------------------------------ | :------------------------------------------------------------------ | :--------------------------------------------------------------------------------------- |
+| Invitation System (Backend)               | [Issue \#45](https://github.com/SWE574-G3/SWE-574-G3/issues/45)   | Implemented the backend functionality for the invitation system.                       |
+| Sending Invitation (Backend)              | [Issue \#55](https://github.com/SWE574-G3/SWE-574-G3/issues/55)   | Developed backend features for sending invitations in private communities.             |
+| Sending Invitation (Frontend)             | [Issue \#56](https://github.com/SWE574-G3/SWE-574-G3/issues/56)   | Implemented the frontend functionality for sending invitations.                        |
+| List Invitations in Community             | [Issue \#67](https://github.com/SWE574-G3/SWE-574-G3/issues/67)   | Added functionality to list invitations associated with a community.                   |
+| List Invitations for Users                | [Issue \#75](https://github.com/SWE574-G3/SWE-574-G3/issues/75)   | Enabled users to view their pending invitations.                                       |
+| Accept, Reject or Cancel An Invitation    | [Issue \#76](https://github.com/SWE574-G3/SWE-574-G3/issues/76)   | Developed functionality to manage invitation statuses (accept/reject/cancel).          |
+| User Invitation List and Accept or Reject | [Issue \#100](https://github.com/SWE574-G3/SWE-574-G3/issues/100) | Implemented the invitation list for users and enabled invitation acceptance/rejection. |
+| Making Header Menu Mobile Friendly        | [Issue \#133](https://github.com/SWE574-G3/SWE-574-G3/issues/133) | Improved the header menu design to make it mobile-friendly.                            |
+| User Follow Functionality (Backend)       | [Issue \#140](https://github.com/SWE574-G3/SWE-574-G3/issues/140) | Implemented backend functionality for the user follow system.                          |
+| User Follow Functionality (Frontend)      | [Issue \#148](https://github.com/SWE574-G3/SWE-574-G3/issues/148) | Developed frontend functionality for the user follow system.                           |
+| Adding Link to Items in Invitation Table  | [Issue \#151](https://github.com/SWE574-G3/SWE-574-G3/issues/151) | Added hyperlinks to invitation items to improve navigation and accessibility.          |
+
+**2.4.13 Other Contributions**
 
 #### **2.5 Ahmet Özmüş** {#2.5-ahmet-özmüş}
 

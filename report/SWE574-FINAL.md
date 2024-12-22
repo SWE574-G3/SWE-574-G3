@@ -1518,37 +1518,27 @@ The **Activity Stream** feature included [8 different requirements](https://gith
 
 **\#\# Issues Created by Me**
 
-**| \*\*Title\*\*                            | \*\*URL\*\*                            | \*\*Description\*\*                                           |**
+# Major Issues
 
-**|--------------------------------------|------------------------------------|-----------------------------------------------------------|**
+## Issues Created by Me
 
-**| Post Delete Functionality on Backend | \[Issue 33\](https://github.com/SWE574-G3/SWE-574-G3/issues/33)|   Implement post deletion functionality where users can delete only their own posts, while community creators have the authority to delete any post within their community. Ensure proper authorization checks, error handling for unauthorized attempts, and logging of all deletion actions.                            |**
+| **Title**                            | **URL**                            | **Description**                                           |
+|--------------------------------------|------------------------------------|-----------------------------------------------------------|
+| Post Delete Functionality on Backend | [Issue 33](https://github.com/SWE574-G3/SWE-574-G3/issues/33)|   Implement post deletion functionality where users can delete only their own posts, while community creators have the authority to delete any post within their community. Ensure proper authorization checks, error handling for unauthorized attempts, and logging of all deletion actions.                            |
+| Post Delete Functionality on Frontend                          |  [Issue 51](https://github.com/SWE574-G3/SWE-574-G3/issues/51)                   | Implement the frontend functionality for post deletion. Users should have a delete option for their own posts, while community creators should see the delete option for all posts in their community. Integrate with the backend API to handle the deletion and provide appropriate feedback to the user.                        |
+Activity Stream on Frontend| [Issue 66](https://github.com/SWE574-G3/SWE-574-G3/issues/66)                    | Implement the frontend for a community-specific activity feed. Display significant user actions in a timeline view, accessible only to registered community members. Include filtering options for action types, a user-friendly interface for browsing historical logs, and visual highlights for actions taken by moderators or community owners.
 
-**| Post Delete Functionality on Frontend                          |  \[Issue 51\](https://github.com/SWE574-G3/SWE-574-G3/issues/51)                   | Implement the frontend functionality for post deletion. Users should have a delete option for their own posts, while community creators should see the delete option for all posts in their community. Integrate with the backend API to handle the deletion and provide appropriate feedback to the user.                        |**
+## Issues Assigned to Me
 
-**Activity Stream on Frontend| \[Issue 66\](https://github.com/SWE574-G3/SWE-574-G3/issues/66)                    | Implement the frontend for a community-specific activity feed. Display significant user actions in a timeline view, accessible only to registered community members. Include filtering options for action types, a user-friendly interface for browsing historical logs, and visual highlights for actions taken by moderators or community owners.**
-
-**\#\# Issues Assigned to Me**
-
-**| \*\*Title\*\*                            | \*\*URL\*\*                            | \*\*Description\*\*                                           |**
-
-**|--------------------------------------|------------------------------------|-----------------------------------------------------------|**
-
-**| Post Delete Functionality on Backend | \[Issue 33\](https://github.com/SWE574-G3/SWE-574-G3/issues/33)| Implement post deletion functionality where users can delete only their own posts, while community creators have the authority to delete any post within their community. Ensure proper authorization checks, error handling for unauthorized attempts, and logging of all deletion actions.                      |**
-
-**| Post Delete Functionality on Frontend | \[Issue 51\](https://github.com/SWE574-G3/SWE-574-G3/issues/51)| Implement the frontend functionality for post deletion. Users should have a delete option for their own posts, while community creators should see the delete option for all posts in their community. Integrate with the backend API to handle the deletion and provide appropriate feedback to the user.                       |**
-
-**|Post Edit Functionality on Backend                             | \[Issue 34\](https://github.com/SWE574-G3/SWE-574-G3/issues/34)                    | Implement post editing functionality where users can edit only their own posts, while community creators have the authority to edit any post within their community. Ensure proper authorization checks, error handling for unauthorized attempts, and logging of all editing actions.                          |**
-
-**Post Edit functionality on Frontend| \[Issue 65\](https://github.com/SWE574-G3/SWE-574-G3/issues/65)                    | Implement the frontend functionality for post editing. Users should have an edit option for their own posts, while community creators should see the edit option for all posts in their community. Integrate with the backend API to handle the editing process and provide appropriate feedback to the user.          |**
-
-**Activity Stream on Backend| \[Issue 44\](https://github.com/SWE574-G3/SWE-574-G3/issues/44)                    | Develop a community-specific activity feed that logs significant user actions and displays them in a timeline view, accessible only to registered community members. Include features for filtering by action type, browsing historical logs, and highlighting actions by moderators or community owners.**
-
-**|**
-
-**Activity Stream on Frontend| \[Issue 66\](https://github.com/SWE574-G3/SWE-574-G3/issues/66)                    | Implement the frontend for a community-specific activity feed. Display significant user actions in a timeline view, accessible only to registered community members. Include filtering options for action types, a user-friendly interface for browsing historical logs, and visual highlights for actions taken by moderators or community owners.**
-
-* **2.1.13 Other Contributions**
+| **Title**                            | **URL**                            | **Description**                                           |
+|--------------------------------------|------------------------------------|-----------------------------------------------------------|
+| Post Delete Functionality on Backend | [Issue 33](https://github.com/SWE574-G3/SWE-574-G3/issues/33)| Implement post deletion functionality where users can delete only their own posts, while community creators have the authority to delete any post within their community. Ensure proper authorization checks, error handling for unauthorized attempts, and logging of all deletion actions.                      |
+| Post Delete Functionality on Frontend | [Issue 51](https://github.com/SWE574-G3/SWE-574-G3/issues/51)| Implement the frontend functionality for post deletion. Users should have a delete option for their own posts, while community creators should see the delete option for all posts in their community. Integrate with the backend API to handle the deletion and provide appropriate feedback to the user.                       |
+|Post Edit Functionality on Backend                             | [Issue 34](https://github.com/SWE574-G3/SWE-574-G3/issues/34)                    | Implement post editing functionality where users can edit only their own posts, while community creators have the authority to edit any post within their community. Ensure proper authorization checks, error handling for unauthorized attempts, and logging of all editing actions.                          |
+Post Edit functionality on Frontend| [Issue 65](https://github.com/SWE574-G3/SWE-574-G3/issues/65)                    | Implement the frontend functionality for post editing. Users should have an edit option for their own posts, while community creators should see the edit option for all posts in their community. Integrate with the backend API to handle the editing process and provide appropriate feedback to the user.          |
+Activity Stream on Backend| [Issue 44](https://github.com/SWE574-G3/SWE-574-G3/issues/44)                    | Develop a community-specific activity feed that logs significant user actions and displays them in a timeline view, accessible only to registered community members. Include features for filtering by action type, browsing historical logs, and highlighting actions by moderators or community owners.
+|
+Activity Stream on Frontend| [Issue 66](https://github.com/SWE574-G3/SWE-574-G3/issues/66)                    | Implement the frontend for a community-specific activity feed. Display significant user actions in a timeline view, accessible only to registered community members. Include filtering options for action types, a user-friendly interface for browsing historical logs, and visual highlights for actions taken by moderators or community owners.
 
 #### **2.4 Yunus Emre Korkmaz**
 

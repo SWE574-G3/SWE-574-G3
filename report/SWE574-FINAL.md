@@ -1586,86 +1586,56 @@ The **Activity Stream** feature included [8 different requirements](https://gith
 
 #### **2.5 Ahmet Özmüş** {#2.5-ahmet-özmüş}
 
-* **2.1.1 Related Requirements and Contributions**  
-  **Specify which project requirements your contributions relate to. Clearly mention the requirement ID or description and explain how your work addresses them.**
+* **2.1.1 Related Requirements and Contributions**
 
-As a full-stack developer, I contributed to several features across the backend and frontend to enhance the functionality, usability, and maintainability of the system. Below are the key contributions and the associated requirements:
-
-**Enumeration Type Fields:**  
-This feature involved both backend and frontend development to ensure seamless creation and interaction with enumeration fields.
-
+  As a full-stack developer, I contributed to several features across the backend and frontend to enhance the functionality, usability, and maintainability of the system. Below are the key contributions and the associated requirements:  
+  **Enumeration Type Fields:**  
+  This feature involved both backend and frontend development to ensure seamless creation and interaction with enumeration fields.  
 * Backend: Enabled enumeration type fields to ensure consistent template creation, allowing communities to define structured data fields. (Aligned with CR02, CR04, and CR06)  
-* Frontend: Added support for displaying and interacting with enumeration type fields in the user interface. (Aligned with CR02)
-
-**Post Voting System:**  
-Implemented a robust voting system for posts, allowing users to upvote or downvote content effectively.
-
+* Frontend: Added support for displaying and interacting with enumeration type fields in the user interface. (Aligned with CR02)  
+  **Post Voting System:**  
+  Implemented a robust voting system for posts, allowing users to upvote or downvote content effectively.  
 * Backend: Developed the logic to handle upvotes and downvotes, ensuring data consistency and preventing duplicate votes.  
-* Frontend: Integrated voting functionality, displaying vote counts dynamically and reflecting changes immediately. (Aligned with SIR02 and PCR05)
-
-**Template Creation:**  
-Focused on improving template creation mechanisms to provide flexibility and resolve conflicts.
-
+* Frontend: Integrated voting functionality, displaying vote counts dynamically and reflecting changes immediately. (Aligned with SIR02 and PCR05)  
+  **Template Creation:**  
+  Focused on improving template creation mechanisms to provide flexibility and resolve conflicts.  
 * Backend: Designed a solution to allow multiple communities to create templates with the same name, eliminating naming conflicts. (Aligned with CR02 and CR03)  
-* Default Templates: Implemented functionality to automatically create a default post template for every new community, ensuring consistency. (Aligned with CR06)
-
-**Backend Refactoring for Clean Code:**  
-Undertook significant refactoring to improve code quality and maintainability.
-
-* Redesigned the backend package structure in alignment with clean code principles, making the system more scalable and easier to understand. (Aligned with general software development best practices)
-
-**Use Case Diagram Creation:**  
-Documented and visualized key system features to ensure alignment across the team and stakeholders.
-
+* Default Templates: Implemented functionality to automatically create a default post template for every new community, ensuring consistency. (Aligned with CR06)  
+  **Backend Refactoring for Clean Code:**  
+  Undertook significant refactoring to improve code quality and maintainability.  
+* Redesigned the backend package structure in alignment with clean code principles, making the system more scalable and easier to understand. (Aligned with general software development best practices)  
+  **Use Case Diagram Creation:**  
+  Documented and visualized key system features to ensure alignment across the team and stakeholders.  
 * Designed use case diagrams for critical functionalities, such as the recommendation engine and post voting system, providing clarity on workflows and user interactions. (Aligned with SIR07, CR06, and RR04)  
     
 * **2.1.2 Description of Major Efforts**  
-  **Provide a brief overview of the major tasks you performed during the project. Include details about your involvement in the implementation, testing, or documentation.**
+  From the outset, I assumed a proactive role in the project, contributing not only to the development of features but also to the overall progress and success of the application. I collaborated with team members to prioritize tasks, troubleshoot issues, and ensure smooth project execution.  
+  During the design phase, I actively participated in meetings, providing insights that helped shape the system’s architecture and ensuring alignment between the backend and frontend teams. My contributions extended beyond implementation to include testing, and documentation.  
+  I conducted thorough manual testing throughout the project, which allowed me to identify and resolve critical bugs in both the backend and frontend. This included fixing template service conflicts and addressing post-voting issues, ensuring a more stable and user-friendly application.  
+  Beyond technical contributions, I focused on the project’s presentation readiness. I designed use case diagrams to clarify complex workflows and align team efforts, making a significant impact on the project’s overall clarity and direction.  
+  My efforts were directed at ensuring the application was both robust and user-friendly, meeting the outlined requirements while adhering to best practices for clean and maintainable code.  
+    
+* **2.1.3 Related Issue URLs**   
+  Enumeration Type Fields Backend Support: [\#134](https://github.com/SWE574-G3/SWE-574-G3/issues/134)  
+  Enumeration Type Fields Frontend Integration: [\#138](https://github.com/SWE574-G3/SWE-574-G3/issues/138)  
+  Template Service Conflict Resolution: [\#107](https://github.com/SWE574-G3/SWE-574-G3/issues/107)  
+  Default Post Template Creation for Communities: [\#101](https://github.com/SWE574-G3/SWE-574-G3/issues/101)  
+  Post Voting System Backend Implementation: [\#92](https://github.com/SWE574-G3/SWE-574-G3/issues/92)  
+  Post Voting System Frontend Integration: [\#40](https://github.com/SWE574-G3/SWE-574-G3/issues/40)  
+  Refactoring Backend Package Structure: [\#29](https://github.com/SWE574-G3/SWE-574-G3/issues/29)  
+  Use Case Diagram Creation: [\#22](https://github.com/SWE574-G3/SWE-574-G3/issues/22)  
+  Bugfix on Template Service: [\#91](https://github.com/SWE574-G3/SWE-574-G3/issues/91)  
+  Bugfix on Voting Functionality: [\#92](https://github.com/SWE574-G3/SWE-574-G3/issues/92)  
+  Bugfix on Template Creation Backend: [\#107](https://github.com/SWE574-G3/SWE-574-G3/issues/107)  
+  Mockup: Recommendation Pages [\#12](https://github.com/SWE574-G3/SWE-574-G3/issues/12)  
+* **2.1.4 Relevant Content Links (Source Code, Documentation, Tests)**
 
-From the outset, I assumed a proactive role in the project, contributing not only to the development of features but also to the overall progress and success of the application. I collaborated with team members to prioritize tasks, troubleshoot issues, and ensure smooth project execution.
-
-During the design phase, I actively participated in meetings, providing insights that helped shape the system’s architecture and ensuring alignment between the backend and frontend teams. My contributions extended beyond implementation to include testing, and documentation.
-
-I conducted thorough manual testing throughout the project, which allowed me to identify and resolve critical bugs in both the backend and frontend. This included fixing template service conflicts and addressing post-voting issues, ensuring a more stable and user-friendly application.
-
-Beyond technical contributions, I focused on the project’s presentation readiness. I designed use case diagrams to clarify complex workflows and align team efforts, making a significant impact on the project’s overall clarity and direction.
-
-My efforts were directed at ensuring the application was both robust and user-friendly, meeting the outlined requirements while adhering to best practices for clean and maintainable code.
-
-* **2.1.3 Related Issue URLs** 
-
-Enumeration Type Fields Backend Support: [\#134](https://github.com/SWE574-G3/SWE-574-G3/issues/134)
-
-Enumeration Type Fields Frontend Integration: [\#138](https://github.com/SWE574-G3/SWE-574-G3/issues/138)
-
-Template Service Conflict Resolution: [\#107](https://github.com/SWE574-G3/SWE-574-G3/issues/107)
-
-Default Post Template Creation for Communities: [\#101](https://github.com/SWE574-G3/SWE-574-G3/issues/101)
-
-Post Voting System Backend Implementation: [\#92](https://github.com/SWE574-G3/SWE-574-G3/issues/92)
-
-Post Voting System Frontend Integration: [\#40](https://github.com/SWE574-G3/SWE-574-G3/issues/40)
-
-Refactoring Backend Package Structure: [\#29](https://github.com/SWE574-G3/SWE-574-G3/issues/29)
-
-Use Case Diagram Creation: [\#22](https://github.com/SWE574-G3/SWE-574-G3/issues/22)
-
-Bugfix on Template Service: [\#91](https://github.com/SWE574-G3/SWE-574-G3/issues/91)
-
-Bugfix on Voting Functionality: [\#92](https://github.com/SWE574-G3/SWE-574-G3/issues/92)
-
-Bugfix on Template Creation Backend: [\#107](https://github.com/SWE574-G3/SWE-574-G3/issues/107)
-
-Mockup: Recommendation Pages [\#12](https://github.com/SWE574-G3/SWE-574-G3/issues/12)
-
-* **2.1.4 Relevant Content Links (Source Code, Documentation, Tests)**  
-  **Include URLs pointing to relevant source code, documentation, test cases, or any other significant contributions you made.**  
   Source Code: [https://github.com/SWE574-G3/SWE-574-G3](https://github.com/SWE574-G3/SWE-574-G3)  
   Use Case Diagram for Recommendation Stream: [https://github.com/SWE574-G3/SWE-574-G3/wiki/Design-Representations\#use-case-diagram-for-recommendation-system](https://github.com/SWE574-G3/SWE-574-G3/wiki/Design-Representations#use-case-diagram-for-recommendation-system)   
-* **2.1.5 Video Demonstration**  
-  **Provide a link to a short video (maximum 5 minutes) demonstrating the functionality you implemented. Ensure the video clearly showcases your contributions, including any relevant user interfaces.**  
-* **2.1.6 Executive Summary of Contributions**  
-  **Summarize your contributions by explaining how they align with the project requirements, design, and management. Include references to corresponding issues and documentation.**  
+* **2.1.5 Video Demonstration**
+
+* **2.1.6 Executive Summary of Contributions**
+
   My contributions were centered around ensuring the project’s backend and frontend were cohesive, scalable, and aligned with both functional and non-functional requirements. I implemented critical features such as enumeration type fields, the post voting system, and template creation functionalities, addressing both development requirements and resolving significant bugs. These implementations ensured seamless template creation, improved user interaction, and enhanced overall system reliability.  
     
   On the backend, I emphasized scalability and maintainability by refactoring the package structure in line with clean code principles. This effort improved code readability and streamlined future development. Additionally, I worked to resolve key issues such as enabling multiple communities to create templates with the same name, thereby eliminating conflicts.  
@@ -1675,8 +1645,7 @@ Mockup: Recommendation Pages [\#12](https://github.com/SWE574-G3/SWE-574-G3/issu
   In addition to development, I contributed to use case diagram creation, providing visual clarity on system functionalities, and manual testing to identify and address critical bugs, ensuring a stable and functional project.  
     
   Overall, my contributions not only met but exceeded the project requirements, aligning the technical implementation with user needs and supporting the team in delivering a robust and well-designed system.  
-* **2.1.7 Code Explanation and Documentation**  
-  **Provide an overview of the code you wrote. Describe its purpose and functionality, and include details about any documentation or unit tests you added.**
+* **2.1.7 Code Explanation and Documentation**
 
 **Enumeration Type Handling**
 
@@ -1849,7 +1818,6 @@ These challenges tested both my technical and adaptive skills, driving personal 
   I collaborated with Ahmet Dolma to resolve complex merge conflicts that arose during the integration of backend features. By carefully analyzing the conflicting changes and understanding the overall system design, I helped streamline the resolution process, ensuring the development branch remained stable and functional. This assistance not only resolved the immediate conflicts but also improved our team's approach to managing version control collaboratively.  
   Additionally, I received significant guidance from Nilay Aydın regarding the frontend implementation of enumeration type fields. Her insights into React and component-based architecture were invaluable in overcoming challenges I faced due to my limited React experience. This collaboration enhanced my understanding of frontend workflows and ensured a smoother implementation of this feature.  
   These contributions reflect my proactive involvement in both supporting my teammates and leveraging their expertise to deliver a cohesive and functional project.  
-  
 
 
 #### **2.6. Ahmet Dolma** {#2.6.-ahmet-dolma}

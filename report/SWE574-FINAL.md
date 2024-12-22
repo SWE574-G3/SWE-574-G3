@@ -1,4 +1,4 @@
-**Project Title: Communitter**
+<img width="1187" alt="Screenshot 2024-12-22 at 05 35 25" src="https://github.com/user-attachments/assets/20853bf0-2891-40ab-a971-9b557c8c4a50" />**Project Title: Communitter**
 
 Course: SWE574: Software Development Practice As A Team 
 
@@ -1749,7 +1749,13 @@ The **Default Template Creation** task aimed to streamline the onboarding proces
 * Added validation to prevent users from accidentally overwriting the default template.  
     
 * **2.1.8 Screenshots of Implemented Functionality**  
-  **Add screenshots to demonstrate the most complex features or functionality you implemented. These should highlight significant contributions or challenges.**  
+  **Add screenshots to demonstrate the most complex features or functionality you implemented. These should highlight significant contributions or challenges.**
+  <img width="1182" alt="Screenshot 2024-12-22 at 05 34 00" src="https://github.com/user-attachments/assets/b00eb08a-2178-44b4-bc5d-7d90b1b04e66" />
+<img width="831" alt="Screenshot 2024-12-22 at 05 34 16" src="https://github.com/user-attachments/assets/ea489866-02b8-4761-8f75-7d0a4c979852" />
+<img width="1187" alt="Screenshot 2024-12-22 at 05 35 25" src="https://github.com/user-attachments/assets/2f78bc96-2fc1-4fb7-9ca8-6699041ebd9e" />
+<img width="1427" alt="Screenshot 2024-12-22 at 05 36 42" src="https://github.com/user-attachments/assets/8f3609da-81a0-4ea2-b743-85c1982611e4" />
+<img width="1123" alt="Screenshot 2024-12-22 at 05 42 15" src="https://github.com/user-attachments/assets/5210d0be-f263-4c1d-98d3-0e0f4cba1a09" />
+
   **![][image6]**  
   **![][image7]**  
   **![][image8]**  

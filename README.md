@@ -2,7 +2,7 @@
 
 Welcome to the **SWE-574-G3** repository! This project aims to build a **Community Engagement Platform** that allows users to create and interact with communities, share posts, and leverage custom templates. The platform is developed using **Spring Boot**, **Hibernate**, **React** and **React Native** focusing on dynamic validation, advanced search features, and user role management.
 
-Application is running in here: [http://34.155.21.219:3000/](http://34.155.21.219:3000/)
+Application is running in here: [34.155.21.219:3000](http://34.155.21.219:3000/)
 
 ## Table of Contents
 
@@ -46,11 +46,12 @@ In order to locally build the application:
 
 ### Installation
 
-1. **Clone the Repository**:
-   **```sh**
-   git clone https://github.com/SWE574-G3/SWE-574-G3.git
-   cd Communitter<br>
-   docker compose(docker-compose for older versions,with the dash in between) up
+ -  command: git clone https://github.com/SWE574-G3/SWE-574-G3.git
+ -  open (Repository-Root)/Communitter/src/main/resources/application.properties
+ -  Uncomment the line 2 (#spring.datasource.url=${db_url}) by removing the “#” at the start
+ -  command: cd (Repository-Root)/Communitter
+ -  command: docker compose up
+
 
 ## Usage
 

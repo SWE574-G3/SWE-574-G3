@@ -46,11 +46,12 @@ In order to locally build the application:
 
 ### Installation
 
-1. **Clone the Repository**:
-   **```sh**
-   git clone https://github.com/SWE574-G3/SWE-574-G3.git
-   cd Communitter<br>
-   docker compose(docker-compose for older versions,with the dash in between) up
+ -  command: git clone https://github.com/SWE574-G3/SWE-574-G3.git
+ -  open (Repository-Root)/Communitter/src/main/resources/application.properties
+ -  Uncomment the line 2 (#spring.datasource.url=${db_url}) by removing the “#” at the start
+ -  command: cd (Repository-Root)/Communitter
+ -  command: docker compose up
+
 
 ## Usage
 
